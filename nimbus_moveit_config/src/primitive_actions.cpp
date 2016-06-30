@@ -3,7 +3,7 @@
 using namespace std;
 
 PrimitiveActions::PrimitiveActions() : pnh("~"),
-                                 primitiveServer(n, "nimbus_moveit/common_actions/store", boost::bind(&PrimitiveActions::executePrimitive, this, _1), false)
+                                 primitiveServer(n, "nimbus_moveit/primitive_action", boost::bind(&PrimitiveActions::executePrimitive, this, _1), false)
 {
   angularCmdPublisher = n.advertise<wpi_jaco_msgs::AngularCommand>("jaco_arm/angular_cmd", 1);
 
@@ -16,6 +16,7 @@ PrimitiveActions::PrimitiveActions() : pnh("~"),
 
 void PrimitiveActions::executePrimitive(const rail_manipulation_msgs::PrimitiveGoalConstPtr &goal)
 {
+  ROS_INFO("Received primitive action request.");
   rail_manipulation_msgs::PrimitiveFeedback feedback;
   rail_manipulation_msgs::PrimitiveResult result;
   stringstream ss;
@@ -48,6 +49,7 @@ void PrimitiveActions::executePrimitive(const rail_manipulation_msgs::PrimitiveG
         break;
     }
 
+    ROS_INFO("Sending goal to Cartesian Path service");
     rail_manipulation_msgs::CartesianPath cartesianPath;
     cartesianPath.request.avoidCollisions = false;
     cartesianPath.request.waypoints.push_back(endPose);
@@ -59,6 +61,7 @@ void PrimitiveActions::executePrimitive(const rail_manipulation_msgs::PrimitiveG
     }
 
     result.completion = cartesianPath.response.completion;
+    ROS_INFO("Path completion: %f", result.completion);
 
     primitiveServer.setSucceeded(result);
     return;
