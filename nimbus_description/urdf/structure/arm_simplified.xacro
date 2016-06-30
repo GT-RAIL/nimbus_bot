@@ -1,0 +1,97 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+<!--
+  Author: David Kent
+  Very simplified arm model for use in self-subtraction of point clouds (significantly improves runtime)
+-->
+
+    <property name="pi" value="3.14159265" />
+
+    <xacro:macro name="jaco_arm_simplified" params="prefix">
+
+        <joint name="${prefix}base_joint_simplified" type="fixed">
+            <parent link="${prefix}base_link" />
+            <child link = "${prefix}base_link_simplified" />
+        </joint>
+
+        <link name="${prefix}base_link_simplified" >
+            <collision>
+                <geometry>
+                    <box size="0.09 0.09 0.32" />
+                </geometry>
+                <origin xyz="0 0 0.16" rpy="0 0 0" />
+            </collision>
+        </link>
+
+        <joint name="${prefix}shoulder_lift_joint_simplified" type="fixed">
+            <parent link="${prefix}upper_arm_link" />
+            <child link = "${prefix}upper_arm_link_simplified" />
+        </joint>
+
+        <link name="${prefix}upper_arm_link_simplified">
+            <collision>
+                <geometry>
+                    <box size="0.46 0.09 0.05" />
+                </geometry>
+                <origin xyz="0.23 0 -.025" rpy="0 0 0" />
+            </collision>
+        </link>
+
+        <joint name="${prefix}elbow_joint_simplified" type="fixed">
+            <parent link="${prefix}forearm_link" />
+            <child link = "${prefix}forearm_link_simplified" />
+        </joint>
+
+        <link name="${prefix}forearm_link_simplified">
+            <collision>
+                <geometry>
+                    <box size="0.255 0.09 0.07" />
+                </geometry>
+                <origin xyz="0.085 0 0.0" rpy="0 0 0" />
+            </collision>
+        </link>
+
+        <joint name="${prefix}wrist_1_joint_simplified" type="fixed">
+            <parent link="${prefix}wrist_1_link" />
+            <child link = "${prefix}wrist_1_link_simplified" />
+        </joint>
+
+        <link name="${prefix}wrist_1_link_simplified">
+            <collision>
+                <geometry>
+                    <box size="0.095 0.09 0.09" />
+                </geometry>
+                <origin xyz="0.0125 0 0.045" rpy="0 0 0" />
+            </collision>
+        </link>
+
+        <joint name="${prefix}wrist_2_joint_simplified" type="fixed">
+            <parent link="${prefix}wrist_2_link" />
+            <child link = "${prefix}wrist_2_link_simplified" />
+        </joint>
+
+        <link name="${prefix}wrist_2_link_simplified">
+            <collision>
+                <geometry>
+                    <box size="0.095 0.09 0.09" />
+                </geometry>
+                <origin xyz="-0.005 0 0.075" rpy="0 ${pi/6} 0" />
+            </collision>
+        </link>
+
+        <joint name="${prefix}wrist_3_joint_simplified" type="fixed">
+            <parent link="${prefix}wrist_3_link" />
+            <child link = "${prefix}wrist_3_link_simplified" />
+        </joint>
+
+        <link name="${prefix}wrist_3_link_simplified">
+            <collision>
+                <geometry>
+                    <box size="0.15 0.09 0.22" />
+                </geometry>
+                <origin xyz="0 0 0.14" rpy="0 0 0" />
+            </collision>
+        </link>
+  </xacro:macro>
+</robot>

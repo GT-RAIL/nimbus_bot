@@ -1,0 +1,287 @@
+<?xml version="1.0"?>
+<robot xmlns:sensor="http://playerstage.sourceforge.net/gazebo/xmlschema/#sensor"
+       xmlns:controller="http://playerstage.sourceforge.net/gazebo/xmlschema/#controller"
+       xmlns:interface="http://playerstage.sourceforge.net/gazebo/xmlschema/#interface"
+       xmlns:xacro="http://ros.org/wiki/xacro">
+
+  <xacro:include filename="$(find nimbus_description)/urdf/sensors/kinect2.urdf.xacro" />
+
+  <!-- Xacro properties -->
+  <xacro:property name="pi" value="3.1415926535897931" />
+
+  <xacro:macro name="nimbus_sensor_frame" params="parent *origin">
+    <xacro:nimbus_sensor_frame_structure parent="${parent}">
+      <xacro:insert_block name="origin" />
+    </xacro:nimbus_sensor_frame_structure>
+
+    <joint name="sensor_frame_camera_plate_link_sensor_frame_sensor_link_joint" type="fixed">
+      <parent link="sensor_frame_camera_plate_link" />
+      <child link="sensor_frame_sensor_link" />
+      <origin xyz="0.041275 0.041275 0.003175" rpy="0 0 0" />
+    </joint>
+    <link name="sensor_frame_sensor_link" />
+
+    <xacro:kinect2 parent="sensor_frame_sensor_link">
+      <origin xyz="0.009 -0.005 -0.011" rpy="0 0 -0.018" /> <!-- insert calibrated x, y, z, and yaw here -->
+    </xacro:kinect2>
+  </xacro:macro>
+
+  <xacro:macro name="nimbus_sensor_frame_calibration" params="parent *origin">
+    <xacro:nimbus_sensor_frame_structure parent="${parent}">
+      <xacro:insert_block name="origin" />
+    </xacro:nimbus_sensor_frame_structure>
+
+    <joint name="sensor_frame_camera_plate_link_sensor_frame_sensor_calibration_link_joint" type="fixed">
+      <parent link="sensor_frame_camera_plate_link" />
+      <child link="sensor_frame_sensor_calibration_link" />
+      <origin xyz="0.041275 0.041275 0.003175" rpy="0 0 0" />
+    </joint>
+    <link name="sensor_frame_sensor_calibration_link" />
+
+    <joint name="sensor_frame_sensor_calibrate_x" type="prismatic">
+      <parent link="sensor_frame_sensor_calibration_link" />
+      <child link="sensor_frame_sensor_x_link" />
+      <axis xyz="1 0 0" />
+      <limit effort="100" velocity="1" lower="-0.1" upper="0.1" />
+    </joint>
+    <link name="sensor_frame_sensor_x_link" />
+
+    <joint name="sensor_frame_sensor_calibrate_y" type="prismatic">
+      <parent link="sensor_frame_sensor_x_link" />
+      <child link="sensor_frame_sensor_y_link" />
+      <axis xyz="0 1 0" />
+      <limit effort="100" velocity="1" lower="-0.1" upper="0.1" />
+    </joint>
+    <link name="sensor_frame_sensor_y_link" />
+
+    <joint name="sensor_frame_sensor_calibrate_z" type="prismatic">
+      <parent link="sensor_frame_sensor_y_link" />
+      <child link="sensor_frame_sensor_z_link" />
+      <axis xyz="0 0 1" />
+      <limit effort="100" velocity="1" lower="-0.1" upper="0.1" />
+    </joint>
+    <link name="sensor_frame_sensor_z_link" />
+
+    <joint name="sensor_frame_sensor_calibrate_yaw" type="revolute">
+      <parent link="sensor_frame_sensor_z_link" />
+      <child link="sensor_frame_sensor_yaw_link" />
+      <axis xyz="0 0 1" />
+      <limit effort="100" velocity="20" lower="${pi/16}" upper="${-pi/16}" />
+    </joint>
+    <link name="sensor_frame_sensor_yaw_link" />
+
+    <joint name="sensor_frame_sensor_yaw_link_sensor_frame_sensor_link_joint" type="fixed">
+      <parent link="sensor_frame_sensor_yaw_link" />
+      <child link="sensor_frame_sensor_link" />
+    </joint>
+    <link name="sensor_frame_sensor_link" />
+
+    <xacro:kinect2_calibration parent="sensor_frame_sensor_link">
+      <origin xyz="0.009 -0.005 -0.011" rpy="0 0 -0.018" /> <!-- insert calibrated x, y, z, and yaw here -->
+    </xacro:kinect2_calibration>
+  </xacro:macro>
+
+  <xacro:macro name="nimbus_sensor_frame_structure" params="parent *origin">
+    <joint name="${parent}_sensor_frame_center_link_joint" type="fixed">
+      <parent link="${parent}" />
+      <child link="sensor_frame_center_link" />
+      <xacro:insert_block name="origin" />
+    </joint>
+    <link name="sensor_frame_center_link" />
+
+    <joint name="sensor_frame_center_link_sensor_frame_left_strut_link_joint" type="fixed">
+      <parent link="sensor_frame_center_link" />
+      <child link="sensor_frame_left_strut_link" />
+      <origin xyz="-0.8397875 0 0" rpy="0 0 0" />
+    </joint>
+    <link name="sensor_frame_left_strut_link" >
+      <visual>
+        <geometry>
+          <box size="0.0254 0.0508 1.2192" />
+        </geometry>
+        <origin xyz="0 0 0.6096" rpy="0 0 0" />
+        <material name="light-gray">
+          <color rgba="0.4 0.4 0.4 1" />
+        </material>
+      </visual>
+      <collision>
+        <geometry>
+          <box size="0.0508 0.0762 1.2192" />
+        </geometry>
+        <origin xyz="0 0 0.6096" rpy="0 0 0" />
+      </collision>
+    </link>
+    <xacro:left_bracket parent="sensor_frame_left_strut_link" side="left" />
+    <xacro:right_bracket parent="sensor_frame_left_strut_link" side="left" />
+
+    <joint name="sensor_frame_center_link_sensor_frame_right_strut_link_joint" type="fixed">
+      <parent link="sensor_frame_center_link" />
+      <child link="sensor_frame_right_strut_link" />
+      <origin xyz="0.8397875 0 0" rpy="0 0 0" />
+    </joint>
+    <link name="sensor_frame_right_strut_link" >
+      <visual>
+        <geometry>
+          <box size="0.0254 0.0508 1.2192" />
+        </geometry>
+        <origin xyz="0 0 0.6096" rpy="0 0 0" />
+        <material name="light-gray" />
+      </visual>
+      <collision>
+        <geometry>
+          <box size="0.0508 0.0762 1.2192" />
+        </geometry>
+        <origin xyz="0 0 0.6096" rpy="0 0 0" />
+      </collision>
+    </link>
+    <xacro:left_bracket parent="sensor_frame_right_strut_link" side="right" />
+    <xacro:right_bracket parent="sensor_frame_right_strut_link" side="right" />
+
+    <joint name="sensor_frame_center_link_sensor_frame_top_beam_link_joint" type="fixed">
+      <parent link="sensor_frame_center_link" />
+      <child link="sensor_frame_top_beam_link" />
+      <origin xyz="0 0 1.2319" rpy="0 0 0" />
+    </joint>
+    <link name="sensor_frame_top_beam_link">
+      <visual>
+        <geometry>
+          <box size="1.8288 0.0508 0.0254" />
+        </geometry>
+        <material name="light-gray" />
+      </visual>
+      <collision>
+        <geometry>
+          <box size="1.8888 0.1108 0.0854" />
+        </geometry>
+      </collision>
+    </link>
+
+    <joint name="sensor_frame_top_beam_link_sensor_frame_camera_strut_link_joint" type="fixed">
+      <parent link="sensor_frame_top_beam_link" />
+      <child link="sensor_frame_camera_strut_link" />
+      <origin xyz="-0.0254 0.0254 0.0127" rpy="${-pi/4} 0 0" />
+    </joint>
+    <link name="sensor_frame_camera_strut_link">
+      <visual>
+        <geometry>
+          <box size="0.0508 0.1524 0.0254" />
+        </geometry>
+        <origin xyz="0 0.0762 -0.0127" rpy="0 0 0" />
+        <material name="light-gray" />
+      </visual>
+      <collision>
+        <geometry>
+          <box size="0.0808 0.1824 0.0554" />
+        </geometry>
+        <origin xyz="0 0.0762 -0.0127" rpy="0 0 0" />
+      </collision>
+    </link>
+
+    <joint name="sensor_frame_camera_strut_link_sensor_frame_camera_plate_link_joint" type="fixed">
+      <parent link="sensor_frame_camera_strut_link" />
+      <child link="sensor_frame_camera_plate_link" />
+      <origin xyz="0 0.1016 0.003175" rpy="0 0 0" />
+    </joint>
+    <link name="sensor_frame_camera_plate_link">
+      <visual>
+        <geometry>
+          <box size="0.1016 0.1016 0.00635" />
+        </geometry>
+        <material name="light-gray" />
+      </visual>
+      <collision>
+        <geometry>
+          <box size="0.1316 0.1316 0.01905" />
+        </geometry>
+      </collision>
+    </link>
+  </xacro:macro>
+
+  <xacro:macro name="left_bracket" params="parent side">
+    <joint name="${parent}_sensor_frame_${side}_bracket_left_foot_link_joint" type="fixed">
+      <parent link="${parent}" />
+      <child link="sensor_frame_${side}_bracket_left_foot_link" />
+      <origin xyz="-0.0381 0 0" rpy="0 0 0" />
+    </joint>
+    <link name="sensor_frame_${side}_bracket_left_foot_link">
+      <visual>
+        <geometry>
+          <box size="0.0508 0.0508 0.015875" />
+        </geometry>
+        <origin xyz="0 0 0.0079375" rpy="0 0 0" />
+        <material name="light-gray" />
+      </visual>
+      <collision>
+        <geometry>
+          <box size="0.0708 0.0708 0.06" />
+        </geometry>
+        <origin xyz="0 0 0.03" rpy="0 0 0" />
+      </collision>
+    </link>
+
+    <joint name="sensor_frame_${side}_bracket_left_foot_link_sensor_frame_${side}_bracket_left_side_link_joint" type="fixed">
+      <parent link="sensor_frame_${side}_bracket_left_foot_link" />
+      <child link="sensor_frame_${side}_bracket_left_side_link" />
+      <origin xyz="0.01905 0 0" rpy="0 0 0" />
+    </joint>
+    <link name="sensor_frame_${side}_bracket_left_side_link">
+      <visual>
+        <geometry>
+          <box size="0.0127 0.0508 0.127" />
+        </geometry>
+        <origin xyz="0 0 0.0635" rpy="0 0 0" />
+        <material name="light-gray" />
+      </visual>
+      <collision>
+        <geometry>
+          <box size="0.0127 0.0508 0.127" />
+        </geometry>
+        <origin xyz="0 0 0.0635" rpy="0 0 0" />
+      </collision>
+    </link>
+  </xacro:macro>
+
+  <xacro:macro name="right_bracket" params="parent side">
+    <joint name="${parent}_sensor_frame_${side}_bracket_right_foot_link_joint" type="fixed">
+      <parent link="${parent}" />
+      <child link="sensor_frame_${side}_bracket_right_foot_link" />
+      <origin xyz="0.0381 0 0" rpy="0 0 0" />
+    </joint>
+    <link name="sensor_frame_${side}_bracket_right_foot_link">
+      <visual>
+        <geometry>
+          <box size="0.0508 0.0508 0.015875" />
+        </geometry>
+        <origin xyz="0 0 0.0079375" rpy="0 0 0" />
+        <material name="light-gray" />
+      </visual>
+      <collision>
+        <geometry>
+          <box size="0.0708 0.0708 0.06" />
+        </geometry>
+        <origin xyz="0 0 0.03" rpy="0 0 0" />
+      </collision>
+    </link>
+
+    <joint name="sensor_frame_${side}_bracket_right_foot_link_sensor_frame_${side}_bracket_right_side_link_joint" type="fixed">
+      <parent link="sensor_frame_${side}_bracket_right_foot_link" />
+      <child link="sensor_frame_${side}_bracket_right_side_link" />
+      <origin xyz="-0.01905 0 0" rpy="0 0 0" />
+    </joint>
+    <link name="sensor_frame_${side}_bracket_right_side_link">
+      <visual>
+        <geometry>
+          <box size="0.0127 0.0508 0.127" />
+        </geometry>
+        <origin xyz="0 0 0.0635" rpy="0 0 0" />
+        <material name="light-gray" />
+      </visual>
+      <collision>
+        <geometry>
+          <box size="0.0127 0.0508 0.127" />
+        </geometry>
+        <origin xyz="0 0 0.0635" rpy="0 0 0" />
+      </collision>
+    </link>
+  </xacro:macro>
+</robot>

@@ -1,0 +1,36 @@
+<!--
+   Author: David Kent, Georgia Tech
+  Version: October 9, 2015
+-->
+
+<launch>
+  <!-- Grasp Database Connection Params -->
+  <arg name="port" default="5432" />
+  <arg name="user" default="ros" />
+  <arg name="password" default="$(env GRASPDB_PW)" />
+  <arg name="db" default="graspdb" />
+  <arg name="host" default="127.0.0.1" />
+
+  <!-- Grasp Collection Params -->
+  <arg name="robot_fixed_frame_id" default="table_base_link" />
+  <arg name="eef_frame_id" default="nimbus_ee_link" />
+  <arg name="gripper_action_server" default="/gripper_actions/gripper_manipulation" />
+  <arg name="lift_action_server" default="jaco_arm/manipulation/lift" />
+  <arg name="verify_grasp_action_server" default="/gripper_actions/verify_grasp" />
+  <arg name="segmented_objects_topic" default="/rail_segmentation/segmented_objects" />
+
+  <!-- Pick and Place -->
+  <include file="$(find rail_pick_and_place_tools)/launch/rail_pick_and_place_backend.launch">
+    <arg name="host" value="$(arg host)" />
+    <arg name="port" value="$(arg port)" />
+    <arg name="user" value="$(arg user)" />
+    <arg name="db" value="$(arg db)" />
+    <arg name="password" value="$(arg password)" />
+    <arg name="robot_fixed_frame_id" value="$(arg robot_fixed_frame_id)" />
+    <arg name="eef_frame_id" value="$(arg eef_frame_id)" />
+    <arg name="gripper_action_server" value="$(arg gripper_action_server)" />
+    <arg name="lift_action_server" value="$(arg lift_action_server)" />
+    <arg name="verify_grasp_action_server" value="$(arg verify_grasp_action_server)" />
+    <arg name="segmented_objects_topic" value="$(arg segmented_objects_topic)" />
+  </include>
+</launch>

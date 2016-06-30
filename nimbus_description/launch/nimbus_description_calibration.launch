@@ -1,0 +1,22 @@
+<launch>
+  <!-- Joint state publisher gui -->
+  <arg name="gui" default="true" />
+
+  <!-- Load the URDF file -->
+  <arg name="urdf_file" default="$(find xacro)/xacro.py '$(find nimbus_description)/robots/nimbus_calibration.urdf.xacro'" />
+  <param name="robot_description" command="$(arg urdf_file)" />
+  <param name="robot/name" value="$(optenv ROBOT nimbus)" />
+  <param name="robot/type" value="nimbus" />
+  
+  <!-- State publishers -->
+  <node pkg="robot_state_publisher" type="robot_state_publisher" name="robot_state_publisher">
+    <param name="publish_frequency" type="double" value="100" />
+  </node>
+  <node name="joint_state_publisher" pkg="joint_state_publisher" type="joint_state_publisher">
+  	<param name="use_gui" value="$(arg gui)" />
+  	<rosparam param="source_list">[jaco_arm/joint_states, gripper/joint_states]</rosparam>
+  </node>
+
+  <!-- Visualization -->
+  <node name="rviz" pkg="rviz" type="rviz" args="-d $(find nimbus_description)/rviz/calibrate_robot.rviz" required="true" />
+</launch>

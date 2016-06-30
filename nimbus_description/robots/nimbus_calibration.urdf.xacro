@@ -1,0 +1,37 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="nimbus">
+  <xacro:include filename="$(find nimbus_description)/urdf/structure/arm_mount.urdf.xacro" />
+  <xacro:include filename="$(find nimbus_description)/urdf/structure/sensor_structure.urdf.xacro" />
+  <xacro:include filename="$(find nimbus_description)/urdf/structure/placeholder.urdf.xacro" />
+
+  <link name="table_base_link">
+    <visual>
+      <geometry>
+        <cylinder length="0.022" radius=".9144"/>
+      </geometry>
+      <origin rpy="0 0 0" xyz="0 0 -0.011" />
+      <material name="tan">
+        <color rgba="0.871 0.722 0.529 1" />
+      </material>
+    </visual>
+    <collision>
+      <geometry>
+        <cylinder length="0.022" radius=".9144"/>
+      </geometry>
+      <origin rpy="0 0 0" xyz="0 0 -0.011" />
+    </collision>
+  </link>
+
+  <xacro:nimbus_kinect parent="table_base_link">
+    <origin xyz="0 0 0" rpy="0 0 0" />
+  </xacro:nimbus_kinect>
+
+  <xacro:arm_mount parent="table_base_link">
+    <origin xyz="0 0.0762 0" rpy="0 0 0" />
+  </xacro:arm_mount>
+
+  <xacro:nimbus_sensor_frame_calibration parent="table_base_link">
+    <origin xyz="0 0.0508 0" rpy="0 0 0" />
+  </xacro:nimbus_sensor_frame_calibration>
+
+</robot>

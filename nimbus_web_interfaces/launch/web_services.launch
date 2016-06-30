@@ -1,0 +1,19 @@
+<!--
+   Author: Aaron St. Clair, Georgia Institute of Technology
+  Version: March 30, 2016
+-->
+
+<launch>
+  <!-- rosbridge -->
+  <include file="$(find rosbridge_server)/launch/rosbridge_websocket.launch"/>
+
+  <!-- tf2 republisher -->
+  <node pkg="tf2_web_republisher" type="tf2_web_republisher" name="tf2_web_republisher" respawn="true" output="screen"/>
+
+  <!-- tf2 republisher -->
+  <node pkg="mjpeg_server" type="mjpeg_server" name="mjpeg_server" respawn="true" output="screen"/>
+
+  <!-- user queue -->
+  <node pkg="rail_user_queue_manager" type="rail_user_queue_manager" name="rail_user_queue_manager" respawn="true" output="screen"/>
+
+</launch>

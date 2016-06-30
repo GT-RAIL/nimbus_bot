@@ -1,0 +1,58 @@
+sensor_frame: 'kinect2_rgb_optical_frame'
+use_rgb: true
+max_queue_size: 1
+self_see_links:
+  -
+    name: 'robotiq_85_right_finger_tip_link'
+    padding: 0.05
+  -
+    name: 'robotiq_85_left_finger_tip_link'
+    padding: 0.05
+  -
+    name: 'robotiq_85_right_finger_link'
+    padding: 0.05
+  -
+    name: 'robotiq_85_left_finger_link'
+    padding: 0.05
+  -
+    name: 'robotiq_85_right_inner_knuckle_link'
+    padding: 0.05
+  -
+    name: 'robotiq_85_left_inner_knuckle_link'
+    padding: 0.05
+  -
+    name: 'robotiq_85_right_knuckle_link'
+    padding: 0.05
+  -
+    name: 'robotiq_85_left_knuckle_link'
+    padding: 0.05
+  -
+    name: 'robotiq_85_base_link'
+    padding: 0.05
+  -
+    name: 'jaco_wrist_3_link'
+    padding: 0.05
+  -
+    name: 'jaco_wrist_2_link'
+    padding: 0.05
+  -
+    name: 'jaco_wrist_1_link'
+    padding: 0.05
+  -
+    name: 'jaco_forearm_link'
+    padding: 0.05
+  -
+    name: 'jaco_upper_arm_link'
+    padding: 0.05
+  -
+    name: 'jaco_shoulder_link'
+    padding: 0.05
+  -
+    name: 'jaco_base_link'
+    padding: 0.05
+  -
+    name: 'arm_mount_beam_link'
+    padding: 0.05
+  -
+    name: 'arm_mount_plate_link'
+    padding: 0.05

@@ -1,0 +1,145 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://ros.org/wiki/xacro">
+
+  <!-- Xacro properties -->
+  <xacro:property name="pi" value="3.1415926535897931" />
+
+  <xacro:macro name="kinect2" params="parent *origin">
+    <xacro:kinect2_base parent="${parent}">
+      <xacro:insert_block name="origin" />
+    </xacro:kinect2_base>
+    <xacro:kinect2_camera parent="kinect2_tilt_base_link">
+      <origin xyz="0 0 0" rpy="-0.536 0 0" /> <!-- insert hand-calibrated roll value here -->
+    </xacro:kinect2_camera>
+  </xacro:macro>
+
+  <xacro:macro name="kinect2_calibration" params="parent *origin">
+    <xacro:kinect2_base parent="${parent}">
+      <xacro:insert_block name="origin" />
+    </xacro:kinect2_base>
+    <xacro:kinect2_camera_calibration parent="kinect2_tilt_base_link">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+    </xacro:kinect2_camera_calibration>
+  </xacro:macro>
+
+  <xacro:macro name="kinect2_base" params="parent *origin">
+    <joint name="${parent}_kinect2_mounting_plate_link_joint" type="fixed">
+      <parent link="${parent}" />
+      <child link="kinect2_mounting_plate_link" />
+      <xacro:insert_block name="origin" />
+    </joint>
+    <link name="kinect2_mounting_plate_link">
+      <visual>
+        <geometry>
+          <box size="0.1143 0.06985 0.009525" />
+        </geometry>
+        <origin xyz="0 -0.0127 0.0047625" rpy="0 0 0" />
+        <material name="grey">
+          <color rgba="0.2 0.2 0.2 1" />
+        </material>
+      </visual>
+      <collision>
+        <geometry>
+          <box size="0.1143 0.06985 0.009525" />
+        </geometry>
+        <origin xyz="0 -0.0127 0.0047625" rpy="0 0 0" />
+      </collision>
+    </link>
+
+    <joint name="kinect2_mounting_plate_link_kinect2_mic_bar_link_joint" type="fixed">
+      <parent link="kinect2_mounting_plate_link" />
+      <child link="kinect2_mic_bar_link" />
+      <origin xyz="0 0.0254 0.00873125" rpy="0 0 0" />
+    </joint>
+    <link name="kinect2_mic_bar_link">
+      <visual>
+        <geometry>
+          <box size="0.250825 0.015875 0.0174625" />
+        </geometry>
+        <material name="grey" />
+      </visual>
+      <collision>
+        <geometry>
+          <box size="0.310825 0.075875 0.0774625" />
+        </geometry>
+      </collision>
+    </link>
+
+    <joint name="kinect2_mic_bar_link_kinect2_tilt_base_link_joint" type="fixed">
+      <parent link="kinect2_mic_bar_link" />
+      <child link="kinect2_tilt_base_link" />
+      <origin xyz="0 -0.003571875 0.01825625" rpy="0 0 0" />
+    </joint>
+    <link name="kinect2_tilt_base_link" type="fixed">
+      <visual>
+        <geometry>
+          <box size="0.1143 0.00714375 0.009525" />
+        </geometry>
+        <origin xyz="0 0 -0.0047625" />
+        <material name="grey" />
+      </visual>
+      <collision>
+        <geometry>
+          <box size="0.1143 0.00714375 0.009525" />
+        </geometry>
+        <origin xyz="0 0 0.0047625" />
+      </collision>
+    </link>
+  </xacro:macro>
+
+  <xacro:macro name="kinect2_camera_calibration" params="parent *origin">
+    <joint name="${parent}_kinect2_tilt_link_joint" type="revolute">
+      <parent link="${parent}" />
+      <child link="kinect2_tilt_link" />
+      <xacro:insert_block name="origin" />
+      <axis xyz="1 0 0" />
+      <limit effort="100" velocity="20" lower="${pi/4}" upper="${-pi/4}" />
+    </joint>
+    <link name="kinect2_tilt_link" />
+
+    <xacro:kinect2_camera_link parent="kinect2_tilt_link" />
+
+  </xacro:macro>
+
+  <xacro:macro name="kinect2_camera" params="parent *origin">
+    <joint name="${parent}_kinect2_tilt_link_joint" type="fixed">
+      <parent link="${parent}" />
+      <child link="kinect2_tilt_link" />
+      <xacro:insert_block name="origin" />
+    </joint>
+    <link name="kinect2_tilt_link" />
+
+    <xacro:kinect2_camera_link parent="kinect2_tilt_link" />
+
+  </xacro:macro>
+
+  <xacro:macro name="kinect2_camera_link" params="parent">
+    <joint name="${parent}_kinect2_structure_link_joint" type="fixed">
+      <parent link="${parent}" />
+      <child link="kinect2_structure_link" />
+      <origin xyz="0.0968375 0 0.022225" rpy="0 0 0" />
+    </joint>
+    <link name="kinect2_structure_link">
+      <visual>
+        <geometry>
+          <box size="0.250825 0.06985 0.04445" />
+        </geometry>
+        <origin xyz="-0.0968375 -0.02778125 0" />
+        <material name="grey" />
+      </visual>
+      <collision>
+        <geometry>
+          <box size="0.310825 0.12985 0.10445" />
+        </geometry>
+        <origin xyz="-0.0968375 -0.02778125 0" />
+      </collision>
+    </link>
+
+    <joint name="kinect2_structure_link_kinect2_link_joint" type="fixed">
+      <parent link="kinect2_structure_link" />
+      <child link="kinect2_link" />
+      <origin xyz="0 0 0" rpy="${-pi/2} 0 0" />
+    </joint>
+    <link name="kinect2_link" />
+  </xacro:macro>
+</robot>

@@ -1,0 +1,8 @@
+moveit_setup_assistant_config:
+  URDF:
+    package: nimbus_description
+    relative_path: robots/nimbus.urdf
+  SRDF:
+    relative_path: config/nimbus.srdf
+  CONFIG:
+    generated_timestamp: 1450452464

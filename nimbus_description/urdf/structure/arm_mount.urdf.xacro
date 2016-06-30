@@ -1,0 +1,68 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro">
+  <xacro:include filename="$(find jaco2_description)/urdf/jaco.urdf.xacro" />
+  <xacro:include filename="$(find nimbus_description)/urdf/structure/arm_simplified.xacro" />
+
+  <!-- Xacro properties -->
+  <xacro:property name="M_PI" value="3.1415926535897931" />
+
+  <xacro:macro name="arm_mount" params="parent *origin">
+    <joint name="${parent}_arm_mount_plate_link_joint" type="fixed">
+      <parent link="${parent}" />
+      <child link="arm_mount_plate_link" />
+      <xacro:insert_block name="origin" />
+    </joint>
+    <link name="arm_mount_plate_link" >
+      <visual>
+        <geometry>
+          <box size="0.2032 0.1524 0.015875"/>
+        </geometry>
+        <origin rpy="0 0 0" xyz="0 0 0.0079375" />
+        <material name="dark-gray">
+          <color rgba="0.2 0.2 0.2 1" />
+        </material>
+      </visual>
+      <collision>
+        <geometry>
+          <box size="0.2032 0.1524 0.015875"/>
+        </geometry>
+        <origin rpy="0 0 0" xyz="0 0 0.0079375" />
+      </collision>
+    </link>
+
+    <joint name="arm_mount_plate_link_arm_mount_beam_link_joint" type="fixed">
+      <parent link="arm_mount_plate_link" />
+      <child link="arm_mount_beam_link" />
+      <origin xyz="0 0 0" rpy="0 0 0" />
+    </joint>
+    <link name="arm_mount_beam_link">
+      <visual>
+        <geometry>
+          <box size="0.0396875 0.0396875 0.0889"/>
+        </geometry>
+        <origin rpy="0 0 0" xyz="0 0 0.04445" />
+        <material name="dark-gray" />
+      </visual>
+      <collision>
+        <geometry>
+          <box size="0.0396875 0.0396875 0.0889"/>
+        </geometry>
+        <origin rpy="0 0 0" xyz="0 0 0.04445" />
+      </collision>
+    </link>
+
+    <xacro:jaco2_arm prefix="jaco_" parent="arm_mount_beam_link">
+      <origin xyz="0 0 0.0508" rpy="0 0 ${pi}" />
+    </xacro:jaco2_arm>
+
+    <xacro:jaco_arm_simplified prefix="jaco_" />
+
+    <joint name="jaco_ee_link_nimbus_ee_link_joint" type="fixed">
+      <parent link="jaco_ee_link" />
+      <child link="nimbus_ee_link" />
+      <origin xyz="0 0 0" rpy="0 ${-pi/2.0} 0" />
+    </joint>
+    <link name="nimbus_ee_link" />
+
+  </xacro:macro>
+</robot>

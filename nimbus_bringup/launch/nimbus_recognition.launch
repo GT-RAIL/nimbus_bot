@@ -1,0 +1,40 @@
+<!--
+   Author: David Kent, Georgia Tech
+  Version: October 9, 2015
+-->
+
+<launch>
+  <!-- Grasp Database Connection Params -->
+  <arg name="port" default="5432" />
+  <arg name="user" default="ros" />
+  <arg name="password" default="$(env GRASPDB_PW)" />
+  <arg name="db" default="graspdb" />
+  <arg name="host" default="127.0.0.1" />
+
+  <!-- Segmentation Params -->
+  <arg name="debug" default="false" />
+
+  <!-- Recognition Params -->
+  <arg name="segmented_objects_topic" default="/rail_segmentation/segmented_objects" />
+
+  <!-- nodes -->
+  <node name="self_filter" pkg="robot_self_filter" type="self_filter" output="screen">
+    <rosparam command="load" file="$(find nimbus_bringup)/config/self_filter/filter_params.yaml" />
+  </node>
+
+  <node name="rail_segmentation" pkg="rail_segmentation" type="rail_segmentation" output="screen">
+    <param name="zones_config" value="$(find nimbus_bringup)/config/segmentation/zones.yaml" />
+    <param name="debug" value="$(arg debug)" />
+    <param name="point_cloud_topic" value="kinect2/qhd/points_self_filtered" />
+  </node>
+
+  <include file="$(find rail_recognition)/launch/object_recognition_listener.launch">
+    <arg name="host" value="$(arg host)" />
+    <arg name="port" value="$(arg port)" />
+    <arg name="user" value="$(arg user)" />
+    <arg name="db" value="$(arg db)" />
+    <arg name="password" value="$(arg password)" />
+    <arg name="debug" value="$(arg debug)" />
+    <arg name="segmented_objects_topic" value="$(arg segmented_objects_topic)" />
+  </include>
+</launch>
