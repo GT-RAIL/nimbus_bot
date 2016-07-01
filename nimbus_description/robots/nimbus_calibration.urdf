@@ -15,6 +15,7 @@
 -->
   <!-- Xacro properties -->
   <!-- Xacro properties -->
+  <!-- Parameterised in part by the values in turtlebot_properties.urdf.xacro -->
   <!-- Xacro properties -->
   <!-- Xacro properties -->
   <link name="table_base_link">
@@ -926,48 +927,10 @@
       </geometry>
     </collision>
   </link>
-  <joint name="sensor_frame_top_beam_link_sensor_frame_camera_strut_link_joint" type="fixed">
+  <joint name="sensor_frame_top_beam_link_sensor_frame_sensor_calibration_link_joint" type="fixed">
     <parent link="sensor_frame_top_beam_link"/>
-    <child link="sensor_frame_camera_strut_link"/>
-    <origin rpy="-0.785398163397 0 0" xyz="-0.0254 0.0254 0.0127"/>
-  </joint>
-  <link name="sensor_frame_camera_strut_link">
-    <visual>
-      <geometry>
-        <box size="0.0508 0.1524 0.0254"/>
-      </geometry>
-      <origin rpy="0 0 0" xyz="0 0.0762 -0.0127"/>
-      <material name="light-gray"/>
-    </visual>
-    <collision>
-      <geometry>
-        <box size="0.0808 0.1824 0.0554"/>
-      </geometry>
-      <origin rpy="0 0 0" xyz="0 0.0762 -0.0127"/>
-    </collision>
-  </link>
-  <joint name="sensor_frame_camera_strut_link_sensor_frame_camera_plate_link_joint" type="fixed">
-    <parent link="sensor_frame_camera_strut_link"/>
-    <child link="sensor_frame_camera_plate_link"/>
-    <origin rpy="0 0 0" xyz="0 0.1016 0.003175"/>
-  </joint>
-  <link name="sensor_frame_camera_plate_link">
-    <visual>
-      <geometry>
-        <box size="0.1016 0.1016 0.00635"/>
-      </geometry>
-      <material name="light-gray"/>
-    </visual>
-    <collision>
-      <geometry>
-        <box size="0.1316 0.1316 0.01905"/>
-      </geometry>
-    </collision>
-  </link>
-  <joint name="sensor_frame_camera_plate_link_sensor_frame_sensor_calibration_link_joint" type="fixed">
-    <parent link="sensor_frame_camera_plate_link"/>
     <child link="sensor_frame_sensor_calibration_link"/>
-    <origin rpy="0 0 0" xyz="0.041275 0.041275 0.003175"/>
+    <origin rpy="0 1.57079632679 1.57079632679" xyz="0.0 0.07 -0.038"/>
   </joint>
   <link name="sensor_frame_sensor_calibration_link"/>
   <joint name="sensor_frame_sensor_calibrate_x" type="prismatic">
@@ -991,8 +954,15 @@
     <limit effort="100" lower="-0.1" upper="0.1" velocity="1"/>
   </joint>
   <link name="sensor_frame_sensor_z_link"/>
-  <joint name="sensor_frame_sensor_calibrate_yaw" type="revolute">
+  <joint name="sensor_frame_sensor_calibrate_pitch" type="revolute">
     <parent link="sensor_frame_sensor_z_link"/>
+    <child link="sensor_frame_sensor_pitch_link"/>
+    <axis xyz="0 1 0"/>
+    <limit effort="100" lower="0.392699081699" upper="-0.392699081699" velocity="20"/>
+  </joint>
+  <link name="sensor_frame_sensor_pitch_link"/>
+  <joint name="sensor_frame_sensor_calibrate_yaw" type="revolute">
+    <parent link="sensor_frame_sensor_pitch_link"/>
     <child link="sensor_frame_sensor_yaw_link"/>
     <axis xyz="0 0 1"/>
     <limit effort="100" lower="0.196349540849" upper="-0.196349540849" velocity="20"/>
@@ -1003,99 +973,90 @@
     <child link="sensor_frame_sensor_link"/>
   </joint>
   <link name="sensor_frame_sensor_link"/>
-  <joint name="sensor_frame_sensor_link_kinect2_mounting_plate_link_joint" type="fixed">
+  <joint name="camera_rgb_joint" type="fixed">
+    <origin rpy="0.0 0.0 0.0" xyz="0.0 0.0 0.0"/>
     <parent link="sensor_frame_sensor_link"/>
-    <child link="kinect2_mounting_plate_link"/>
-    <origin rpy="0 0 -0.018" xyz="0.009 -0.005 -0.011"/>
+    <child link="camera_rgb_frame"/>
   </joint>
-  <link name="kinect2_mounting_plate_link">
+  <link name="camera_rgb_frame"/>
+  <joint name="camera_rgb_optical_joint" type="fixed">
+    <origin rpy="-1.57079632679 0 -1.57079632679" xyz="0 0 0"/>
+    <parent link="camera_rgb_frame"/>
+    <child link="camera_rgb_optical_frame"/>
+  </joint>
+  <link name="camera_rgb_optical_frame"/>
+  <joint name="camera_joint" type="fixed">
+    <origin rpy="0 0 0" xyz="0 -0.022 0"/>
+    <parent link="camera_rgb_frame"/>
+    <child link="camera_link"/>
+  </joint>
+  <link name="camera_link">
     <visual>
+      <origin rpy="0 0 0" xyz="-0.015 0.0035 0.004"/>
       <geometry>
-        <box size="0.1143 0.06985 0.009525"/>
+        <mesh filename="package://nimbus_description/meshes/xtion_pro_camera.dae"/>
       </geometry>
-      <origin rpy="0 0 0" xyz="0 -0.0127 0.0047625"/>
-      <material name="grey">
-        <color rgba="0.2 0.2 0.2 1"/>
-      </material>
     </visual>
     <collision>
+      <origin rpy="0 0 0" xyz="0.0 0.0 0.0"/>
       <geometry>
-        <box size="0.1143 0.06985 0.009525"/>
-      </geometry>
-      <origin rpy="0 0 0" xyz="0 -0.0127 0.0047625"/>
-    </collision>
-  </link>
-  <joint name="kinect2_mounting_plate_link_kinect2_mic_bar_link_joint" type="fixed">
-    <parent link="kinect2_mounting_plate_link"/>
-    <child link="kinect2_mic_bar_link"/>
-    <origin rpy="0 0 0" xyz="0 0.0254 0.00873125"/>
-  </joint>
-  <link name="kinect2_mic_bar_link">
-    <visual>
-      <geometry>
-        <box size="0.250825 0.015875 0.0174625"/>
-      </geometry>
-      <material name="grey"/>
-    </visual>
-    <collision>
-      <geometry>
-        <box size="0.310825 0.075875 0.0774625"/>
+        <box size="0.0730 0.2760 0.0720"/>
       </geometry>
     </collision>
+    <inertial>
+      <mass value="0.170"/>
+      <origin xyz="0 0 0"/>
+      <inertia ixx="0.001152600" ixy="0.0" ixz="0.0" iyy="0.000148934" iyz="0.0" izz="0.001154654"/>
+    </inertial>
   </link>
-  <joint name="kinect2_mic_bar_link_kinect2_tilt_base_link_joint" type="fixed">
-    <parent link="kinect2_mic_bar_link"/>
-    <child link="kinect2_tilt_base_link"/>
-    <origin rpy="0 0 0" xyz="0 -0.003571875 0.01825625"/>
+  <joint name="camera_depth_joint" type="fixed">
+    <origin rpy="0 0 0" xyz="0 0.027 0"/>
+    <parent link="camera_rgb_frame"/>
+    <child link="camera_depth_frame"/>
   </joint>
-  <link name="kinect2_tilt_base_link" type="fixed">
-    <visual>
-      <geometry>
-        <box size="0.1143 0.00714375 0.009525"/>
-      </geometry>
-      <origin xyz="0 0 -0.0047625"/>
-      <material name="grey"/>
-    </visual>
-    <collision>
-      <geometry>
-        <box size="0.1143 0.00714375 0.009525"/>
-      </geometry>
-      <origin xyz="0 0 0.0047625"/>
-    </collision>
-  </link>
-  <joint name="kinect2_tilt_base_link_kinect2_tilt_link_joint" type="revolute">
-    <parent link="kinect2_tilt_base_link"/>
-    <child link="kinect2_tilt_link"/>
-    <origin rpy="0 0 0" xyz="0 0 0"/>
-    <axis xyz="1 0 0"/>
-    <limit effort="100" lower="0.785398163397" upper="-0.785398163397" velocity="20"/>
+  <link name="camera_depth_frame"/>
+  <joint name="camera_depth_optical_joint" type="fixed">
+    <origin rpy="-1.57079632679 0 -1.57079632679" xyz="0 0 0"/>
+    <parent link="camera_depth_frame"/>
+    <child link="camera_depth_optical_frame"/>
   </joint>
-  <link name="kinect2_tilt_link"/>
-  <joint name="kinect2_tilt_link_kinect2_structure_link_joint" type="fixed">
-    <parent link="kinect2_tilt_link"/>
-    <child link="kinect2_structure_link"/>
-    <origin rpy="0 0 0" xyz="0.0968375 0 0.022225"/>
-  </joint>
-  <link name="kinect2_structure_link">
-    <visual>
-      <geometry>
-        <box size="0.250825 0.06985 0.04445"/>
-      </geometry>
-      <origin xyz="-0.0968375 -0.02778125 0"/>
-      <material name="grey"/>
-    </visual>
-    <collision>
-      <geometry>
-        <box size="0.310825 0.12985 0.10445"/>
-      </geometry>
-      <origin xyz="-0.0968375 -0.02778125 0"/>
-    </collision>
-  </link>
-  <joint name="kinect2_structure_link_kinect2_link_joint" type="fixed">
-    <parent link="kinect2_structure_link"/>
-    <child link="kinect2_link"/>
-    <origin rpy="-1.57079632679 0 0" xyz="0 0 0"/>
-  </joint>
-  <link name="kinect2_link"/>
+  <link name="camera_depth_optical_frame"/>
+  <!-- RGBD sensor for simulation, same as Kinect -->
+  <gazebo reference="camera_link">
+    <sensor name="camera" type="depth">
+      <always_on>true</always_on>
+      <update_rate>20.0</update_rate>
+      <camera>
+        <horizontal_fov>1.0471975512</horizontal_fov>
+        <image>
+          <format>R8G8B8</format>
+          <width>640</width>
+          <height>480</height>
+        </image>
+        <clip>
+          <near>0.05</near>
+          <far>8.0</far>
+        </clip>
+      </camera>
+      <plugin filename="libgazebo_ros_openni_kinect.so" name="kinect_camera_controller">
+        <cameraName>camera</cameraName>
+        <alwaysOn>true</alwaysOn>
+        <updateRate>10</updateRate>
+        <imageTopicName>rgb/image_raw</imageTopicName>
+        <depthImageTopicName>depth/image_raw</depthImageTopicName>
+        <pointCloudTopicName>depth/points</pointCloudTopicName>
+        <cameraInfoTopicName>rgb/camera_info</cameraInfoTopicName>
+        <depthImageCameraInfoTopicName>depth/camera_info</depthImageCameraInfoTopicName>
+        <frameName>camera_depth_optical_frame</frameName>
+        <baseline>0.1</baseline>
+        <distortion_k1>0.0</distortion_k1>
+        <distortion_k2>0.0</distortion_k2>
+        <distortion_k3>0.0</distortion_k3>
+        <distortion_t1>0.0</distortion_t1>
+        <distortion_t2>0.0</distortion_t2>
+        <pointCloudCutoff>0.4</pointCloudCutoff>
+      </plugin>
+    </sensor>
+  </gazebo>
 </robot>
 

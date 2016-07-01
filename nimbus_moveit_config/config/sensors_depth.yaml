@@ -1,6 +1,6 @@
 sensors:
   - sensor_plugin: occupancy_map_monitor/DepthImageOctomapUpdater
-    image_topic: /kinect2/qhd/image_depth_rect
+    image_topic: /camera/depth_registered/image
     queue_size: 5
     near_clipping_plane_distance: 0.5
     far_clipping_plane_distance: 4.5

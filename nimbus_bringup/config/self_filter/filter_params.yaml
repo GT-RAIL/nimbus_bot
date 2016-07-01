@@ -1,4 +1,4 @@
-sensor_frame: 'kinect2_rgb_optical_frame'
+sensor_frame: 'camera_rgb_optical_frame'
 use_rgb: true
 max_queue_size: 1
 keep_organized: true

@@ -7,9 +7,10 @@
 <launch>
   <!-- Kinect v2 -->
   <arg name="fps_limit" default="-1.0" />
-  <include file="$(find kinect2_bridge)/launch/kinect2_bridge.launch">
-    <arg name="publish_tf" value="true" />
-    <arg name="calib_path" value="$(find nimbus_bringup)/config/camera_info/" />
-    <arg name="fps_limit" value="$(arg fps_limit)" />
+  <include file="$(find openni_launch)/launch/openni.launch">
+    <arg name="depth_registration" value="true" />
+    <arg name="publish_tf" value="false" />
+    <arg name="rgb_camera_info_url" value="file://$(find nimbus_bringup)/config/camera_info/rgb_1411060937.yaml" />
+    <arg name="depth_camera_info_url" value="file://$(find nimbus_bringup)/config/camera_info/depth_1411060937.yaml" />
   </include>
 </launch>

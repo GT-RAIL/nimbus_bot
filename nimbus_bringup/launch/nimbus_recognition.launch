@@ -25,7 +25,7 @@
   <node name="rail_segmentation" pkg="rail_segmentation" type="rail_segmentation" output="screen">
     <param name="zones_config" value="$(find nimbus_bringup)/config/segmentation/zones.yaml" />
     <param name="debug" value="$(arg debug)" />
-    <param name="point_cloud_topic" value="kinect2/qhd/points_self_filtered" />
+    <param name="point_cloud_topic" value="camera/depth_registered/points" />
   </node>
 
   <include file="$(find rail_recognition)/launch/object_recognition_listener.launch">

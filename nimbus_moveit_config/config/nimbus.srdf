@@ -61,6 +61,7 @@
     <end_effector name="jaco_eef" parent_link="jaco_wrist_3_link" group="gripper" />
     <!--DISABLE COLLISIONS: By default it is assumed that any link of the robot could potentially come into collision with any other link in the robot. This tag disables collision checking between a specified pair of links. -->
     <disable_collisions link1="arm_mount_beam_link" link2="arm_mount_plate_link" reason="Adjacent" />
+    <disable_collisions link1="arm_mount_beam_link" link2="camera_link" reason="Never" />
     <disable_collisions link1="arm_mount_beam_link" link2="jaco_base_link" reason="Adjacent" />
     <disable_collisions link1="arm_mount_beam_link" link2="jaco_base_link_simplified" reason="Default" />
     <disable_collisions link1="arm_mount_beam_link" link2="jaco_forearm_link" reason="Never" />
@@ -71,12 +72,6 @@
     <disable_collisions link1="arm_mount_beam_link" link2="jaco_wrist_1_link_simplified" reason="User" />
     <disable_collisions link1="arm_mount_beam_link" link2="jaco_wrist_2_link_simplified" reason="User" />
     <disable_collisions link1="arm_mount_beam_link" link2="jaco_wrist_3_link_simplified" reason="User" />
-    <disable_collisions link1="arm_mount_beam_link" link2="kinect2_mic_bar_link" reason="Never" />
-    <disable_collisions link1="arm_mount_beam_link" link2="kinect2_mounting_plate_link" reason="Never" />
-    <disable_collisions link1="arm_mount_beam_link" link2="kinect2_structure_link" reason="Never" />
-    <disable_collisions link1="arm_mount_beam_link" link2="kinect2_tilt_base_link" reason="Never" />
-    <disable_collisions link1="arm_mount_beam_link" link2="sensor_frame_camera_plate_link" reason="Never" />
-    <disable_collisions link1="arm_mount_beam_link" link2="sensor_frame_camera_strut_link" reason="Never" />
     <disable_collisions link1="arm_mount_beam_link" link2="sensor_frame_left_bracket_left_foot_link" reason="Never" />
     <disable_collisions link1="arm_mount_beam_link" link2="sensor_frame_left_bracket_left_side_link" reason="Never" />
     <disable_collisions link1="arm_mount_beam_link" link2="sensor_frame_left_bracket_right_foot_link" reason="Never" />
@@ -88,6 +83,7 @@
     <disable_collisions link1="arm_mount_beam_link" link2="sensor_frame_right_bracket_right_side_link" reason="Never" />
     <disable_collisions link1="arm_mount_beam_link" link2="sensor_frame_right_strut_link" reason="Never" />
     <disable_collisions link1="arm_mount_beam_link" link2="sensor_frame_top_beam_link" reason="Never" />
+    <disable_collisions link1="arm_mount_plate_link" link2="camera_link" reason="Never" />
     <disable_collisions link1="arm_mount_plate_link" link2="jaco_base_link" reason="Never" />
     <disable_collisions link1="arm_mount_plate_link" link2="jaco_base_link_simplified" reason="Never" />
     <disable_collisions link1="arm_mount_plate_link" link2="jaco_forearm_link_simplified" reason="User" />
@@ -97,12 +93,6 @@
     <disable_collisions link1="arm_mount_plate_link" link2="jaco_wrist_1_link_simplified" reason="User" />
     <disable_collisions link1="arm_mount_plate_link" link2="jaco_wrist_2_link_simplified" reason="User" />
     <disable_collisions link1="arm_mount_plate_link" link2="jaco_wrist_3_link_simplified" reason="User" />
-    <disable_collisions link1="arm_mount_plate_link" link2="kinect2_mic_bar_link" reason="Never" />
-    <disable_collisions link1="arm_mount_plate_link" link2="kinect2_mounting_plate_link" reason="Never" />
-    <disable_collisions link1="arm_mount_plate_link" link2="kinect2_structure_link" reason="Never" />
-    <disable_collisions link1="arm_mount_plate_link" link2="kinect2_tilt_base_link" reason="Never" />
-    <disable_collisions link1="arm_mount_plate_link" link2="sensor_frame_camera_plate_link" reason="Never" />
-    <disable_collisions link1="arm_mount_plate_link" link2="sensor_frame_camera_strut_link" reason="Never" />
     <disable_collisions link1="arm_mount_plate_link" link2="sensor_frame_left_bracket_left_foot_link" reason="Never" />
     <disable_collisions link1="arm_mount_plate_link" link2="sensor_frame_left_bracket_left_side_link" reason="Never" />
     <disable_collisions link1="arm_mount_plate_link" link2="sensor_frame_left_bracket_right_foot_link" reason="Never" />
@@ -114,6 +104,29 @@
     <disable_collisions link1="arm_mount_plate_link" link2="sensor_frame_right_bracket_right_side_link" reason="Never" />
     <disable_collisions link1="arm_mount_plate_link" link2="sensor_frame_right_strut_link" reason="Adjacent" />
     <disable_collisions link1="arm_mount_plate_link" link2="sensor_frame_top_beam_link" reason="Adjacent" />
+    <disable_collisions link1="camera_link" link2="jaco_base_link" reason="Never" />
+    <disable_collisions link1="camera_link" link2="jaco_base_link_simplified" reason="Never" />
+    <disable_collisions link1="camera_link" link2="jaco_forearm_link" reason="Never" />
+    <disable_collisions link1="camera_link" link2="jaco_forearm_link_simplified" reason="Never" />
+    <disable_collisions link1="camera_link" link2="jaco_shoulder_link" reason="Never" />
+    <disable_collisions link1="camera_link" link2="jaco_upper_arm_link" reason="Never" />
+    <disable_collisions link1="camera_link" link2="jaco_upper_arm_link_simplified" reason="Never" />
+    <disable_collisions link1="camera_link" link2="jaco_wrist_1_link" reason="Never" />
+    <disable_collisions link1="camera_link" link2="jaco_wrist_1_link_simplified" reason="Never" />
+    <disable_collisions link1="camera_link" link2="jaco_wrist_2_link" reason="Never" />
+    <disable_collisions link1="camera_link" link2="jaco_wrist_2_link_simplified" reason="Never" />
+    <disable_collisions link1="camera_link" link2="jaco_wrist_3_link_simplified" reason="Default" />
+    <disable_collisions link1="camera_link" link2="sensor_frame_left_bracket_left_foot_link" reason="Never" />
+    <disable_collisions link1="camera_link" link2="sensor_frame_left_bracket_left_side_link" reason="Never" />
+    <disable_collisions link1="camera_link" link2="sensor_frame_left_bracket_right_foot_link" reason="Never" />
+    <disable_collisions link1="camera_link" link2="sensor_frame_left_bracket_right_side_link" reason="Never" />
+    <disable_collisions link1="camera_link" link2="sensor_frame_left_strut_link" reason="Never" />
+    <disable_collisions link1="camera_link" link2="sensor_frame_right_bracket_left_foot_link" reason="Never" />
+    <disable_collisions link1="camera_link" link2="sensor_frame_right_bracket_left_side_link" reason="Never" />
+    <disable_collisions link1="camera_link" link2="sensor_frame_right_bracket_right_foot_link" reason="Never" />
+    <disable_collisions link1="camera_link" link2="sensor_frame_right_bracket_right_side_link" reason="Never" />
+    <disable_collisions link1="camera_link" link2="sensor_frame_right_strut_link" reason="Never" />
+    <disable_collisions link1="camera_link" link2="sensor_frame_top_beam_link" reason="Adjacent" />
     <disable_collisions link1="jaco_base_link" link2="jaco_base_link_simplified" reason="Adjacent" />
     <disable_collisions link1="jaco_base_link" link2="jaco_forearm_link" reason="Never" />
     <disable_collisions link1="jaco_base_link" link2="jaco_forearm_link_simplified" reason="Never" />
@@ -123,12 +136,6 @@
     <disable_collisions link1="jaco_base_link" link2="jaco_wrist_1_link_simplified" reason="User" />
     <disable_collisions link1="jaco_base_link" link2="jaco_wrist_2_link_simplified" reason="User" />
     <disable_collisions link1="jaco_base_link" link2="jaco_wrist_3_link_simplified" reason="User" />
-    <disable_collisions link1="jaco_base_link" link2="kinect2_mic_bar_link" reason="Never" />
-    <disable_collisions link1="jaco_base_link" link2="kinect2_mounting_plate_link" reason="Never" />
-    <disable_collisions link1="jaco_base_link" link2="kinect2_structure_link" reason="Never" />
-    <disable_collisions link1="jaco_base_link" link2="kinect2_tilt_base_link" reason="Never" />
-    <disable_collisions link1="jaco_base_link" link2="sensor_frame_camera_plate_link" reason="Never" />
-    <disable_collisions link1="jaco_base_link" link2="sensor_frame_camera_strut_link" reason="Never" />
     <disable_collisions link1="jaco_base_link" link2="sensor_frame_left_bracket_left_foot_link" reason="Never" />
     <disable_collisions link1="jaco_base_link" link2="sensor_frame_left_bracket_left_side_link" reason="Never" />
     <disable_collisions link1="jaco_base_link" link2="sensor_frame_left_bracket_right_foot_link" reason="Never" />
@@ -151,10 +158,6 @@
     <disable_collisions link1="jaco_base_link_simplified" link2="jaco_wrist_2_link_simplified" reason="User" />
     <disable_collisions link1="jaco_base_link_simplified" link2="jaco_wrist_3_link" reason="User" />
     <disable_collisions link1="jaco_base_link_simplified" link2="jaco_wrist_3_link_simplified" reason="User" />
-    <disable_collisions link1="jaco_base_link_simplified" link2="kinect2_mic_bar_link" reason="Never" />
-    <disable_collisions link1="jaco_base_link_simplified" link2="kinect2_mounting_plate_link" reason="Never" />
-    <disable_collisions link1="jaco_base_link_simplified" link2="kinect2_structure_link" reason="Never" />
-    <disable_collisions link1="jaco_base_link_simplified" link2="kinect2_tilt_base_link" reason="Never" />
     <disable_collisions link1="jaco_base_link_simplified" link2="robotiq_85_base_link" reason="User" />
     <disable_collisions link1="jaco_base_link_simplified" link2="robotiq_85_left_finger_link" reason="User" />
     <disable_collisions link1="jaco_base_link_simplified" link2="robotiq_85_left_finger_tip_link" reason="User" />
@@ -164,8 +167,6 @@
     <disable_collisions link1="jaco_base_link_simplified" link2="robotiq_85_right_finger_tip_link" reason="User" />
     <disable_collisions link1="jaco_base_link_simplified" link2="robotiq_85_right_inner_knuckle_link" reason="User" />
     <disable_collisions link1="jaco_base_link_simplified" link2="robotiq_85_right_knuckle_link" reason="User" />
-    <disable_collisions link1="jaco_base_link_simplified" link2="sensor_frame_camera_plate_link" reason="Never" />
-    <disable_collisions link1="jaco_base_link_simplified" link2="sensor_frame_camera_strut_link" reason="Never" />
     <disable_collisions link1="jaco_base_link_simplified" link2="sensor_frame_left_bracket_left_foot_link" reason="Never" />
     <disable_collisions link1="jaco_base_link_simplified" link2="sensor_frame_left_bracket_left_side_link" reason="Never" />
     <disable_collisions link1="jaco_base_link_simplified" link2="sensor_frame_left_bracket_right_foot_link" reason="Never" />
@@ -187,10 +188,6 @@
     <disable_collisions link1="jaco_forearm_link" link2="jaco_wrist_2_link_simplified" reason="Never" />
     <disable_collisions link1="jaco_forearm_link" link2="jaco_wrist_3_link" reason="Never" />
     <disable_collisions link1="jaco_forearm_link" link2="jaco_wrist_3_link_simplified" reason="Never" />
-    <disable_collisions link1="jaco_forearm_link" link2="kinect2_mic_bar_link" reason="Never" />
-    <disable_collisions link1="jaco_forearm_link" link2="kinect2_mounting_plate_link" reason="Never" />
-    <disable_collisions link1="jaco_forearm_link" link2="kinect2_structure_link" reason="Never" />
-    <disable_collisions link1="jaco_forearm_link" link2="kinect2_tilt_base_link" reason="Never" />
     <disable_collisions link1="jaco_forearm_link" link2="robotiq_85_base_link" reason="Never" />
     <disable_collisions link1="jaco_forearm_link" link2="robotiq_85_left_finger_link" reason="Never" />
     <disable_collisions link1="jaco_forearm_link" link2="robotiq_85_left_finger_tip_link" reason="Never" />
@@ -200,8 +197,6 @@
     <disable_collisions link1="jaco_forearm_link" link2="robotiq_85_right_finger_tip_link" reason="Never" />
     <disable_collisions link1="jaco_forearm_link" link2="robotiq_85_right_inner_knuckle_link" reason="Never" />
     <disable_collisions link1="jaco_forearm_link" link2="robotiq_85_right_knuckle_link" reason="Never" />
-    <disable_collisions link1="jaco_forearm_link" link2="sensor_frame_camera_plate_link" reason="Never" />
-    <disable_collisions link1="jaco_forearm_link" link2="sensor_frame_camera_strut_link" reason="Never" />
     <disable_collisions link1="jaco_forearm_link" link2="sensor_frame_left_bracket_left_foot_link" reason="Never" />
     <disable_collisions link1="jaco_forearm_link" link2="sensor_frame_left_bracket_left_side_link" reason="Never" />
     <disable_collisions link1="jaco_forearm_link" link2="sensor_frame_left_bracket_right_foot_link" reason="Never" />
@@ -222,10 +217,6 @@
     <disable_collisions link1="jaco_forearm_link_simplified" link2="jaco_wrist_2_link_simplified" reason="Never" />
     <disable_collisions link1="jaco_forearm_link_simplified" link2="jaco_wrist_3_link" reason="Never" />
     <disable_collisions link1="jaco_forearm_link_simplified" link2="jaco_wrist_3_link_simplified" reason="User" />
-    <disable_collisions link1="jaco_forearm_link_simplified" link2="kinect2_mic_bar_link" reason="Never" />
-    <disable_collisions link1="jaco_forearm_link_simplified" link2="kinect2_mounting_plate_link" reason="Never" />
-    <disable_collisions link1="jaco_forearm_link_simplified" link2="kinect2_structure_link" reason="Never" />
-    <disable_collisions link1="jaco_forearm_link_simplified" link2="kinect2_tilt_base_link" reason="Never" />
     <disable_collisions link1="jaco_forearm_link_simplified" link2="robotiq_85_base_link" reason="Never" />
     <disable_collisions link1="jaco_forearm_link_simplified" link2="robotiq_85_left_finger_link" reason="Never" />
     <disable_collisions link1="jaco_forearm_link_simplified" link2="robotiq_85_left_finger_tip_link" reason="Never" />
@@ -235,8 +226,6 @@
     <disable_collisions link1="jaco_forearm_link_simplified" link2="robotiq_85_right_finger_tip_link" reason="Never" />
     <disable_collisions link1="jaco_forearm_link_simplified" link2="robotiq_85_right_inner_knuckle_link" reason="Never" />
     <disable_collisions link1="jaco_forearm_link_simplified" link2="robotiq_85_right_knuckle_link" reason="Never" />
-    <disable_collisions link1="jaco_forearm_link_simplified" link2="sensor_frame_camera_plate_link" reason="Never" />
-    <disable_collisions link1="jaco_forearm_link_simplified" link2="sensor_frame_camera_strut_link" reason="Never" />
     <disable_collisions link1="jaco_forearm_link_simplified" link2="sensor_frame_left_bracket_left_foot_link" reason="Never" />
     <disable_collisions link1="jaco_forearm_link_simplified" link2="sensor_frame_left_bracket_left_side_link" reason="Never" />
     <disable_collisions link1="jaco_forearm_link_simplified" link2="sensor_frame_left_bracket_right_foot_link" reason="Never" />
@@ -254,12 +243,6 @@
     <disable_collisions link1="jaco_shoulder_link" link2="jaco_wrist_1_link_simplified" reason="Never" />
     <disable_collisions link1="jaco_shoulder_link" link2="jaco_wrist_2_link_simplified" reason="User" />
     <disable_collisions link1="jaco_shoulder_link" link2="jaco_wrist_3_link_simplified" reason="User" />
-    <disable_collisions link1="jaco_shoulder_link" link2="kinect2_mic_bar_link" reason="Never" />
-    <disable_collisions link1="jaco_shoulder_link" link2="kinect2_mounting_plate_link" reason="Never" />
-    <disable_collisions link1="jaco_shoulder_link" link2="kinect2_structure_link" reason="Never" />
-    <disable_collisions link1="jaco_shoulder_link" link2="kinect2_tilt_base_link" reason="Never" />
-    <disable_collisions link1="jaco_shoulder_link" link2="sensor_frame_camera_plate_link" reason="Never" />
-    <disable_collisions link1="jaco_shoulder_link" link2="sensor_frame_camera_strut_link" reason="Never" />
     <disable_collisions link1="jaco_shoulder_link" link2="sensor_frame_left_bracket_left_foot_link" reason="Never" />
     <disable_collisions link1="jaco_shoulder_link" link2="sensor_frame_left_bracket_left_side_link" reason="Never" />
     <disable_collisions link1="jaco_shoulder_link" link2="sensor_frame_left_bracket_right_foot_link" reason="Never" />
@@ -276,12 +259,6 @@
     <disable_collisions link1="jaco_upper_arm_link" link2="jaco_wrist_1_link_simplified" reason="User" />
     <disable_collisions link1="jaco_upper_arm_link" link2="jaco_wrist_2_link_simplified" reason="User" />
     <disable_collisions link1="jaco_upper_arm_link" link2="jaco_wrist_3_link_simplified" reason="User" />
-    <disable_collisions link1="jaco_upper_arm_link" link2="kinect2_mic_bar_link" reason="Never" />
-    <disable_collisions link1="jaco_upper_arm_link" link2="kinect2_mounting_plate_link" reason="Never" />
-    <disable_collisions link1="jaco_upper_arm_link" link2="kinect2_structure_link" reason="Never" />
-    <disable_collisions link1="jaco_upper_arm_link" link2="kinect2_tilt_base_link" reason="Never" />
-    <disable_collisions link1="jaco_upper_arm_link" link2="sensor_frame_camera_plate_link" reason="Never" />
-    <disable_collisions link1="jaco_upper_arm_link" link2="sensor_frame_camera_strut_link" reason="Never" />
     <disable_collisions link1="jaco_upper_arm_link" link2="sensor_frame_left_bracket_left_foot_link" reason="Never" />
     <disable_collisions link1="jaco_upper_arm_link" link2="sensor_frame_left_bracket_left_side_link" reason="Never" />
     <disable_collisions link1="jaco_upper_arm_link" link2="sensor_frame_left_bracket_right_foot_link" reason="Never" />
@@ -299,10 +276,6 @@
     <disable_collisions link1="jaco_upper_arm_link_simplified" link2="jaco_wrist_2_link_simplified" reason="User" />
     <disable_collisions link1="jaco_upper_arm_link_simplified" link2="jaco_wrist_3_link" reason="User" />
     <disable_collisions link1="jaco_upper_arm_link_simplified" link2="jaco_wrist_3_link_simplified" reason="User" />
-    <disable_collisions link1="jaco_upper_arm_link_simplified" link2="kinect2_mic_bar_link" reason="Never" />
-    <disable_collisions link1="jaco_upper_arm_link_simplified" link2="kinect2_mounting_plate_link" reason="Never" />
-    <disable_collisions link1="jaco_upper_arm_link_simplified" link2="kinect2_structure_link" reason="Never" />
-    <disable_collisions link1="jaco_upper_arm_link_simplified" link2="kinect2_tilt_base_link" reason="Never" />
     <disable_collisions link1="jaco_upper_arm_link_simplified" link2="robotiq_85_base_link" reason="User" />
     <disable_collisions link1="jaco_upper_arm_link_simplified" link2="robotiq_85_left_finger_link" reason="User" />
     <disable_collisions link1="jaco_upper_arm_link_simplified" link2="robotiq_85_left_finger_tip_link" reason="User" />
@@ -312,8 +285,6 @@
     <disable_collisions link1="jaco_upper_arm_link_simplified" link2="robotiq_85_right_finger_tip_link" reason="User" />
     <disable_collisions link1="jaco_upper_arm_link_simplified" link2="robotiq_85_right_inner_knuckle_link" reason="User" />
     <disable_collisions link1="jaco_upper_arm_link_simplified" link2="robotiq_85_right_knuckle_link" reason="User" />
-    <disable_collisions link1="jaco_upper_arm_link_simplified" link2="sensor_frame_camera_plate_link" reason="Never" />
-    <disable_collisions link1="jaco_upper_arm_link_simplified" link2="sensor_frame_camera_strut_link" reason="Never" />
     <disable_collisions link1="jaco_upper_arm_link_simplified" link2="sensor_frame_left_bracket_left_foot_link" reason="Never" />
     <disable_collisions link1="jaco_upper_arm_link_simplified" link2="sensor_frame_left_bracket_left_side_link" reason="Never" />
     <disable_collisions link1="jaco_upper_arm_link_simplified" link2="sensor_frame_left_bracket_right_foot_link" reason="Never" />
@@ -330,10 +301,6 @@
     <disable_collisions link1="jaco_wrist_1_link" link2="jaco_wrist_2_link_simplified" reason="Default" />
     <disable_collisions link1="jaco_wrist_1_link" link2="jaco_wrist_3_link" reason="Never" />
     <disable_collisions link1="jaco_wrist_1_link" link2="jaco_wrist_3_link_simplified" reason="Never" />
-    <disable_collisions link1="jaco_wrist_1_link" link2="kinect2_mic_bar_link" reason="Never" />
-    <disable_collisions link1="jaco_wrist_1_link" link2="kinect2_mounting_plate_link" reason="Never" />
-    <disable_collisions link1="jaco_wrist_1_link" link2="kinect2_structure_link" reason="Never" />
-    <disable_collisions link1="jaco_wrist_1_link" link2="kinect2_tilt_base_link" reason="Never" />
     <disable_collisions link1="jaco_wrist_1_link" link2="robotiq_85_base_link" reason="Never" />
     <disable_collisions link1="jaco_wrist_1_link" link2="robotiq_85_left_finger_link" reason="Never" />
     <disable_collisions link1="jaco_wrist_1_link" link2="robotiq_85_left_finger_tip_link" reason="Never" />
@@ -343,8 +310,6 @@
     <disable_collisions link1="jaco_wrist_1_link" link2="robotiq_85_right_finger_tip_link" reason="Never" />
     <disable_collisions link1="jaco_wrist_1_link" link2="robotiq_85_right_inner_knuckle_link" reason="Never" />
     <disable_collisions link1="jaco_wrist_1_link" link2="robotiq_85_right_knuckle_link" reason="Never" />
-    <disable_collisions link1="jaco_wrist_1_link" link2="sensor_frame_camera_plate_link" reason="Never" />
-    <disable_collisions link1="jaco_wrist_1_link" link2="sensor_frame_camera_strut_link" reason="Never" />
     <disable_collisions link1="jaco_wrist_1_link" link2="sensor_frame_left_bracket_left_foot_link" reason="Never" />
     <disable_collisions link1="jaco_wrist_1_link" link2="sensor_frame_left_bracket_left_side_link" reason="Never" />
     <disable_collisions link1="jaco_wrist_1_link" link2="sensor_frame_left_bracket_right_foot_link" reason="Never" />
@@ -360,10 +325,6 @@
     <disable_collisions link1="jaco_wrist_1_link_simplified" link2="jaco_wrist_2_link_simplified" reason="Default" />
     <disable_collisions link1="jaco_wrist_1_link_simplified" link2="jaco_wrist_3_link" reason="Never" />
     <disable_collisions link1="jaco_wrist_1_link_simplified" link2="jaco_wrist_3_link_simplified" reason="User" />
-    <disable_collisions link1="jaco_wrist_1_link_simplified" link2="kinect2_mic_bar_link" reason="Never" />
-    <disable_collisions link1="jaco_wrist_1_link_simplified" link2="kinect2_mounting_plate_link" reason="Never" />
-    <disable_collisions link1="jaco_wrist_1_link_simplified" link2="kinect2_structure_link" reason="Never" />
-    <disable_collisions link1="jaco_wrist_1_link_simplified" link2="kinect2_tilt_base_link" reason="Never" />
     <disable_collisions link1="jaco_wrist_1_link_simplified" link2="robotiq_85_base_link" reason="Never" />
     <disable_collisions link1="jaco_wrist_1_link_simplified" link2="robotiq_85_left_finger_link" reason="Never" />
     <disable_collisions link1="jaco_wrist_1_link_simplified" link2="robotiq_85_left_finger_tip_link" reason="Never" />
@@ -373,8 +334,6 @@
     <disable_collisions link1="jaco_wrist_1_link_simplified" link2="robotiq_85_right_finger_tip_link" reason="Never" />
     <disable_collisions link1="jaco_wrist_1_link_simplified" link2="robotiq_85_right_inner_knuckle_link" reason="Never" />
     <disable_collisions link1="jaco_wrist_1_link_simplified" link2="robotiq_85_right_knuckle_link" reason="Never" />
-    <disable_collisions link1="jaco_wrist_1_link_simplified" link2="sensor_frame_camera_plate_link" reason="Never" />
-    <disable_collisions link1="jaco_wrist_1_link_simplified" link2="sensor_frame_camera_strut_link" reason="Never" />
     <disable_collisions link1="jaco_wrist_1_link_simplified" link2="sensor_frame_left_bracket_left_foot_link" reason="Never" />
     <disable_collisions link1="jaco_wrist_1_link_simplified" link2="sensor_frame_left_bracket_left_side_link" reason="Never" />
     <disable_collisions link1="jaco_wrist_1_link_simplified" link2="sensor_frame_left_bracket_right_foot_link" reason="Never" />
@@ -389,10 +348,6 @@
     <disable_collisions link1="jaco_wrist_2_link" link2="jaco_wrist_2_link_simplified" reason="Adjacent" />
     <disable_collisions link1="jaco_wrist_2_link" link2="jaco_wrist_3_link" reason="Adjacent" />
     <disable_collisions link1="jaco_wrist_2_link" link2="jaco_wrist_3_link_simplified" reason="Default" />
-    <disable_collisions link1="jaco_wrist_2_link" link2="kinect2_mic_bar_link" reason="Never" />
-    <disable_collisions link1="jaco_wrist_2_link" link2="kinect2_mounting_plate_link" reason="Never" />
-    <disable_collisions link1="jaco_wrist_2_link" link2="kinect2_structure_link" reason="Never" />
-    <disable_collisions link1="jaco_wrist_2_link" link2="kinect2_tilt_base_link" reason="Never" />
     <disable_collisions link1="jaco_wrist_2_link" link2="robotiq_85_base_link" reason="Never" />
     <disable_collisions link1="jaco_wrist_2_link" link2="robotiq_85_left_finger_link" reason="Never" />
     <disable_collisions link1="jaco_wrist_2_link" link2="robotiq_85_left_finger_tip_link" reason="Never" />
@@ -402,8 +357,6 @@
     <disable_collisions link1="jaco_wrist_2_link" link2="robotiq_85_right_finger_tip_link" reason="Never" />
     <disable_collisions link1="jaco_wrist_2_link" link2="robotiq_85_right_inner_knuckle_link" reason="Never" />
     <disable_collisions link1="jaco_wrist_2_link" link2="robotiq_85_right_knuckle_link" reason="Never" />
-    <disable_collisions link1="jaco_wrist_2_link" link2="sensor_frame_camera_plate_link" reason="Never" />
-    <disable_collisions link1="jaco_wrist_2_link" link2="sensor_frame_camera_strut_link" reason="Never" />
     <disable_collisions link1="jaco_wrist_2_link" link2="sensor_frame_left_bracket_left_foot_link" reason="Never" />
     <disable_collisions link1="jaco_wrist_2_link" link2="sensor_frame_left_bracket_left_side_link" reason="Never" />
     <disable_collisions link1="jaco_wrist_2_link" link2="sensor_frame_left_bracket_right_foot_link" reason="Never" />
@@ -417,10 +370,6 @@
     <disable_collisions link1="jaco_wrist_2_link" link2="sensor_frame_top_beam_link" reason="Never" />
     <disable_collisions link1="jaco_wrist_2_link_simplified" link2="jaco_wrist_3_link" reason="Default" />
     <disable_collisions link1="jaco_wrist_2_link_simplified" link2="jaco_wrist_3_link_simplified" reason="Default" />
-    <disable_collisions link1="jaco_wrist_2_link_simplified" link2="kinect2_mic_bar_link" reason="User" />
-    <disable_collisions link1="jaco_wrist_2_link_simplified" link2="kinect2_mounting_plate_link" reason="Never" />
-    <disable_collisions link1="jaco_wrist_2_link_simplified" link2="kinect2_structure_link" reason="Never" />
-    <disable_collisions link1="jaco_wrist_2_link_simplified" link2="kinect2_tilt_base_link" reason="Never" />
     <disable_collisions link1="jaco_wrist_2_link_simplified" link2="robotiq_85_base_link" reason="Never" />
     <disable_collisions link1="jaco_wrist_2_link_simplified" link2="robotiq_85_left_finger_link" reason="Never" />
     <disable_collisions link1="jaco_wrist_2_link_simplified" link2="robotiq_85_left_finger_tip_link" reason="Never" />
@@ -430,8 +379,6 @@
     <disable_collisions link1="jaco_wrist_2_link_simplified" link2="robotiq_85_right_finger_tip_link" reason="Never" />
     <disable_collisions link1="jaco_wrist_2_link_simplified" link2="robotiq_85_right_inner_knuckle_link" reason="Never" />
     <disable_collisions link1="jaco_wrist_2_link_simplified" link2="robotiq_85_right_knuckle_link" reason="Never" />
-    <disable_collisions link1="jaco_wrist_2_link_simplified" link2="sensor_frame_camera_plate_link" reason="Never" />
-    <disable_collisions link1="jaco_wrist_2_link_simplified" link2="sensor_frame_camera_strut_link" reason="Never" />
     <disable_collisions link1="jaco_wrist_2_link_simplified" link2="sensor_frame_left_bracket_left_foot_link" reason="Never" />
     <disable_collisions link1="jaco_wrist_2_link_simplified" link2="sensor_frame_left_bracket_left_side_link" reason="Never" />
     <disable_collisions link1="jaco_wrist_2_link_simplified" link2="sensor_frame_left_bracket_right_foot_link" reason="Never" />
@@ -444,8 +391,6 @@
     <disable_collisions link1="jaco_wrist_2_link_simplified" link2="sensor_frame_right_strut_link" reason="Never" />
     <disable_collisions link1="jaco_wrist_2_link_simplified" link2="sensor_frame_top_beam_link" reason="Never" />
     <disable_collisions link1="jaco_wrist_3_link" link2="jaco_wrist_3_link_simplified" reason="Adjacent" />
-    <disable_collisions link1="jaco_wrist_3_link" link2="kinect2_mounting_plate_link" reason="Never" />
-    <disable_collisions link1="jaco_wrist_3_link" link2="kinect2_tilt_base_link" reason="Never" />
     <disable_collisions link1="jaco_wrist_3_link" link2="robotiq_85_base_link" reason="Adjacent" />
     <disable_collisions link1="jaco_wrist_3_link" link2="robotiq_85_left_finger_link" reason="Never" />
     <disable_collisions link1="jaco_wrist_3_link" link2="robotiq_85_left_finger_tip_link" reason="Never" />
@@ -455,10 +400,8 @@
     <disable_collisions link1="jaco_wrist_3_link" link2="robotiq_85_right_finger_tip_link" reason="Never" />
     <disable_collisions link1="jaco_wrist_3_link" link2="robotiq_85_right_inner_knuckle_link" reason="Never" />
     <disable_collisions link1="jaco_wrist_3_link" link2="robotiq_85_right_knuckle_link" reason="Never" />
-    <disable_collisions link1="jaco_wrist_3_link" link2="sensor_frame_camera_plate_link" reason="Never" />
     <disable_collisions link1="jaco_wrist_3_link" link2="sensor_frame_left_bracket_left_foot_link" reason="Never" />
     <disable_collisions link1="jaco_wrist_3_link" link2="sensor_frame_left_bracket_left_side_link" reason="Never" />
-    <disable_collisions link1="jaco_wrist_3_link" link2="sensor_frame_left_bracket_right_foot_link" reason="Never" />
     <disable_collisions link1="jaco_wrist_3_link" link2="sensor_frame_left_bracket_right_side_link" reason="Never" />
     <disable_collisions link1="jaco_wrist_3_link" link2="sensor_frame_left_strut_link" reason="Never" />
     <disable_collisions link1="jaco_wrist_3_link" link2="sensor_frame_right_bracket_left_foot_link" reason="Never" />
@@ -467,10 +410,6 @@
     <disable_collisions link1="jaco_wrist_3_link" link2="sensor_frame_right_bracket_right_side_link" reason="Never" />
     <disable_collisions link1="jaco_wrist_3_link" link2="sensor_frame_right_strut_link" reason="Never" />
     <disable_collisions link1="jaco_wrist_3_link" link2="sensor_frame_top_beam_link" reason="Never" />
-    <disable_collisions link1="jaco_wrist_3_link_simplified" link2="kinect2_mic_bar_link" reason="User" />
-    <disable_collisions link1="jaco_wrist_3_link_simplified" link2="kinect2_mounting_plate_link" reason="User" />
-    <disable_collisions link1="jaco_wrist_3_link_simplified" link2="kinect2_structure_link" reason="User" />
-    <disable_collisions link1="jaco_wrist_3_link_simplified" link2="kinect2_tilt_base_link" reason="User" />
     <disable_collisions link1="jaco_wrist_3_link_simplified" link2="robotiq_85_base_link" reason="Default" />
     <disable_collisions link1="jaco_wrist_3_link_simplified" link2="robotiq_85_left_finger_link" reason="Default" />
     <disable_collisions link1="jaco_wrist_3_link_simplified" link2="robotiq_85_left_finger_tip_link" reason="Default" />
@@ -480,8 +419,6 @@
     <disable_collisions link1="jaco_wrist_3_link_simplified" link2="robotiq_85_right_finger_tip_link" reason="Default" />
     <disable_collisions link1="jaco_wrist_3_link_simplified" link2="robotiq_85_right_inner_knuckle_link" reason="Default" />
     <disable_collisions link1="jaco_wrist_3_link_simplified" link2="robotiq_85_right_knuckle_link" reason="Default" />
-    <disable_collisions link1="jaco_wrist_3_link_simplified" link2="sensor_frame_camera_plate_link" reason="User" />
-    <disable_collisions link1="jaco_wrist_3_link_simplified" link2="sensor_frame_camera_strut_link" reason="User" />
     <disable_collisions link1="jaco_wrist_3_link_simplified" link2="sensor_frame_left_bracket_left_foot_link" reason="User" />
     <disable_collisions link1="jaco_wrist_3_link_simplified" link2="sensor_frame_left_bracket_left_side_link" reason="User" />
     <disable_collisions link1="jaco_wrist_3_link_simplified" link2="sensor_frame_left_bracket_right_foot_link" reason="User" />
@@ -492,65 +429,7 @@
     <disable_collisions link1="jaco_wrist_3_link_simplified" link2="sensor_frame_right_bracket_right_foot_link" reason="User" />
     <disable_collisions link1="jaco_wrist_3_link_simplified" link2="sensor_frame_right_bracket_right_side_link" reason="User" />
     <disable_collisions link1="jaco_wrist_3_link_simplified" link2="sensor_frame_right_strut_link" reason="User" />
-    <disable_collisions link1="jaco_wrist_3_link_simplified" link2="sensor_frame_top_beam_link" reason="User" />
-    <disable_collisions link1="kinect2_mic_bar_link" link2="kinect2_mounting_plate_link" reason="Adjacent" />
-    <disable_collisions link1="kinect2_mic_bar_link" link2="kinect2_structure_link" reason="Default" />
-    <disable_collisions link1="kinect2_mic_bar_link" link2="kinect2_tilt_base_link" reason="Adjacent" />
-    <disable_collisions link1="kinect2_mic_bar_link" link2="sensor_frame_camera_plate_link" reason="Default" />
-    <disable_collisions link1="kinect2_mic_bar_link" link2="sensor_frame_camera_strut_link" reason="Default" />
-    <disable_collisions link1="kinect2_mic_bar_link" link2="sensor_frame_left_bracket_left_foot_link" reason="Never" />
-    <disable_collisions link1="kinect2_mic_bar_link" link2="sensor_frame_left_bracket_left_side_link" reason="Never" />
-    <disable_collisions link1="kinect2_mic_bar_link" link2="sensor_frame_left_bracket_right_foot_link" reason="Never" />
-    <disable_collisions link1="kinect2_mic_bar_link" link2="sensor_frame_left_bracket_right_side_link" reason="Never" />
-    <disable_collisions link1="kinect2_mic_bar_link" link2="sensor_frame_left_strut_link" reason="Never" />
-    <disable_collisions link1="kinect2_mic_bar_link" link2="sensor_frame_right_bracket_left_foot_link" reason="Never" />
-    <disable_collisions link1="kinect2_mic_bar_link" link2="sensor_frame_right_bracket_left_side_link" reason="Never" />
-    <disable_collisions link1="kinect2_mic_bar_link" link2="sensor_frame_right_bracket_right_foot_link" reason="Never" />
-    <disable_collisions link1="kinect2_mic_bar_link" link2="sensor_frame_right_bracket_right_side_link" reason="Never" />
-    <disable_collisions link1="kinect2_mic_bar_link" link2="sensor_frame_right_strut_link" reason="Never" />
-    <disable_collisions link1="kinect2_mic_bar_link" link2="sensor_frame_top_beam_link" reason="Never" />
-    <disable_collisions link1="kinect2_mounting_plate_link" link2="kinect2_structure_link" reason="Default" />
-    <disable_collisions link1="kinect2_mounting_plate_link" link2="kinect2_tilt_base_link" reason="Never" />
-    <disable_collisions link1="kinect2_mounting_plate_link" link2="sensor_frame_camera_plate_link" reason="Adjacent" />
-    <disable_collisions link1="kinect2_mounting_plate_link" link2="sensor_frame_camera_strut_link" reason="Never" />
-    <disable_collisions link1="kinect2_mounting_plate_link" link2="sensor_frame_left_bracket_left_foot_link" reason="Never" />
-    <disable_collisions link1="kinect2_mounting_plate_link" link2="sensor_frame_left_bracket_left_side_link" reason="Never" />
-    <disable_collisions link1="kinect2_mounting_plate_link" link2="sensor_frame_left_bracket_right_foot_link" reason="Never" />
-    <disable_collisions link1="kinect2_mounting_plate_link" link2="sensor_frame_left_bracket_right_side_link" reason="Never" />
-    <disable_collisions link1="kinect2_mounting_plate_link" link2="sensor_frame_left_strut_link" reason="Never" />
-    <disable_collisions link1="kinect2_mounting_plate_link" link2="sensor_frame_right_bracket_left_foot_link" reason="Never" />
-    <disable_collisions link1="kinect2_mounting_plate_link" link2="sensor_frame_right_bracket_left_side_link" reason="Never" />
-    <disable_collisions link1="kinect2_mounting_plate_link" link2="sensor_frame_right_bracket_right_foot_link" reason="Never" />
-    <disable_collisions link1="kinect2_mounting_plate_link" link2="sensor_frame_right_bracket_right_side_link" reason="Never" />
-    <disable_collisions link1="kinect2_mounting_plate_link" link2="sensor_frame_right_strut_link" reason="Never" />
-    <disable_collisions link1="kinect2_mounting_plate_link" link2="sensor_frame_top_beam_link" reason="Never" />
-    <disable_collisions link1="kinect2_structure_link" link2="kinect2_tilt_base_link" reason="Adjacent" />
-    <disable_collisions link1="kinect2_structure_link" link2="sensor_frame_camera_plate_link" reason="Never" />
-    <disable_collisions link1="kinect2_structure_link" link2="sensor_frame_camera_strut_link" reason="Never" />
-    <disable_collisions link1="kinect2_structure_link" link2="sensor_frame_left_bracket_left_foot_link" reason="Never" />
-    <disable_collisions link1="kinect2_structure_link" link2="sensor_frame_left_bracket_left_side_link" reason="Never" />
-    <disable_collisions link1="kinect2_structure_link" link2="sensor_frame_left_bracket_right_foot_link" reason="Never" />
-    <disable_collisions link1="kinect2_structure_link" link2="sensor_frame_left_bracket_right_side_link" reason="Never" />
-    <disable_collisions link1="kinect2_structure_link" link2="sensor_frame_left_strut_link" reason="Never" />
-    <disable_collisions link1="kinect2_structure_link" link2="sensor_frame_right_bracket_left_foot_link" reason="Never" />
-    <disable_collisions link1="kinect2_structure_link" link2="sensor_frame_right_bracket_left_side_link" reason="Never" />
-    <disable_collisions link1="kinect2_structure_link" link2="sensor_frame_right_bracket_right_foot_link" reason="Never" />
-    <disable_collisions link1="kinect2_structure_link" link2="sensor_frame_right_bracket_right_side_link" reason="Never" />
-    <disable_collisions link1="kinect2_structure_link" link2="sensor_frame_right_strut_link" reason="Never" />
-    <disable_collisions link1="kinect2_structure_link" link2="sensor_frame_top_beam_link" reason="Never" />
-    <disable_collisions link1="kinect2_tilt_base_link" link2="sensor_frame_camera_plate_link" reason="Never" />
-    <disable_collisions link1="kinect2_tilt_base_link" link2="sensor_frame_camera_strut_link" reason="Never" />
-    <disable_collisions link1="kinect2_tilt_base_link" link2="sensor_frame_left_bracket_left_foot_link" reason="Never" />
-    <disable_collisions link1="kinect2_tilt_base_link" link2="sensor_frame_left_bracket_left_side_link" reason="Never" />
-    <disable_collisions link1="kinect2_tilt_base_link" link2="sensor_frame_left_bracket_right_foot_link" reason="Never" />
-    <disable_collisions link1="kinect2_tilt_base_link" link2="sensor_frame_left_bracket_right_side_link" reason="Never" />
-    <disable_collisions link1="kinect2_tilt_base_link" link2="sensor_frame_left_strut_link" reason="Never" />
-    <disable_collisions link1="kinect2_tilt_base_link" link2="sensor_frame_right_bracket_left_foot_link" reason="Never" />
-    <disable_collisions link1="kinect2_tilt_base_link" link2="sensor_frame_right_bracket_left_side_link" reason="Never" />
-    <disable_collisions link1="kinect2_tilt_base_link" link2="sensor_frame_right_bracket_right_foot_link" reason="Never" />
-    <disable_collisions link1="kinect2_tilt_base_link" link2="sensor_frame_right_bracket_right_side_link" reason="Never" />
-    <disable_collisions link1="kinect2_tilt_base_link" link2="sensor_frame_right_strut_link" reason="Never" />
-    <disable_collisions link1="kinect2_tilt_base_link" link2="sensor_frame_top_beam_link" reason="Never" />
+    <disable_collisions link1="jaco_wrist_3_link_simplified" link2="sensor_frame_top_beam_link" reason="Default" />
     <disable_collisions link1="robotiq_85_base_link" link2="robotiq_85_left_finger_link" reason="Never" />
     <disable_collisions link1="robotiq_85_base_link" link2="robotiq_85_left_finger_tip_link" reason="Never" />
     <disable_collisions link1="robotiq_85_base_link" link2="robotiq_85_left_inner_knuckle_link" reason="Adjacent" />
@@ -560,7 +439,9 @@
     <disable_collisions link1="robotiq_85_base_link" link2="robotiq_85_right_inner_knuckle_link" reason="Adjacent" />
     <disable_collisions link1="robotiq_85_base_link" link2="robotiq_85_right_knuckle_link" reason="Adjacent" />
     <disable_collisions link1="robotiq_85_base_link" link2="sensor_frame_left_bracket_left_foot_link" reason="Never" />
+    <disable_collisions link1="robotiq_85_base_link" link2="sensor_frame_left_bracket_left_side_link" reason="Never" />
     <disable_collisions link1="robotiq_85_base_link" link2="sensor_frame_right_bracket_right_foot_link" reason="Never" />
+    <disable_collisions link1="robotiq_85_base_link" link2="sensor_frame_right_bracket_right_side_link" reason="Never" />
     <disable_collisions link1="robotiq_85_left_finger_link" link2="robotiq_85_left_finger_tip_link" reason="Default" />
     <disable_collisions link1="robotiq_85_left_finger_link" link2="robotiq_85_left_inner_knuckle_link" reason="Never" />
     <disable_collisions link1="robotiq_85_left_finger_link" link2="robotiq_85_left_knuckle_link" reason="Adjacent" />
@@ -568,70 +449,39 @@
     <disable_collisions link1="robotiq_85_left_finger_link" link2="robotiq_85_right_finger_tip_link" reason="Never" />
     <disable_collisions link1="robotiq_85_left_finger_link" link2="robotiq_85_right_inner_knuckle_link" reason="Never" />
     <disable_collisions link1="robotiq_85_left_finger_link" link2="robotiq_85_right_knuckle_link" reason="Never" />
-    <disable_collisions link1="robotiq_85_left_finger_link" link2="sensor_frame_left_bracket_left_foot_link" reason="Never" />
-    <disable_collisions link1="robotiq_85_left_finger_link" link2="sensor_frame_left_bracket_right_foot_link" reason="Never" />
-    <disable_collisions link1="robotiq_85_left_finger_link" link2="sensor_frame_right_bracket_left_foot_link" reason="Never" />
-    <disable_collisions link1="robotiq_85_left_finger_link" link2="sensor_frame_right_bracket_right_foot_link" reason="Never" />
+    <disable_collisions link1="robotiq_85_left_finger_link" link2="sensor_frame_right_bracket_right_side_link" reason="Never" />
     <disable_collisions link1="robotiq_85_left_finger_tip_link" link2="robotiq_85_left_inner_knuckle_link" reason="Adjacent" />
     <disable_collisions link1="robotiq_85_left_finger_tip_link" link2="robotiq_85_left_knuckle_link" reason="Never" />
     <disable_collisions link1="robotiq_85_left_finger_tip_link" link2="robotiq_85_right_finger_link" reason="Never" />
+    <disable_collisions link1="robotiq_85_left_finger_tip_link" link2="robotiq_85_right_finger_tip_link" reason="User" />
     <disable_collisions link1="robotiq_85_left_finger_tip_link" link2="robotiq_85_right_inner_knuckle_link" reason="Never" />
     <disable_collisions link1="robotiq_85_left_finger_tip_link" link2="robotiq_85_right_knuckle_link" reason="Never" />
-    <disable_collisions link1="robotiq_85_left_finger_tip_link" link2="sensor_frame_right_bracket_left_foot_link" reason="Never" />
     <disable_collisions link1="robotiq_85_left_inner_knuckle_link" link2="robotiq_85_left_knuckle_link" reason="Never" />
     <disable_collisions link1="robotiq_85_left_inner_knuckle_link" link2="robotiq_85_right_finger_link" reason="Never" />
     <disable_collisions link1="robotiq_85_left_inner_knuckle_link" link2="robotiq_85_right_finger_tip_link" reason="Never" />
     <disable_collisions link1="robotiq_85_left_inner_knuckle_link" link2="robotiq_85_right_inner_knuckle_link" reason="Never" />
     <disable_collisions link1="robotiq_85_left_inner_knuckle_link" link2="robotiq_85_right_knuckle_link" reason="Never" />
     <disable_collisions link1="robotiq_85_left_inner_knuckle_link" link2="sensor_frame_left_bracket_left_foot_link" reason="Never" />
-    <disable_collisions link1="robotiq_85_left_inner_knuckle_link" link2="sensor_frame_right_bracket_left_foot_link" reason="Never" />
-    <disable_collisions link1="robotiq_85_left_inner_knuckle_link" link2="sensor_frame_right_bracket_right_foot_link" reason="Never" />
     <disable_collisions link1="robotiq_85_left_knuckle_link" link2="robotiq_85_right_finger_link" reason="Never" />
     <disable_collisions link1="robotiq_85_left_knuckle_link" link2="robotiq_85_right_finger_tip_link" reason="Never" />
     <disable_collisions link1="robotiq_85_left_knuckle_link" link2="robotiq_85_right_inner_knuckle_link" reason="Never" />
     <disable_collisions link1="robotiq_85_left_knuckle_link" link2="robotiq_85_right_knuckle_link" reason="Never" />
     <disable_collisions link1="robotiq_85_left_knuckle_link" link2="sensor_frame_left_bracket_left_foot_link" reason="Never" />
     <disable_collisions link1="robotiq_85_left_knuckle_link" link2="sensor_frame_left_bracket_left_side_link" reason="Never" />
-    <disable_collisions link1="robotiq_85_left_knuckle_link" link2="sensor_frame_right_bracket_left_foot_link" reason="Never" />
+    <disable_collisions link1="robotiq_85_left_knuckle_link" link2="sensor_frame_right_bracket_left_side_link" reason="Never" />
     <disable_collisions link1="robotiq_85_left_knuckle_link" link2="sensor_frame_right_bracket_right_foot_link" reason="Never" />
+    <disable_collisions link1="robotiq_85_left_knuckle_link" link2="sensor_frame_right_bracket_right_side_link" reason="Never" />
     <disable_collisions link1="robotiq_85_right_finger_link" link2="robotiq_85_right_finger_tip_link" reason="Default" />
     <disable_collisions link1="robotiq_85_right_finger_link" link2="robotiq_85_right_inner_knuckle_link" reason="Never" />
     <disable_collisions link1="robotiq_85_right_finger_link" link2="robotiq_85_right_knuckle_link" reason="Adjacent" />
-    <disable_collisions link1="robotiq_85_right_finger_link" link2="sensor_frame_left_bracket_left_foot_link" reason="Never" />
     <disable_collisions link1="robotiq_85_right_finger_link" link2="sensor_frame_right_bracket_right_foot_link" reason="Never" />
     <disable_collisions link1="robotiq_85_right_finger_tip_link" link2="robotiq_85_right_inner_knuckle_link" reason="Adjacent" />
     <disable_collisions link1="robotiq_85_right_finger_tip_link" link2="robotiq_85_right_knuckle_link" reason="Never" />
-    <disable_collisions link1="robotiq_85_right_finger_tip_link" link2="sensor_frame_left_bracket_left_foot_link" reason="Never" />
     <disable_collisions link1="robotiq_85_right_inner_knuckle_link" link2="robotiq_85_right_knuckle_link" reason="Never" />
-    <disable_collisions link1="robotiq_85_right_inner_knuckle_link" link2="sensor_frame_left_bracket_left_foot_link" reason="Never" />
-    <disable_collisions link1="robotiq_85_right_inner_knuckle_link" link2="sensor_frame_right_bracket_right_foot_link" reason="Never" />
     <disable_collisions link1="robotiq_85_right_knuckle_link" link2="sensor_frame_left_bracket_left_foot_link" reason="Never" />
     <disable_collisions link1="robotiq_85_right_knuckle_link" link2="sensor_frame_left_bracket_left_side_link" reason="Never" />
-    <disable_collisions link1="robotiq_85_right_knuckle_link" link2="sensor_frame_right_bracket_left_foot_link" reason="Never" />
     <disable_collisions link1="robotiq_85_right_knuckle_link" link2="sensor_frame_right_bracket_right_foot_link" reason="Never" />
-    <disable_collisions link1="sensor_frame_camera_plate_link" link2="sensor_frame_camera_strut_link" reason="Adjacent" />
-    <disable_collisions link1="sensor_frame_camera_plate_link" link2="sensor_frame_left_bracket_left_foot_link" reason="Never" />
-    <disable_collisions link1="sensor_frame_camera_plate_link" link2="sensor_frame_left_bracket_left_side_link" reason="Never" />
-    <disable_collisions link1="sensor_frame_camera_plate_link" link2="sensor_frame_left_bracket_right_foot_link" reason="Never" />
-    <disable_collisions link1="sensor_frame_camera_plate_link" link2="sensor_frame_left_bracket_right_side_link" reason="Never" />
-    <disable_collisions link1="sensor_frame_camera_plate_link" link2="sensor_frame_left_strut_link" reason="Never" />
-    <disable_collisions link1="sensor_frame_camera_plate_link" link2="sensor_frame_right_bracket_left_foot_link" reason="Never" />
-    <disable_collisions link1="sensor_frame_camera_plate_link" link2="sensor_frame_right_bracket_left_side_link" reason="Never" />
-    <disable_collisions link1="sensor_frame_camera_plate_link" link2="sensor_frame_right_bracket_right_foot_link" reason="Never" />
-    <disable_collisions link1="sensor_frame_camera_plate_link" link2="sensor_frame_right_bracket_right_side_link" reason="Never" />
-    <disable_collisions link1="sensor_frame_camera_plate_link" link2="sensor_frame_right_strut_link" reason="Never" />
-    <disable_collisions link1="sensor_frame_camera_plate_link" link2="sensor_frame_top_beam_link" reason="Never" />
-    <disable_collisions link1="sensor_frame_camera_strut_link" link2="sensor_frame_left_bracket_left_foot_link" reason="Never" />
-    <disable_collisions link1="sensor_frame_camera_strut_link" link2="sensor_frame_left_bracket_left_side_link" reason="Never" />
-    <disable_collisions link1="sensor_frame_camera_strut_link" link2="sensor_frame_left_bracket_right_foot_link" reason="Never" />
-    <disable_collisions link1="sensor_frame_camera_strut_link" link2="sensor_frame_left_bracket_right_side_link" reason="Never" />
-    <disable_collisions link1="sensor_frame_camera_strut_link" link2="sensor_frame_left_strut_link" reason="Never" />
-    <disable_collisions link1="sensor_frame_camera_strut_link" link2="sensor_frame_right_bracket_left_foot_link" reason="Never" />
-    <disable_collisions link1="sensor_frame_camera_strut_link" link2="sensor_frame_right_bracket_left_side_link" reason="Never" />
-    <disable_collisions link1="sensor_frame_camera_strut_link" link2="sensor_frame_right_bracket_right_foot_link" reason="Never" />
-    <disable_collisions link1="sensor_frame_camera_strut_link" link2="sensor_frame_right_bracket_right_side_link" reason="Never" />
-    <disable_collisions link1="sensor_frame_camera_strut_link" link2="sensor_frame_right_strut_link" reason="Never" />
-    <disable_collisions link1="sensor_frame_camera_strut_link" link2="sensor_frame_top_beam_link" reason="Adjacent" />
+    <disable_collisions link1="robotiq_85_right_knuckle_link" link2="sensor_frame_right_bracket_right_side_link" reason="Never" />
     <disable_collisions link1="sensor_frame_left_bracket_left_foot_link" link2="sensor_frame_left_bracket_left_side_link" reason="Adjacent" />
     <disable_collisions link1="sensor_frame_left_bracket_left_foot_link" link2="sensor_frame_left_bracket_right_foot_link" reason="Never" />
     <disable_collisions link1="sensor_frame_left_bracket_left_foot_link" link2="sensor_frame_left_bracket_right_side_link" reason="Never" />
