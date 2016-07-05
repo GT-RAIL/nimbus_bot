@@ -17,9 +17,6 @@
   <!-- Recognition Params -->
   <arg name="segmented_objects_topic" default="/rail_segmentation/segmented_objects" />
 
-  <!-- Sensor Params -->
-  <arg name="fps_limit" default="-1.0" />
-
   <!-- Manipulation Params -->
   <arg name="using_pickup" default="true" />
   <arg name="visualize_recognition" default="true" />
@@ -39,9 +36,7 @@
   </node>
   <node pkg="robotiq_85_gripper_actions" type="gripper_actions" name="gripper_actions" />
 
-  <include file="$(find nimbus_bringup)/launch/sensors.launch">
-    <arg name="fps_limit" value="$(arg fps_limit)" />
-  </include>
+  <include file="$(find nimbus_bringup)/launch/sensors.launch" />
   <include file="$(find nimbus_bringup)/launch/robot_model.launch" />
 
   <include file="$(find nimbus_bringup)/launch/nimbus_recognition.launch">

@@ -936,7 +936,7 @@
   </joint>
   <link name="sensor_frame_sensor_link"/>
   <joint name="camera_rgb_joint" type="fixed">
-    <origin rpy="0.0 -0.223 0.0" xyz="0.023 -0.014 -0.04"/>
+    <origin rpy="0.002 -0.236 -0.008" xyz="0.001 -0.025 0.02"/>
     <parent link="sensor_frame_sensor_link"/>
     <child link="camera_rgb_frame"/>
   </joint>

@@ -22,7 +22,7 @@
     <link name="sensor_frame_sensor_link" />
 
     <xacro:sensor_asus_xtion_pro parent="sensor_frame_sensor_link">
-      <origin xyz="0.023 -0.014 -0.04" rpy="0.0 -0.223 0.0" /> <!-- insert calibrated x, y, z, pitch, and yaw here -->
+      <origin xyz="0.001 -0.025 0.02" rpy="0.002 -0.236 -0.008" /> <!-- insert calibrated x, y, z, pitch, and yaw here -->
     </xacro:sensor_asus_xtion_pro>
   </xacro:macro>
 
