@@ -64,6 +64,25 @@ NimbusMoveIt::NimbusMoveIt() :
   moveToJointPoseServer.start();
 
   cout << "End effector link: " << jacoArmGroup->getEndEffectorLink() << endl;
+
+  moveit_msgs::GetPlanningScene planningSceneSrv;
+  planningSceneSrv.request.components.components = moveit_msgs::PlanningSceneComponents::ALLOWED_COLLISION_MATRIX;
+  if (!planningSceneClient.call(planningSceneSrv))
+  {
+    ROS_INFO("Could not get the current planning scene.");
+    ROS_INFO("COLLISIONS BETWEEN <octomap> AND simplified geometry WILL NOT BE IGNOTED!!!");
+    return;
+  }
+
+  collision_detection::AllowedCollisionMatrix acm(planningSceneSrv.response.scene.allowed_collision_matrix);
+  //Disable collisions on self-filter geometry
+  acm.setEntry("<octomap>", simplifiedGeometryNames, true);
+  moveit_msgs::PlanningScene planningSceneUpdate;
+  acm.getMessage(planningSceneUpdate.allowed_collision_matrix);
+  planningSceneUpdate.is_diff = true;
+  planningScenePublisher.publish(planningSceneUpdate);
+
+  ros::Duration(0.5).sleep(); //delay for publish to go through
 }
 
 NimbusMoveIt::~NimbusMoveIt()
