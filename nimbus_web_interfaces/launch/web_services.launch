@@ -16,4 +16,10 @@
   <!-- user queue -->
   <node pkg="rail_user_queue_manager" type="rail_user_queue_manager" name="rail_user_queue_manager" respawn="true" output="screen"/>
 
+  <!-- Interactive Markers -->
+  <node name="nimbus_im_proxy" pkg="interactive_marker_proxy" type="proxy" output="screen">
+    <remap from="topic_ns" to="/nimbus_interactive_manipulation" />
+    <remap from="target_frame" to="/table_base_link" />
+  </node>
+
 </launch>
