@@ -51,6 +51,7 @@ private:
   actionlib::SimpleActionServer<rail_manipulation_msgs::LiftAction> liftServer;
   actionlib::SimpleActionServer<rail_manipulation_msgs::ArmAction> armServer;
   actionlib::SimpleActionServer<rail_manipulation_msgs::PickupAction> pickupServer;
+  actionlib::SimpleActionServer<rail_manipulation_msgs::PickupAction> pickupUnrecognizedServer;
   actionlib::SimpleActionServer<rail_manipulation_msgs::StoreAction> storeServer;
 
   tf::TransformBroadcaster tfBroadcaster;
@@ -82,6 +83,17 @@ private:
   * @param goal Grasp pose with which to execute the pickup
   */
   void executePickup(const rail_manipulation_msgs::PickupGoalConstPtr &goal);
+
+  /**
+  * \brief Perform a pickup action without object recognition
+  *
+  * A pickup action with nimbus consists of sequentially executing the following actions: move to approach angle,
+  * open gripper, move along approach angle to the grasp pose, close gripper, optionally lift the object, and
+  * optionally verify that it is in-hand.
+  *
+  * @param goal Grasp pose with which to execute the pickup
+  */
+  void executePickupUnrecognized(const rail_manipulation_msgs::PickupGoalConstPtr &goal);
 
   /**
   * \brief Perform a store action

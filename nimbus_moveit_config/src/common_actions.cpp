@@ -25,6 +25,7 @@ CommonActions::CommonActions() : pnh("~"),
                                  liftServer(n, "nimbus_moveit/common_actions/lift", boost::bind(&CommonActions::liftArm, this, _1), false),
                                  armServer(n, "nimbus_moveit/common_actions/arm_action", boost::bind(&CommonActions::executeArmAction, this, _1), false),
                                  pickupServer(n, "nimbus_moveit/common_actions/pickup", boost::bind(&CommonActions::executePickup, this, _1), false),
+                                 pickupUnrecognizedServer(n, "nimbus_moveit/common_actions/pickup_unrecognized", boost::bind(&CommonActions::executePickupUnrecognized, this, _1), false),
                                  storeServer(n, "nimbus_moveit/common_actions/store", boost::bind(&CommonActions::executeStore, this, _1), false)
 {
   //setup home position
@@ -58,6 +59,7 @@ CommonActions::CommonActions() : pnh("~"),
   liftServer.start();
   armServer.start();
   pickupServer.start();
+  pickupUnrecognizedServer.start();
   storeServer.start();
 }
 
@@ -229,13 +231,13 @@ void CommonActions::executePickup(const rail_manipulation_msgs::PickupGoalConstP
   pickupServer.setSucceeded(result);
 }
 
-/* Old method involving linear pickup trajectory... remove if new method proves sufficient
-void CommonActions::executePickup(const rail_manipulation_msgs::PickupGoalConstPtr &goal)
+void CommonActions::executePickupUnrecognized(const rail_manipulation_msgs::PickupGoalConstPtr &goal)
 {
   rail_manipulation_msgs::PickupFeedback feedback;
   rail_manipulation_msgs::PickupResult result;
   result.success = false;
   stringstream ss;
+
   //make sure pose is in the table_base_link frame
   geometry_msgs::PoseStamped graspPose, approachAnglePose;
   graspPose.header.frame_id = "table_base_link";
@@ -243,22 +245,27 @@ void CommonActions::executePickup(const rail_manipulation_msgs::PickupGoalConstP
     tfListener.transformPose("table_base_link", goal->pose, graspPose);
   else
     graspPose = goal->pose;
+
   tf::Transform graspTransform;
   graspTransform.setOrigin(tf::Vector3(graspPose.pose.position.x, graspPose.pose.position.y, graspPose.pose.position.z));
   graspTransform.setRotation(tf::Quaternion(graspPose.pose.orientation.x, graspPose.pose.orientation.y, graspPose.pose.orientation.z, graspPose.pose.orientation.w));
   ros::Time now = ros::Time::now();
   tfBroadcaster.sendTransform(tf::StampedTransform(graspTransform, now, "table_base_link", "grasp_frame"));
   tfListener.waitForTransform("grasp_frame", "table_base_link", now, ros::Duration(5.0));
+
   approachAnglePose.header.frame_id = "grasp_frame";
-  approachAnglePose.pose.position.x = -0.1;
+  approachAnglePose.pose.position.x = -0.05;
   approachAnglePose.pose.orientation.w = 1.0;
+
   //move to approach angle
   ss.str("");
   ss << "Attempting to move gripper to approach angle...";
   feedback.message = ss.str();
-  pickupServer.publishFeedback(feedback);
+  pickupUnrecognizedServer.publishFeedback(feedback);
+
   rail_manipulation_msgs::MoveToPoseGoal approachAngleGoal;
   approachAngleGoal.pose = approachAnglePose;
+  approachAngleGoal.planningTime = 3.0;
   moveToPoseClient.sendGoal(approachAngleGoal);
   moveToPoseClient.waitForResult(ros::Duration(30.0));
   if (!moveToPoseClient.getResult()->success)
@@ -266,16 +273,18 @@ void CommonActions::executePickup(const rail_manipulation_msgs::PickupGoalConstP
     ss.str("");
     ss << "Moving to approach angle failed for this grasp.";
     feedback.message = ss.str();
-    pickupServer.publishFeedback(feedback);
+    pickupUnrecognizedServer.publishFeedback(feedback);
     result.executionSuccess = false;
-    pickupServer.setAborted(result, "Unable to move to approach angle.");
+    pickupUnrecognizedServer.setAborted(result, "Unable to move to approach angle.");
     return;
   }
+
   //open gripper
   ss.str("");
   ss << "Opening gripper...";
   feedback.message = ss.str();
-  pickupServer.publishFeedback(feedback);
+  pickupUnrecognizedServer.publishFeedback(feedback);
+
   rail_manipulation_msgs::GripperGoal gripperGoal;
   gripperGoal.close = false;
   gripperClient.sendGoal(gripperGoal);
@@ -284,9 +293,10 @@ void CommonActions::executePickup(const rail_manipulation_msgs::PickupGoalConstP
   {
     ROS_INFO("Opening gripper failed.");
     result.executionSuccess = false;
-    pickupServer.setAborted(result, "Unable to open gripper.");
+    pickupUnrecognizedServer.setAborted(result, "Unable to open gripper.");
     return;
   }
+
   //follow approach angle to grasp
   ss.str("");
   ss << "Moving along approach angle...";
@@ -296,7 +306,7 @@ void CommonActions::executePickup(const rail_manipulation_msgs::PickupGoalConstP
   geometry_msgs::PoseStamped cartesianPose;
   cartesianPose.header.frame_id = "table_base_link";
   tfListener.transformPose("table_base_link", graspPose, cartesianPose);
-  srv.request.waypoints.push_back(cartesianPose.pose);
+  srv.request.waypoints.push_back(cartesianPose);
   srv.request.avoidCollisions = false;
   if (!cartesianPathClient.call(srv))
   {
@@ -305,11 +315,23 @@ void CommonActions::executePickup(const rail_manipulation_msgs::PickupGoalConstP
     pickupServer.setAborted(result, "Could not call Jaco Cartesian path service.");
     return;
   }
+  else
+  {
+    if (srv.response.completion < 0.5)
+    {
+      ROS_INFO("Could not move gripper along Cartesian path.");
+      result.executionSuccess = false;
+      pickupServer.setAborted(result, "Could not move gripper along Cartesian path.");
+      return;
+    }
+  }
+
   //close gripper
   ss.str("");
   ss << "Closing gripper...";
   feedback.message = ss.str();
-  pickupServer.publishFeedback(feedback);
+  pickupUnrecognizedServer.publishFeedback(feedback);
+
   gripperGoal.close = true;
   gripperClient.sendGoal(gripperGoal);
   gripperClient.waitForResult(ros::Duration(10.0));
@@ -317,33 +339,40 @@ void CommonActions::executePickup(const rail_manipulation_msgs::PickupGoalConstP
   {
     ROS_INFO("Closing gripper failed.");
     result.executionSuccess = false;
-    pickupServer.setAborted(result, "Unable to close gripper.");
+    pickupUnrecognizedServer.setAborted(result, "Unable to close gripper.");
     return;
   }
+
+  ROS_INFO("Passed threshold for execution success.");
   result.executionSuccess = true;
+
   //attach scene object to gripper
   std_srvs::Empty emptySrv;
   if (!attachClosestObjectClient.call(emptySrv))
   {
     ROS_INFO("No scene object to attach...");
   }
+
   if (goal->lift)
   {
     //lift hand
     ss.str("");
     ss << "Lifting hand...";
     feedback.message = ss.str();
-    pickupServer.publishFeedback(feedback);
+    pickupUnrecognizedServer.publishFeedback(feedback);
+
     rail_manipulation_msgs::LiftGoal liftGoal;
     liftClient.sendGoal(liftGoal);
     liftClient.waitForResult(ros::Duration(10.0));
   }
+
   if (goal->verify)
   {
     ss.str("");
     ss << "Verifying grasp...";
     feedback.message = ss.str();
-    pickupServer.publishFeedback(feedback);
+    pickupUnrecognizedServer.publishFeedback(feedback);
+
     rail_manipulation_msgs::VerifyGraspGoal verifyGoal;
     verifyClient.sendGoal(verifyGoal);
     verifyClient.waitForResult(ros::Duration(10.0));
@@ -351,7 +380,9 @@ void CommonActions::executePickup(const rail_manipulation_msgs::PickupGoalConstP
     {
       ROS_INFO("Grasp evaluated as unsuccessful.");
       result.success = false;
-      pickupServer.setAborted(result, "Grasp evaluated as unsuccessful.");
+      std_srvs::Empty detachSrv;
+      detachObjectsClient.call(detachSrv);
+      pickupUnrecognizedServer.setAborted(result, "Grasp evaluated as unsuccessful.");
       return;
     }
     else
@@ -361,9 +392,9 @@ void CommonActions::executePickup(const rail_manipulation_msgs::PickupGoalConstP
   {
     result.success = true;
   }
-  pickupServer.setSucceeded(result);
+
+  pickupUnrecognizedServer.setSucceeded(result);
 }
-*/
 
 void CommonActions::executeStore(const rail_manipulation_msgs::StoreGoalConstPtr &goal)
 {
