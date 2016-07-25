@@ -23,6 +23,34 @@ void PrimitiveActions::executePrimitive(const rail_manipulation_msgs::PrimitiveG
 
   if (goal->primitive_type == rail_manipulation_msgs::PrimitiveGoal::TRANSLATION)
   {
+    ss << "Moving the arm ";
+    string direction;
+    switch (goal->axis)
+    {
+      case (rail_manipulation_msgs::PrimitiveGoal::X_AXIS):
+        if (goal->distance >= 0)
+          direction = "forward";
+        else
+          direction = "back";
+        break;
+      case (rail_manipulation_msgs::PrimitiveGoal::Y_AXIS):
+        if (goal->distance >= 0)
+          direction = "right";
+        else
+          direction = "left";
+        break;
+      case (rail_manipulation_msgs::PrimitiveGoal::Z_AXIS):
+        if (goal->distance >= 0)
+          direction = "up";
+        else
+          direction = "down";
+        break;
+    }
+    ss << direction << "...";
+
+    feedback.feedback = ss.str();
+    primitiveServer.publishFeedback(feedback);
+
     tf::StampedTransform startTransform;
     tfListener.lookupTransform("table_base_link", "nimbus_ee_link", ros::Time(0), startTransform);
     geometry_msgs::PoseStamped startPose;
@@ -55,6 +83,9 @@ void PrimitiveActions::executePrimitive(const rail_manipulation_msgs::PrimitiveG
     cartesianPath.request.waypoints.push_back(endPose);
     if (!cartesianPathClient.call(cartesianPath))
     {
+      feedback.feedback = "Couldn't move arm, an error has occurred.";
+      primitiveServer.publishFeedback(feedback);
+
       ROS_INFO("Cartesian Path service call failed.");
       primitiveServer.setAborted();
       return;
@@ -63,14 +94,43 @@ void PrimitiveActions::executePrimitive(const rail_manipulation_msgs::PrimitiveG
     result.completion = cartesianPath.response.completion;
     ROS_INFO("Path completion: %f", result.completion);
 
+    if (result.completion <= 0.5)
+    {
+      ss.str("");
+      ss << "The arm couldn't fully move " << direction << ". Try another command.";
+      feedback.feedback = ss.str();
+      primitiveServer.publishFeedback(feedback);
+    }
+    else
+    {
+      ss.str("");
+      ss << "Finished moving the arm " << direction << ".";
+      feedback.feedback = ss.str();
+      primitiveServer.publishFeedback(feedback);
+    }
+
     primitiveServer.setSucceeded(result);
     return;
   }
   else if (goal->primitive_type == rail_manipulation_msgs::PrimitiveGoal::ROTATION)
   {
+    ss << "Rotating the gripper ";
+    string direction;
+    if (goal->distance >= 0)
+      direction = "clockwise";
+    else
+      direction = "counterclockwise";
+    ss << direction << "...";
+
+    feedback.feedback = ss.str();
+    primitiveServer.publishFeedback(feedback);
+
     wpi_jaco_msgs::GetAngularPosition getAngularPosition;
     if (!jacoPosClient.call(getAngularPosition))
     {
+      feedback.feedback = "Couldn't rotate the gripper, an error has occurred.";
+      primitiveServer.publishFeedback(feedback);
+
       ROS_INFO("Jaco Angular Position service call failed.");
       primitiveServer.setAborted();
       return;
@@ -115,6 +175,22 @@ void PrimitiveActions::executePrimitive(const rail_manipulation_msgs::PrimitiveG
     angularCmdPublisher.publish(angularCmd);
 
     result.completion = min(fabs(prevJointPos - startJointPos)/goal->distance, 1.0);
+
+    if (result.completion > 0.5)
+    {
+      ss.str("");
+      ss << "The gripper couldn't fully rotate " << direction << ". Try another command.";
+      feedback.feedback = ss.str();
+      primitiveServer.publishFeedback(feedback);
+    }
+    else
+    {
+      ss.str("");
+      ss << "Finished rotating the gripper " << direction << ".";
+      feedback.feedback = ss.str();
+      primitiveServer.publishFeedback(feedback);
+    }
+
     primitiveServer.setSucceeded(result);
     return;
   }
