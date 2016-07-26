@@ -673,7 +673,7 @@ void CommonActions::executeArmAction(const rail_manipulation_msgs::ArmGoalConstP
       armServer.publishFeedback(feedback);
       break;
     case rail_manipulation_msgs::ArmGoal::RETRACT:
-      feedback.message = "Retracting arm...";
+      feedback.message = "Moving arm out of the way...";
       armServer.publishFeedback(feedback);
       break;
     default:
@@ -698,7 +698,7 @@ void CommonActions::executeArmAction(const rail_manipulation_msgs::ArmGoalConstP
   {
     if (isArmAtPosition(defaultRetractPosition))
     {
-      feedback.message = "Arm is already retracted.";
+      feedback.message = "The arm is already in the reset position.";
       armServer.publishFeedback(feedback);
 
       result.success = true;
@@ -736,11 +736,6 @@ void CommonActions::executeArmAction(const rail_manipulation_msgs::ArmGoalConstP
   int attempts = MAX_MOVE_ATTEMPTS;
   while (!succeeded && counter < attempts)
   {
-    stringstream ss;
-    ss << "Planning and moving arm to requested arm position (attempt " << counter + 1 << "/" << attempts << ")";
-    feedback.message = ss.str();
-    armServer.publishFeedback(feedback);
-
     ROS_INFO("Move arm attempt %d", counter);
 
     moveToJointPoseClient.sendGoal(jointPoseGoal);
@@ -765,7 +760,10 @@ void CommonActions::executeArmAction(const rail_manipulation_msgs::ArmGoalConstP
     //slightly vary joint goal and retry planning
     if (!succeeded && counter < attempts)
     {
-      ROS_INFO("Moving arm failed, resampling goal for another attempt...");
+      stringstream ss;
+      ss << "The arm encountered an error while planning to reset. Trying again, please wait...";
+      feedback.message = ss.str();
+      armServer.publishFeedback(feedback);
       for (unsigned int i = 0; i < jointPoseGoal.joints.size(); i ++)
       {
         jointPoseGoal.joints[i] = baseJointPoseGoal[i] + (rand() % 700 - 350) / 10000;  //vary by up to ~2 degrees
@@ -775,8 +773,16 @@ void CommonActions::executeArmAction(const rail_manipulation_msgs::ArmGoalConstP
 
   if (!succeeded)
   {
-    feedback.message = "Failed to perform requested arm action.";
-    armServer.publishFeedback(feedback);
+    if (goal->action == rail_manipulation_msgs::ArmGoal::RETRACT)
+    {
+      feedback.message = "Failed to reset the arm.  Make sure it's not touching anything and try again.";
+      armServer.publishFeedback(feedback);
+    }
+    else
+    {
+      feedback.message = "Failed to perform requested arm action.";
+      armServer.publishFeedback(feedback);
+    }
 
     ROS_INFO("Plan and move to requested arm position failed.");
     result.success = false;
@@ -791,7 +797,7 @@ void CommonActions::executeArmAction(const rail_manipulation_msgs::ArmGoalConstP
       armServer.publishFeedback(feedback);
       break;
     case rail_manipulation_msgs::ArmGoal::RETRACT:
-      feedback.message = "Retract arm completed.";
+      feedback.message = "Arm reset successfully.";
       armServer.publishFeedback(feedback);
       break;
     default:

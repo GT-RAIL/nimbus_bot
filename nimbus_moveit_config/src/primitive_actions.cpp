@@ -29,15 +29,15 @@ void PrimitiveActions::executePrimitive(const rail_manipulation_msgs::PrimitiveG
     {
       case (rail_manipulation_msgs::PrimitiveGoal::X_AXIS):
         if (goal->distance >= 0)
-          direction = "forward";
-        else
-          direction = "back";
-        break;
-      case (rail_manipulation_msgs::PrimitiveGoal::Y_AXIS):
-        if (goal->distance >= 0)
           direction = "right";
         else
           direction = "left";
+        break;
+      case (rail_manipulation_msgs::PrimitiveGoal::Y_AXIS):
+        if (goal->distance >= 0)
+          direction = "forward";
+        else
+          direction = "back";
         break;
       case (rail_manipulation_msgs::PrimitiveGoal::Z_AXIS):
         if (goal->distance >= 0)
@@ -153,8 +153,10 @@ void PrimitiveActions::executePrimitive(const rail_manipulation_msgs::PrimitiveG
     bool commandFinished = false;
     double prevJointPos = getAngularPosition.response.pos[wristJoint];
     double startJointPos = getAngularPosition.response.pos[wristJoint];
+    ros::Duration(0.5).sleep(); //short wait to allow arm to start moving
     while (!commandFinished)
     {
+      loopRate.sleep();
       if (!jacoPosClient.call(getAngularPosition))
       {
         ROS_INFO("Jaco Angular Position service call failed.");
@@ -168,6 +170,7 @@ void PrimitiveActions::executePrimitive(const rail_manipulation_msgs::PrimitiveG
     }
 
     //publish stop command
+    angularCmd.position = false;
     for (unsigned int i = 0; i < NUM_JACO_JOINTS; i ++)
     {
       angularCmd.joints.push_back(0.0);
