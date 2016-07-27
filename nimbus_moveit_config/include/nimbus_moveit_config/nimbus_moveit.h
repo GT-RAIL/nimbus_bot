@@ -62,6 +62,7 @@ private:
   ros::Subscriber cartesianControlSubscriber;
   ros::Subscriber armHomedSubscriber;
   ros::Subscriber recognizedObjectsSubscriber;
+  ros::Subscriber followJointTrajectoryResultSubscriber;
   ros::Publisher angularCmdPublisher;
   ros::Publisher trajectoryVisPublisher;
   ros::Publisher graspingStatePublisher;
@@ -98,6 +99,7 @@ private:
   std::vector<std::string> simplifiedGeometryNames;
   std::string ignoredObject;
 
+  bool executionFinished; //state of execution, used for monitoring results of asyncExecute
 
   void moveToPose(const rail_manipulation_msgs::MoveToPoseGoalConstPtr &goal);
 
@@ -116,6 +118,8 @@ private:
   void armHomedCallback(const std_msgs::Bool &msg);
 
   void recognizedObjectsCallback(const rail_manipulation_msgs::SegmentedObjectList &msg);
+
+  void followJointTrajectoryResultCallback(const control_msgs::FollowJointTrajectoryActionResult &msg);
 
   bool attachClosestSceneObject(std_srvs::Empty::Request &req, std_srvs::Empty::Response &res);
 

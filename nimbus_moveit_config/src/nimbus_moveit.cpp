@@ -33,6 +33,7 @@ NimbusMoveIt::NimbusMoveIt() :
   cartesianControlSubscriber = pnh.subscribe("cartesian_control", 1, &NimbusMoveIt::cartesianControlCallback, this);
   armHomedSubscriber = n.subscribe("jaco_arm/arm_homed", 1, &NimbusMoveIt::armHomedCallback, this);
   recognizedObjectsSubscriber = n.subscribe("object_recognition_listener/recognized_objects", 1, &NimbusMoveIt::recognizedObjectsCallback, this);
+  followJointTrajectoryResultSubscriber = n.subscribe("jaco_arm/joint_velocity_controller/trajectory/result", 1, &NimbusMoveIt::followJointTrajectoryResultCallback, this);
 
   angularCmdPublisher = n.advertise<wpi_jaco_msgs::AngularCommand>("jaco_arm/angular_cmd", 1);
   trajectoryVisPublisher = pnh.advertise<moveit_msgs::DisplayTrajectory>("computed_trajectory", 1);
@@ -364,10 +365,30 @@ bool NimbusMoveIt::cartesianPathCallback(rail_manipulation_msgs::CartesianPath::
   plan.trajectory_ = finalTraj;
   moveit::core::robotStateToRobotStateMsg(*(jacoArmGroup->getCurrentState()), plan.start_state_);
   //plan.planning_time_ = 0.0; //does this matter?
-  jacoArmGroup->execute(plan);
+  jacoArmGroup->asyncExecute(plan);
 
+  executionFinished = false;
+  ros::Rate loopRate(30);
+  ros::Time timeout = ros::Time::now() + ros::Duration(2.0);
   res.success = true;
+  while (!executionFinished)
+  {
+    if (ros::Time::now() >= timeout)
+    {
+      jacoArmGroup->stop();
+      res.success = false;
+      ROS_INFO("Timeout reached, stopping trajectory execution.");
+    }
+    loopRate.sleep();
+    ros::spinOnce();
+  }
+
   return true;
+}
+
+void NimbusMoveIt::followJointTrajectoryResultCallback(const control_msgs::FollowJointTrajectoryActionResult &msg)
+{
+  executionFinished = true;
 }
 
 bool NimbusMoveIt::ikCallback(rail_manipulation_msgs::CallIK::Request &req, rail_manipulation_msgs::CallIK::Response &res)
