@@ -7,13 +7,30 @@ project(nimbus_interactive_manipulation)
 
 find_package(catkin REQUIRED COMPONENTS
   actionlib
+  actionlib_msgs
   interactive_markers
+  message_generation
   move_base_msgs
   rail_segmentation
   rail_pick_and_place_msgs
   roscpp
   sensor_msgs
   visualization_msgs
+)
+
+################################################
+## Declare ROS messages, services and actions ##
+################################################
+
+add_action_files(
+  FILES
+  SpecifiedGrasp.action
+)
+
+## Generate added messages and services with any dependencies listed here
+generate_messages(
+  DEPENDENCIES
+  actionlib_msgs
 )
 
 ###################################################
@@ -37,20 +54,30 @@ include_directories(
 
 ## Declare a cpp executable
 add_executable(nimbus_interactive_manipulation src/nimbus_interactive_manipulation.cpp)
+add_executable(nimbus_6dof_planning src/nimbus6dofPlanning.cpp)
+add_executable(nimbus_6dof_vis src/nimbus6dofVis.cpp)
 
 ## Specify libraries to link a library or executable target against
 target_link_libraries(nimbus_interactive_manipulation
   ${catkin_LIBRARIES}
 )
+target_link_libraries(nimbus_6dof_planning
+  ${catkin_LIBRARIES}
+  )
+target_link_libraries(nimbus_6dof_vis
+  ${catkin_LIBRARIES}
+  )
+
 ## Add cmake target dependencies of the executable/library
-add_dependencies(${PROJECT_NAME} rail_pick_and_place_msgs_gencpp)
+add_dependencies(nimbus_interactive_manipulation rail_pick_and_place_msgs_gencpp wpi_jaco_msgs_gencpp)
+add_dependencies(nimbus_6dof_planning rail_pick_and_place_msgs_gencpp wpi_jaco_msgs_gencpp)
 
 #############
 ## Install ##
 #############
 
 ## Mark executables and/or libraries for installation
-install(TARGETS ${PROJECT_NAME} nimbus_interactive_manipulation
+install(TARGETS nimbus_interactive_manipulation nimbus_6dof_planning
   RUNTIME DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
 )
 
