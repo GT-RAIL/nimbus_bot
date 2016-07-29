@@ -307,13 +307,10 @@ bool NimbusMoveIt::cartesianPathCallback(rail_manipulation_msgs::CartesianPath::
   }
   else
   {
+    finalTraj = tempTraj;
     ROS_INFO("Could not find a complete path, varying parameters and recalculating...");
     //vary jumpThreshold and eefStep
-    for (unsigned int i = 0; i < 2; i ++)
-    {
-      double newCompletion;
-      if (i != 0)
-        jumpThreshold += 1.5;
+    double newCompletion;
       for (unsigned int j = 0; j < 3; j ++)
       {
         if (j == 0)
@@ -333,9 +330,6 @@ bool NimbusMoveIt::cartesianPathCallback(rail_manipulation_msgs::CartesianPath::
           }
         }
       }
-      if (newCompletion == 1.0)
-        break;
-    }
   }
 
   if (completion == 0.0)

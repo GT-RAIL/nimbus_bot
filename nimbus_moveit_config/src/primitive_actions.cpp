@@ -117,9 +117,9 @@ void PrimitiveActions::executePrimitive(const rail_manipulation_msgs::PrimitiveG
     ss << "Rotating the gripper ";
     string direction;
     if (goal->distance >= 0)
-      direction = "clockwise";
-    else
       direction = "counterclockwise";
+    else
+      direction = "clockwise";
     ss << direction << "...";
 
     feedback.feedback = ss.str();
@@ -177,9 +177,9 @@ void PrimitiveActions::executePrimitive(const rail_manipulation_msgs::PrimitiveG
     }
     angularCmdPublisher.publish(angularCmd);
 
-    result.completion = min(fabs(prevJointPos - startJointPos)/goal->distance, 1.0);
+    result.completion = min(fabs((prevJointPos - startJointPos)/goal->distance), 1.0);
 
-    if (result.completion > 0.5)
+    if (result.completion <= 0.5)
     {
       ss.str("");
       ss << "The gripper couldn't fully rotate " << direction << ". Try another command.";
