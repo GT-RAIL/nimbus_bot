@@ -6,14 +6,10 @@ Nimbus6dofPlanning::Nimbus6dofPlanning() :
         pnh("~"), pickupUnrecognizedClient("nimbus_moveit/common_actions/pickup_unrecognized"),
         specifiedGraspServer(pnh, "execute_grasp", boost::bind(&Nimbus6dofPlanning::executeGraspCallback, this, _1), false)
 {
-  joints.resize(6);
-
   //messages
   markerPosePublisher = pnh.advertise<geometry_msgs::PoseStamped>("gripper_marker_pose", 1);
-  jointStateSubscriber = n.subscribe("jaco_arm/joint_states", 1, &Nimbus6dofPlanning::updateJoints, this);
 
   //services
-  jacoFkClient = n.serviceClient<wpi_jaco_msgs::JacoFK>("jaco_arm/kinematics/fk");
   resetMarkerPositionServer = pnh.advertiseService("reset_marker_position", &Nimbus6dofPlanning::resetMarkerPositionCallback, this);
 
   imServer.reset(
@@ -28,55 +24,67 @@ Nimbus6dofPlanning::Nimbus6dofPlanning() :
   specifiedGraspServer.start();
 }
 
-void Nimbus6dofPlanning::updateJoints(const sensor_msgs::JointState::ConstPtr& msg)
-{
-  for (unsigned int i = 0; i < 6; i++)
-  {
-    joints.at(i) = msg->position.at(i);
-  }
-}
-
 void Nimbus6dofPlanning::makeGripperMarker()
 {
   visualization_msgs::InteractiveMarker iMarker;
-  iMarker.header.frame_id = "nimbus_ee_link";
+  iMarker.header.frame_id = "table_base_link";
 
-  //initialize position to the jaco arm's current position
-  wpi_jaco_msgs::JacoFK fkSrv;
-  for (unsigned int i = 0; i < 6; i++)
-  {
-    fkSrv.request.joints.push_back(joints.at(i));
-  }
-  iMarker.pose.position.x = 0.0;
-  iMarker.pose.position.y = 0.0;
-  iMarker.pose.position.z = 0.0;
-  iMarker.pose.orientation.x = 0.0;
-  iMarker.pose.orientation.y = 0.0;
-  iMarker.pose.orientation.z = 0.0;
-  iMarker.pose.orientation.w = 1.0;
+  tf::StampedTransform currentEefTransform;
+  tfListener.waitForTransform("nimbus_ee_link", "table_base_link", ros::Time::now(), ros::Duration(1.0));
+  tfListener.lookupTransform("table_base_link", "nimbus_ee_link", ros::Time(0), currentEefTransform);
+  iMarker.pose.position.x = currentEefTransform.getOrigin().x();
+  iMarker.pose.position.y = currentEefTransform.getOrigin().y();
+  iMarker.pose.position.z = currentEefTransform.getOrigin().z();
+  iMarker.pose.orientation.x = currentEefTransform.getRotation().x();
+  iMarker.pose.orientation.y = currentEefTransform.getRotation().y();
+  iMarker.pose.orientation.z = currentEefTransform.getRotation().z();
+  iMarker.pose.orientation.w = currentEefTransform.getRotation().w();
+
   iMarker.scale = 0.2;
 
   iMarker.name = "nimbus_gripper";
   iMarker.description = "Set Nimbus' gripper pose";
 
-  //make a sphere control to represent the end effector position
+  //make a shape primitive representation of a gripper
   visualization_msgs::Marker gripperMarker;
-  //gripperMarker.pose.position.x = -0.125;
-  //gripperMarker.pose.orientation.x = 0.7071;
-  //gripperMarker.pose.orientation.w = 0.7071;
   gripperMarker.pose.orientation.w = 1.0;
-  gripperMarker.type = visualization_msgs::Marker::MESH_RESOURCE;
-  gripperMarker.mesh_resource = "package://agile_test_nodes/meshes/robotiq_85_base_link.dae";
-  gripperMarker.scale.x = 1.0;
-  gripperMarker.scale.y = 1.0;
-  gripperMarker.scale.z = 1.0;
+  gripperMarker.type = visualization_msgs::Marker::CUBE;
+  gripperMarker.scale.x = 0.1;
+  gripperMarker.scale.y = 0.02;
+  gripperMarker.scale.z = 0.05;
   gripperMarker.color.r = 1.0;
   gripperMarker.color.g = 1.0;
   gripperMarker.color.b = 0.0;
   gripperMarker.color.a = 0.5;
+  visualization_msgs::Marker gripperFingerL;
+  gripperFingerL.pose.position.x = 0.05;
+  gripperFingerL.pose.position.z = -0.025;
+  gripperFingerL.pose.orientation.w = 1.0;
+  gripperFingerL.type = visualization_msgs::Marker::CUBE;
+  gripperFingerL.scale.x = 0.1;
+  gripperFingerL.scale.y = 0.01;
+  gripperFingerL.scale.z = 0.005;
+  gripperFingerL.color.r = 1.0;
+  gripperFingerL.color.g = 1.0;
+  gripperFingerL.color.b = 0.0;
+  gripperFingerL.color.a = 0.5;
+  visualization_msgs::Marker gripperFingerR;
+  gripperFingerR.pose.position.x = 0.05;
+  gripperFingerR.pose.position.z = -0.025;
+  gripperFingerR.pose.orientation.w = 1.0;
+  gripperFingerR.type = visualization_msgs::Marker::CUBE;
+  gripperFingerR.scale.x = 0.1;
+  gripperFingerR.scale.y = 0.01;
+  gripperFingerR.scale.z = 0.005;
+  gripperFingerR.color.r = 1.0;
+  gripperFingerR.color.g = 1.0;
+  gripperFingerR.color.b = 0.0;
+  gripperFingerR.color.a = 0.5;
 
   visualization_msgs::InteractiveMarkerControl gripperControl;
   gripperControl.markers.push_back(gripperMarker);
+  gripperControl.markers.push_back(gripperFingerL);
+  gripperControl.markers.push_back(gripperFingerR);
   gripperControl.interaction_mode = visualization_msgs::InteractiveMarkerControl::NONE;
   gripperControl.name = "gripper_control";
 
@@ -158,32 +166,21 @@ void Nimbus6dofPlanning::executeGraspCallback(const nimbus_interactive_manipulat
 
 bool Nimbus6dofPlanning::resetMarkerPositionCallback(std_srvs::Empty::Request &req, std_srvs::Empty::Response &res)
 {
-  //updateMarkerPosition();
+  tf::StampedTransform currentEefTransform;
+  tfListener.waitForTransform("nimbus_ee_link", "table_base_link", ros::Time::now(), ros::Duration(1.0));
+  tfListener.lookupTransform("table_base_link", "nimbus_ee_link", ros::Time(0), currentEefTransform);
   geometry_msgs::Pose pose;
-  pose.orientation.w = 1.0;
+  pose.position.x = currentEefTransform.getOrigin().x();
+  pose.position.y = currentEefTransform.getOrigin().y();
+  pose.position.z = currentEefTransform.getOrigin().z();
+  pose.orientation.x = currentEefTransform.getRotation().x();
+  pose.orientation.y = currentEefTransform.getRotation().y();
+  pose.orientation.z = currentEefTransform.getRotation().z();
+  pose.orientation.w = currentEefTransform.getRotation().w();
   imServer->setPose("nimbus_gripper", pose);
   imServer->applyChanges();
 
   return true;
-}
-
-void Nimbus6dofPlanning::updateMarkerPosition()
-{
-  wpi_jaco_msgs::JacoFK fkSrv;
-  for (unsigned int i = 0; i < 6; i++)
-  {
-    fkSrv.request.joints.push_back(joints.at(i));
-  }
-
-  if (jacoFkClient.call(fkSrv))
-  {
-    imServer->setPose("nimbus_gripper", fkSrv.response.handPose.pose);
-    imServer->applyChanges();
-  }
-  else
-  {
-    ROS_INFO("Failed to call forward kinematics service");
-  }
 }
 
 void Nimbus6dofPlanning::publishMarkerPosition()

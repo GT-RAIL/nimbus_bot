@@ -8,7 +8,7 @@ Nimbus6dofVis::Nimbus6dofVis() : pnh("~")
   markerPoseSubscriber = n.subscribe("nimbus_6dof_planning/gripper_marker_pose", 1, &Nimbus6dofVis::markerPositionCallback, this);
 
   imServer.reset(
-      new interactive_markers::InteractiveMarkerServer("nimbus_interactive_manipulation", "nimbus_6dof_vis", false));
+      new interactive_markers::InteractiveMarkerServer("nimbus_6dof_vis", "nimbus_6dof_vis", false));
 
   ros::Duration(0.1).sleep();
 

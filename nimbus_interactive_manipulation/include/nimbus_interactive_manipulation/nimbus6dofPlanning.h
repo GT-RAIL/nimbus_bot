@@ -9,6 +9,7 @@
 #include <rail_manipulation_msgs/PickupAction.h>
 #include <sensor_msgs/JointState.h>
 #include <std_srvs/Empty.h>
+#include <tf/transform_listener.h>
 #include <wpi_jaco_msgs/JacoFK.h>
 
 class Nimbus6dofPlanning
@@ -31,21 +32,14 @@ private:
 
   bool resetMarkerPositionCallback(std_srvs::Empty::Request &req, std_srvs::Empty::Response &res);
 
-  /**
-  * \brief Update the interactive marker on the JACO's end effector to move based on the the current joint state of the arm
-  */
-  void updateMarkerPosition();
-
   void executeGraspCallback(const nimbus_interactive_manipulation::SpecifiedGraspGoalConstPtr &goal);
 
   ros::NodeHandle n, pnh;
 
   //messages
   ros::Publisher markerPosePublisher;
-  ros::Subscriber jointStateSubscriber;
 
   //services
-  ros::ServiceClient jacoFkClient;
   ros::ServiceServer resetMarkerPositionServer;
 
   //actionlib
@@ -54,7 +48,7 @@ private:
 
   boost::shared_ptr<interactive_markers::InteractiveMarkerServer> imServer; //!< interactive marker server
 
-  std::vector<float> joints;
+  tf::TransformListener tfListener;
 };
 
 #endif
