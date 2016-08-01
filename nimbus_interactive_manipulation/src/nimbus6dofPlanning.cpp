@@ -17,13 +17,15 @@ Nimbus6dofPlanning::Nimbus6dofPlanning() :
   resetMarkerPositionServer = pnh.advertiseService("reset_marker_position", &Nimbus6dofPlanning::resetMarkerPositionCallback, this);
 
   imServer.reset(
-      new interactive_markers::InteractiveMarkerServer("nimbus_interactive_manipulation", "nimbus_6dof_planning", false));
+      new interactive_markers::InteractiveMarkerServer("nimbus_6dof_planning", "nimbus_6dof_planning", false));
 
   ros::Duration(0.1).sleep();
 
   makeGripperMarker();
 
   imServer->applyChanges();
+
+  specifiedGraspServer.start();
 }
 
 void Nimbus6dofPlanning::updateJoints(const sensor_msgs::JointState::ConstPtr& msg)
@@ -37,7 +39,7 @@ void Nimbus6dofPlanning::updateJoints(const sensor_msgs::JointState::ConstPtr& m
 void Nimbus6dofPlanning::makeGripperMarker()
 {
   visualization_msgs::InteractiveMarker iMarker;
-  iMarker.header.frame_id = "table_base_link";
+  iMarker.header.frame_id = "nimbus_ee_link";
 
   //initialize position to the jaco arm's current position
   wpi_jaco_msgs::JacoFK fkSrv;
@@ -45,30 +47,24 @@ void Nimbus6dofPlanning::makeGripperMarker()
   {
     fkSrv.request.joints.push_back(joints.at(i));
   }
-  if (jacoFkClient.call(fkSrv))
-  {
-    iMarker.pose = fkSrv.response.handPose.pose;
-  }
-  else
-  {
-    iMarker.pose.position.x = 0.0;
-    iMarker.pose.position.y = 0.0;
-    iMarker.pose.position.z = 0.0;
-    iMarker.pose.orientation.x = 0.0;
-    iMarker.pose.orientation.y = 0.0;
-    iMarker.pose.orientation.z = 0.0;
-    iMarker.pose.orientation.w = 1.0;
-  }
-  iMarker.scale = 1.0;
+  iMarker.pose.position.x = 0.0;
+  iMarker.pose.position.y = 0.0;
+  iMarker.pose.position.z = 0.0;
+  iMarker.pose.orientation.x = 0.0;
+  iMarker.pose.orientation.y = 0.0;
+  iMarker.pose.orientation.z = 0.0;
+  iMarker.pose.orientation.w = 1.0;
+  iMarker.scale = 0.2;
 
   iMarker.name = "nimbus_gripper";
   iMarker.description = "Set Nimbus' gripper pose";
 
   //make a sphere control to represent the end effector position
   visualization_msgs::Marker gripperMarker;
-  gripperMarker.pose.position.x = -0.125;
-  gripperMarker.pose.orientation.x = 0.7071;
-  gripperMarker.pose.orientation.w = 0.7071;
+  //gripperMarker.pose.position.x = -0.125;
+  //gripperMarker.pose.orientation.x = 0.7071;
+  //gripperMarker.pose.orientation.w = 0.7071;
+  gripperMarker.pose.orientation.w = 1.0;
   gripperMarker.type = visualization_msgs::Marker::MESH_RESOURCE;
   gripperMarker.mesh_resource = "package://agile_test_nodes/meshes/robotiq_85_base_link.dae";
   gripperMarker.scale.x = 1.0;
@@ -162,7 +158,11 @@ void Nimbus6dofPlanning::executeGraspCallback(const nimbus_interactive_manipulat
 
 bool Nimbus6dofPlanning::resetMarkerPositionCallback(std_srvs::Empty::Request &req, std_srvs::Empty::Response &res)
 {
-  updateMarkerPosition();
+  //updateMarkerPosition();
+  geometry_msgs::Pose pose;
+  pose.orientation.w = 1.0;
+  imServer->setPose("nimbus_gripper", pose);
+  imServer->applyChanges();
 
   return true;
 }

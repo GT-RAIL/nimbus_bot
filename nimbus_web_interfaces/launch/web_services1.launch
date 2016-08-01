@@ -1,8 +1,3 @@
-<!--
-   Author: Aaron St. Clair, Georgia Institute of Technology
-  Version: March 30, 2016
--->
-
 <launch>
   <!-- rosbridge -->
   <include file="$(find rosbridge_server)/launch/rosbridge_websocket.launch"/>
@@ -18,7 +13,7 @@
 
   <!-- Interactive Markers -->
   <node name="nimbus_im_proxy" pkg="interactive_marker_proxy" type="proxy" output="screen">
-    <remap from="topic_ns" to="/nimbus_interactive_manipulation" />
+    <remap from="topic_ns" to="/nimbus_6dof_planning" />
     <remap from="target_frame" to="/table_base_link" />
   </node>
 </launch>
