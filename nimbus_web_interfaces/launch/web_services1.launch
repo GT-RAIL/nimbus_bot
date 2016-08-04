@@ -12,8 +12,23 @@
   <node pkg="rail_user_queue_manager" type="rail_user_queue_manager" name="rail_user_queue_manager" respawn="true" output="screen"/>
 
   <!-- Interactive Markers -->
-  <node name="nimbus_im_proxy" pkg="interactive_marker_proxy" type="proxy" output="screen">
+  <node name="nimbus_6dof_planning_proxy" pkg="interactive_marker_proxy" type="proxy" output="screen">
     <remap from="topic_ns" to="/nimbus_6dof_planning" />
+    <remap from="target_frame" to="/table_base_link" />
+  </node>
+
+  <node name="nimbus_6dof_vis_proxy" pkg="interactive_marker_proxy" type="proxy" output="screen">
+    <remap from="topic_ns" to="/nimbus_6dof_vis" />
+    <remap from="target_frame" to="/table_base_link" />
+  </node>
+
+  <node name="nimbus_im_proxy" pkg="interactive_marker_proxy" type="proxy" output="screen">
+    <remap from="topic_ns" to="/nimbus_interactive_manipulation" />
+    <remap from="target_frame" to="/table_base_link" />
+  </node>
+
+  <node name="nimbus_grasp_selector_proxy" pkg="interactive_marker_proxy" type="proxy" output="screen">
+    <remap from="topic_ns" to="/grasp_selector" />
     <remap from="target_frame" to="/table_base_link" />
   </node>
 </launch>
