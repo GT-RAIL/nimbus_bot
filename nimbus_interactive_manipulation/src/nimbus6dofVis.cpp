@@ -26,7 +26,7 @@ void Nimbus6dofVis::markerPositionCallback(const geometry_msgs::PoseStamped& pos
 void Nimbus6dofVis::makeGripperMarker()
 {
   visualization_msgs::InteractiveMarker iMarker;
-  iMarker.header.frame_id = "table_base_link";
+  iMarker.header.frame_id = "jaco_base_link";
 
   iMarker.pose.position.x = 0.0;
   iMarker.pose.position.y = 0.0;
