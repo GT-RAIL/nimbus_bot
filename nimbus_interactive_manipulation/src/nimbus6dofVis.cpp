@@ -40,58 +40,54 @@ void Nimbus6dofVis::makeGripperMarker()
   iMarker.name = "nimbus_gripper";
   iMarker.description = "View Nimbus' planned gripper pose";
 
-//  visualization_msgs::Marker gripperMarker;
-//  gripperMarker.pose.position.x = -0.125;
-//  gripperMarker.pose.orientation.x = 0.7071;
-//  gripperMarker.pose.orientation.w = 0.7071;
-//  gripperMarker.type = visualization_msgs::Marker::MESH_RESOURCE;
-//  gripperMarker.mesh_resource = "package://agile_test_nodes/meshes/robotiq_85_base_link.dae";
-//  gripperMarker.scale.x = 1.0;
-//  gripperMarker.scale.y = 1.0;
-//  gripperMarker.scale.z = 1.0;
-//  gripperMarker.color.r = 1.0;
-//  gripperMarker.color.g = 1.0;
-//  gripperMarker.color.b = 0.0;
-//  gripperMarker.color.a = 0.5;
-  visualization_msgs::Marker gripperMarker;
-  gripperMarker.pose.orientation.w = 1.0;
-  gripperMarker.type = visualization_msgs::Marker::CUBE;
-  gripperMarker.scale.x = 0.076;
-  gripperMarker.scale.y = 0.02;
-  gripperMarker.scale.z = 0.11;
-  gripperMarker.color.r = 0.75;
-  gripperMarker.color.g = 0.0;
-  gripperMarker.color.b = 0.75;
-  gripperMarker.color.a = 0.5;
-  visualization_msgs::Marker gripperFingerL;
-  gripperFingerL.pose.position.x = 0.065;
-  gripperFingerL.pose.position.z = -0.05;
-  gripperFingerL.pose.orientation.w = 1.0;
-  gripperFingerL.type = visualization_msgs::Marker::CUBE;
-  gripperFingerL.scale.x = 0.052;
-  gripperFingerL.scale.y = 0.02;
-  gripperFingerL.scale.z = 0.01;
-  gripperFingerL.color.r = 0.75;
-  gripperFingerL.color.g = 0.0;
-  gripperFingerL.color.b = 0.75;
-  gripperFingerL.color.a = 0.5;
-  visualization_msgs::Marker gripperFingerR;
-  gripperFingerR.pose.position.x = 0.065;
-  gripperFingerR.pose.position.z = 0.05;
-  gripperFingerR.pose.orientation.w = 1.0;
-  gripperFingerR.type = visualization_msgs::Marker::CUBE;
-  gripperFingerR.scale.x = 0.052;
-  gripperFingerR.scale.y = 0.02;
-  gripperFingerR.scale.z = 0.01;
-  gripperFingerR.color.r = 0.75;
-  gripperFingerR.color.g = 0.0;
-  gripperFingerR.color.b = 0.75;
-  gripperFingerR.color.a = 0.5;
+  //gripper mesh marker
+  visualization_msgs::Marker gripperBase = createGripperMeshMarker(
+      -0.055, 0, 0,
+      -0.707, 0, 0, 0.707,
+      "package://robotiq_85_description/meshes/robotiq_85_gripper/visual/robotiq_85_base_link.dae");
+  visualization_msgs::Marker gripperLeftKnuckle = createGripperMeshMarker(
+      -0.001, 0, -0.031,
+      0.707, 0, 0, 0.707,
+      "package://robotiq_85_description/meshes/robotiq_85_gripper/visual/robotiq_85_knuckle_link.dae");
+  visualization_msgs::Marker gripperRightKnuckle = createGripperMeshMarker(
+      -0.001, 0, 0.031,
+      -0.707, 0, 0, 0.707,
+      "package://robotiq_85_description/meshes/robotiq_85_gripper/visual/robotiq_85_knuckle_link.dae");
+  visualization_msgs::Marker gripperLeftFinger = createGripperMeshMarker(
+      -0.005, 0, -0.062,
+      0.707, 0, 0, 0.707,
+      "package://robotiq_85_description/meshes/robotiq_85_gripper/visual/robotiq_85_finger_link.dae");
+  visualization_msgs::Marker gripperRightFinger = createGripperMeshMarker(
+      -0.005, 0, 0.062,
+      -0.707, 0, 0, 0.707,
+      "package://robotiq_85_description/meshes/robotiq_85_gripper/visual/robotiq_85_finger_link.dae");
+  visualization_msgs::Marker gripperLeftInnerKnuckle = createGripperMeshMarker(
+      0.006, 0, -0.013,
+      0.707, 0, 0, 0.707,
+      "package://robotiq_85_description/meshes/robotiq_85_gripper/visual/robotiq_85_inner_knuckle_link.dae");
+  visualization_msgs::Marker gripperRightInnerKnuckle = createGripperMeshMarker(
+      0.006, 0, 0.013,
+      -0.707, 0, 0, 0.707,
+      "package://robotiq_85_description/meshes/robotiq_85_gripper/visual/robotiq_85_inner_knuckle_link.dae");
+  visualization_msgs::Marker gripperLeftFingerTip = createGripperMeshMarker(
+      0.049, 0, -0.05,
+      0.707, 0, 0, 0.707,
+      "package://robotiq_85_description/meshes/robotiq_85_gripper/visual/robotiq_85_finger_tip_link.dae");
+  visualization_msgs::Marker gripperRightFingerTip = createGripperMeshMarker(
+      0.049, 0, 0.05,
+      -0.707, 0, 0, 0.707,
+      "package://robotiq_85_description/meshes/robotiq_85_gripper/visual/robotiq_85_finger_tip_link.dae");
 
   visualization_msgs::InteractiveMarkerControl gripperControl;
-  gripperControl.markers.push_back(gripperMarker);
-  gripperControl.markers.push_back(gripperFingerL);
-  gripperControl.markers.push_back(gripperFingerR);
+  gripperControl.markers.push_back(gripperBase);
+  gripperControl.markers.push_back(gripperLeftKnuckle);
+  gripperControl.markers.push_back(gripperRightKnuckle);
+  gripperControl.markers.push_back(gripperLeftFinger);
+  gripperControl.markers.push_back(gripperRightFinger);
+  gripperControl.markers.push_back(gripperLeftInnerKnuckle);
+  gripperControl.markers.push_back(gripperRightInnerKnuckle);
+  gripperControl.markers.push_back(gripperLeftFingerTip);
+  gripperControl.markers.push_back(gripperRightFingerTip);
   gripperControl.interaction_mode = visualization_msgs::InteractiveMarkerControl::NONE;
   gripperControl.name = "gripper_control";
   gripperControl.always_visible = true;
@@ -99,6 +95,29 @@ void Nimbus6dofVis::makeGripperMarker()
   iMarker.controls.push_back(gripperControl);
 
   imServer->insert(iMarker);
+}
+
+visualization_msgs::Marker Nimbus6dofVis::createGripperMeshMarker(double x, double y, double z, double rx, double ry, double rz, double rw, string meshLocation)
+{
+  visualization_msgs::Marker marker;
+  marker.pose.position.x = x;
+  marker.pose.position.y = y;
+  marker.pose.position.z = z;
+  marker.pose.orientation.x = rx;
+  marker.pose.orientation.y = ry;
+  marker.pose.orientation.z = rz;
+  marker.pose.orientation.w = rw;
+  marker.type = visualization_msgs::Marker::MESH_RESOURCE;
+  marker.mesh_resource = meshLocation;
+  marker.scale.x = 1.0;
+  marker.scale.y = 1.0;
+  marker.scale.z = 1.0;
+  marker.color.r = 0.85;
+  marker.color.g = 0.0;
+  marker.color.b = 0.85;
+  marker.color.a = 0.5;
+
+  return marker;
 }
 
 int main(int argc, char **argv)

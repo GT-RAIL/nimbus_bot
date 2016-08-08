@@ -34,6 +34,8 @@ private:
 
   void executeGraspCallback(const nimbus_interactive_manipulation::SpecifiedGraspGoalConstPtr &goal);
 
+  visualization_msgs::Marker createGripperMeshMarker(double x, double y, double z, double rx, double ry, double rz, double rw, std::string meshLocation);
+
   ros::NodeHandle n, pnh;
 
   //messages
