@@ -29,6 +29,8 @@ private:
 
   void markerPositionCallback(const geometry_msgs::PoseStamped& pose);
 
+  visualization_msgs::Marker createGripperMeshMarker(double x, double y, double z, double rx, double ry, double rz, double rw, std::string meshLocation);
+
   /**
   * \brief Update the interactive marker on the JACO's end effector to move based on the the current joint state of the arm
   */
