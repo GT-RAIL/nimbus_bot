@@ -1,0 +1,78 @@
+<!--
+   Author: David Kent, Worcester Polytechnic Institute
+  Version: October 8, 2015
+-->
+
+<launch>
+  <!-- Arm Params -->
+  <arg name="home_arm_on_init" default="false" />
+
+  <!-- Gripper Params -->
+  <arg name="comport" default="/dev/ttyUSB0"/>
+  <arg name="baud" default="115200"/>
+
+  <!-- Segmentation Params -->
+  <arg name="debug" default="false" />
+
+  <!-- Recognition Params -->
+  <arg name="segmented_objects_topic" default="/rail_segmentation/segmented_objects" />
+
+  <!-- Manipulation Params -->
+  <arg name="using_pickup" default="true" />
+  <arg name="visualize_recognition" default="true" />
+
+  <!-- Jaco 2 -->
+  <include file="$(find wpi_jaco_wrapper)/launch/arm.launch">
+    <arg name="arm_name" value="jaco2" />
+    <arg name="kinova_gripper" value="false" />
+    <arg name="home_arm_on_init" value="$(arg home_arm_on_init)" />
+  </include>
+
+  <!-- Robotiq 85 ROS Driver -->
+  <node pkg="robotiq_85_driver" type="robotiq_85_driver" name="robotiq_85_driver" respawn="true" output="screen">
+    <param name="num_grippers" value="1" />
+    <param name="comport" value="$(arg comport)" />
+    <param name="baud" value="$(arg baud)" />
+  </node>
+  <node pkg="robotiq_85_gripper_actions" type="gripper_actions" name="gripper_actions" />
+
+  <include file="$(find nimbus_bringup)/launch/sensors2.launch" />
+  <include file="$(find nimbus_bringup)/launch/robot_model.launch" />
+
+  <include file="$(find nimbus_bringup)/launch/nimbus_recognition.launch">
+    <arg name="debug" value="$(arg debug)" />
+    <arg name="segmented_objects_topic" value="$(arg segmented_objects_topic)" />
+  </include>
+
+  <!--Depth Cloud -->
+  <node pkg="depthcloud_encoder" type="depthcloud_encoder_node" name="depth_cloud1">
+   <param name="depth" value="/camera1/depth_registered/image_float" />
+   <param name="rgb" value="/camera1/rgb/image_rect_color" />
+  </node>
+
+  <node pkg="depthcloud_encoder" type="depthcloud_encoder_node" name="depth_cloud2">
+   <param name="depth" value="/camera2/depth_registered/image_float" />
+   <param name="rgb" value="/camera2/rgb/image_rect_color" />
+  </node>
+
+  <!--depth cloud processing-->
+  <node pkg="nodelet" type="nodelet" name="convert1" args="standalone depth_image_proc/convert_metric standalone_nodelet">
+   <param name="image_raw" value="/camera2/depth_registered/image_raw" />
+   <param name="image" value="/camera2/rgb/image_float" />
+  </node>
+  <node pkg="nodelet" type="nodelet" name="convert2" args="standalone depth_image_proc/convert_metric standalone_nodelet">
+   <param name="image_raw" value="/camera1/depth_registered/image_raw" />
+   <param name="image" value="/camera1/rgb/image_float" />
+  </node>
+
+
+  <!-- MoveIt -->
+  <include file="$(find nimbus_moveit_config)/launch/nimbus_moveit_full.launch" />
+  <node pkg="nimbus_moveit_config" type="nimbus_moveit" name="nimbus_moveit" />
+  <node pkg="nimbus_moveit_config" type="common_actions" name="common_actions" output="screen"/>
+
+  <node pkg="nimbus_interactive_manipulation" type="nimbus_interactive_manipulation" name="nimbus_interactive_manipulation" output="screen">
+    <param name="using_pickup" value="$(arg using_pickup)" />
+    <param name="using_recognition" value="$(arg visualize_recognition)" />
+  </node>
+</launch>
