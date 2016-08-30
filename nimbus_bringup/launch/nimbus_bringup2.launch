@@ -60,14 +60,9 @@
   <!--depth cloud processing-->
   <node pkg="nodelet" type="nodelet" name="standalone_nodelet"  args="manager"/>
 
-  <node pkg="nodelet" type="nodelet" name="convert1" args="standalone depth_image_proc/convert_metric">
-   <arg name="image_raw" value="/camera2/depth_registered/image_raw" />
-   <arg name="image" value="/camera2/depth_registered/image_float" />
-  </node>
-  <node pkg="nodelet" type="nodelet" name="convert2" args="standalone depth_image_proc/convert_metric">
-   <arg name="image_raw" value="/camera1/depth_registered/image_raw" />
-   <arg name="image" value="/camera1/depth_registered/image_float" />
-  </node>
+  <node pkg="nodelet" type="nodelet" name="convert1" args="standalone depth_image_proc/convert_metric image_raw:=/camera2/depth_registered/image_raw image:=/camera2/depth_registered/image_float" />
+  <node pkg="nodelet" type="nodelet" name="convert2" args="standalone depth_image_proc/convert_metric image_raw:=/camera1/depth_registered/image_raw image:=/camera1/depth_registered/image_float" />
+  
 
 
   <!-- MoveIt -->
