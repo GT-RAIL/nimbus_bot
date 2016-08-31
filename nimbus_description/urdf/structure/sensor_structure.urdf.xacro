@@ -10,6 +10,14 @@
   <xacro:property name="pi" value="3.1415926535897931" />
 
   <xacro:macro name="nimbus_sensor_frame" params="parent *origin">
+    <!-- satellite camera -->
+    <joint name="${parent}_camera_side_link" type="fixed">
+      <parent link="${parent}" />
+      <child link="camera_side_link" />
+      <origin xyz="-0.104 -0.887 0.252" rpy="-0.032 0.035 1.538" /> <!-- Calibrated xyz and rpy for side camera go here (rosrun tf tf_echo /table_base_link /camera_side_link)-->
+    </joint>
+    <link name="camera_side_link" />
+
     <xacro:nimbus_sensor_frame_structure parent="${parent}">
       <xacro:insert_block name="origin" />
     </xacro:nimbus_sensor_frame_structure>
@@ -23,12 +31,75 @@
 
     <xacro:sensor_asus_xtion_pro parent="sensor_frame_sensor_link">
       <!--<origin xyz="0.001 -0.025 0.02" rpy="0.002 -0.236 -0.008" />--> <!-- insert calibrated x, y, z, pitch, and yaw here -->
-      <!--<origin xyz="0.007 0.006 0.014" rpy="0.002 -0.228 -0.010" />--> <!-- calbration 200 -->
-      <origin xyz="-0.017 0.000 -0.01" rpy="0.003 -0.176 -0.017" />
+      <!--<origin xyz="0.007 0.006 0.014" rpy="0.002 -0.228 -0.010" />--> <!-- calibration 200 -->
+      <!--<origin xyz="-0.017 0.000 -0.01" rpy="0.003 -0.176 -0.017" />-->
+      <origin xyz="-0.007 0.000 -0.015" rpy="0.003 -0.176 -0.017" />
     </xacro:sensor_asus_xtion_pro>
   </xacro:macro>
 
   <xacro:macro name="nimbus_sensor_frame_calibration" params="parent *origin">
+    <!-- satellite camera -->
+    <joint name="${parent}_calibrate_side_camera_link" type="fixed">
+      <parent link="${parent}" />
+      <child link="calibrate_side_camera_link" />
+      <origin xyz="-0.1 -0.9 0.25" rpy="0.0 0.0 ${pi/2.0}" /> <!-- todo: set to reasonable values -->
+    </joint>
+    <link name="calibrate_side_camera_link" />
+
+    <joint name="calibrate_side_camera_link_camera_side_x" type="prismatic">
+      <parent link="calibrate_side_camera_link" />
+      <child link="camera_side_x_link" />
+      <axis xyz="1 0 0" />
+      <limit effort="100" velocity="1" lower="-0.1" upper="0.1" />
+    </joint>
+    <link name="camera_side_x_link" />
+
+    <joint name="camera_side_x_link_camera_side_y_link" type="prismatic">
+      <parent link="camera_side_x_link" />
+      <child link="camera_side_y_link" />
+      <axis xyz="0 1 0" />
+      <limit effort="100" velocity="1" lower="-0.1" upper="0.1" />
+    </joint>
+    <link name="camera_side_y_link" />
+
+    <joint name="camera_side_y_link_camera_side_z_link" type="prismatic">
+      <parent link="camera_side_y_link" />
+      <child link="camera_side_z_link" />
+      <axis xyz="0 0 1" />
+      <limit effort="100" velocity="1" lower="-0.1" upper="0.1" />
+    </joint>
+    <link name="camera_side_z_link" />
+
+    <joint name="camera_side_z_link_camera_side_roll_link" type="revolute">
+      <parent link="camera_side_z_link" />
+      <child link="camera_side_roll_link" />
+      <axis xyz="1 0 0" />
+      <limit effort="100" velocity="20" lower="${-pi/8}" upper="${pi/8}" />
+    </joint>
+    <link name="camera_side_roll_link" />
+
+    <joint name="camera_side_roll_link_camera_side_pitch_link" type="revolute">
+      <parent link="camera_side_roll_link" />
+      <child link="camera_side_pitch_link" />
+      <axis xyz="0 1 0" />
+      <limit effort="100" velocity="20" lower="${-pi/8}" upper="${pi/8}" />
+    </joint>
+    <link name="camera_side_pitch_link" />
+
+    <joint name="camera_side_pitch_link_camera_side_yaw_link" type="revolute">
+      <parent link="camera_side_pitch_link" />
+      <child link="camera_side_yaw_link" />
+      <axis xyz="0 0 1" />
+      <limit effort="100" velocity="20" lower="${-pi/8}" upper="${pi/8}" />
+    </joint>
+    <link name="camera_side_yaw_link" />
+
+    <joint name="camera_side_yaw_link_camera_side_link" type="fixed">
+      <parent link="camera_side_yaw_link" />
+      <child link="camera_side_link" />
+      <origin xyz="0 0 0" rpy="0 0 0" />
+    </joint>
+    <link name="camera_side_link"/>
     <xacro:nimbus_sensor_frame_structure parent="${parent}">
       <xacro:insert_block name="origin" />
     </xacro:nimbus_sensor_frame_structure>

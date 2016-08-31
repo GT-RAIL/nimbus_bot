@@ -701,6 +701,62 @@
     <origin rpy="0 -1.57079632679 0" xyz="0 0 0"/>
   </joint>
   <link name="nimbus_ee_link"/>
+  <!-- satellite camera -->
+  <joint name="table_base_link_calibrate_side_camera_link" type="fixed">
+    <parent link="table_base_link"/>
+    <child link="calibrate_side_camera_link"/>
+    <origin rpy="0.0 0.0 1.57079632679" xyz="-0.1 -0.9 0.25"/>
+    <!-- todo: set to reasonable values -->
+  </joint>
+  <link name="calibrate_side_camera_link"/>
+  <joint name="calibrate_side_camera_link_camera_side_x" type="prismatic">
+    <parent link="calibrate_side_camera_link"/>
+    <child link="camera_side_x_link"/>
+    <axis xyz="1 0 0"/>
+    <limit effort="100" lower="-0.1" upper="0.1" velocity="1"/>
+  </joint>
+  <link name="camera_side_x_link"/>
+  <joint name="camera_side_x_link_camera_side_y_link" type="prismatic">
+    <parent link="camera_side_x_link"/>
+    <child link="camera_side_y_link"/>
+    <axis xyz="0 1 0"/>
+    <limit effort="100" lower="-0.1" upper="0.1" velocity="1"/>
+  </joint>
+  <link name="camera_side_y_link"/>
+  <joint name="camera_side_y_link_camera_side_z_link" type="prismatic">
+    <parent link="camera_side_y_link"/>
+    <child link="camera_side_z_link"/>
+    <axis xyz="0 0 1"/>
+    <limit effort="100" lower="-0.1" upper="0.1" velocity="1"/>
+  </joint>
+  <link name="camera_side_z_link"/>
+  <joint name="camera_side_z_link_camera_side_roll_link" type="revolute">
+    <parent link="camera_side_z_link"/>
+    <child link="camera_side_roll_link"/>
+    <axis xyz="1 0 0"/>
+    <limit effort="100" lower="-0.392699081699" upper="0.392699081699" velocity="20"/>
+  </joint>
+  <link name="camera_side_roll_link"/>
+  <joint name="camera_side_roll_link_camera_side_pitch_link" type="revolute">
+    <parent link="camera_side_roll_link"/>
+    <child link="camera_side_pitch_link"/>
+    <axis xyz="0 1 0"/>
+    <limit effort="100" lower="-0.392699081699" upper="0.392699081699" velocity="20"/>
+  </joint>
+  <link name="camera_side_pitch_link"/>
+  <joint name="camera_side_pitch_link_camera_side_yaw_link" type="revolute">
+    <parent link="camera_side_pitch_link"/>
+    <child link="camera_side_yaw_link"/>
+    <axis xyz="0 0 1"/>
+    <limit effort="100" lower="-0.392699081699" upper="0.392699081699" velocity="20"/>
+  </joint>
+  <link name="camera_side_yaw_link"/>
+  <joint name="camera_side_yaw_link_camera_side_link" type="fixed">
+    <parent link="camera_side_yaw_link"/>
+    <child link="camera_side_link"/>
+    <origin rpy="0 0 0" xyz="0 0 0"/>
+  </joint>
+  <link name="camera_side_link"/>
   <joint name="table_base_link_sensor_frame_center_link_joint" type="fixed">
     <parent link="table_base_link"/>
     <child link="sensor_frame_center_link"/>

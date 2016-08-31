@@ -703,6 +703,14 @@
     <origin rpy="0 -1.57079632679 0" xyz="0 0 0"/>
   </joint>
   <link name="nimbus_ee_link"/>
+  <!-- satellite camera -->
+  <joint name="table_base_link_camera_side_link" type="fixed">
+    <parent link="table_base_link"/>
+    <child link="camera_side_link"/>
+    <origin rpy="-0.032 0.035 1.538" xyz="-0.104 -0.887 0.252"/>
+    <!-- Calibrated xyz and rpy for side camera go here (rosrun tf tf_echo /table_base_link /camera_side_link)-->
+  </joint>
+  <link name="camera_side_link"/>
   <joint name="table_base_link_sensor_frame_center_link_joint" type="fixed">
     <parent link="table_base_link"/>
     <child link="sensor_frame_center_link"/>
@@ -936,7 +944,7 @@
   </joint>
   <link name="sensor_frame_sensor_link"/>
   <joint name="camera_rgb_joint" type="fixed">
-    <origin rpy="0.003 -0.176 -0.017" xyz="-0.017 0.000 -0.01"/>
+    <origin rpy="0.003 -0.176 -0.017" xyz="-0.007 0.000 -0.015"/>
     <parent link="sensor_frame_sensor_link"/>
     <child link="camera_rgb_frame"/>
   </joint>

@@ -36,7 +36,7 @@
   </node>
   <node pkg="robotiq_85_gripper_actions" type="gripper_actions" name="gripper_actions" />
 
-  <include file="$(find nimbus_bringup)/launch/sensors2.launch" />
+  <include file="$(find nimbus_bringup)/launch/sensors.launch" />
   <include file="$(find nimbus_bringup)/launch/robot_model.launch" />
 
   <include file="$(find nimbus_bringup)/launch/nimbus_recognition.launch">
@@ -46,22 +46,21 @@
 
   <!--Depth Cloud -->
   <node pkg="depthcloud_encoder" type="depthcloud_encoder_node" name="depth_cloud1">
-   <param name="depth" value="/camera1/depth_registered/image_float" />
-   <param name="rgb" value="/camera1/rgb/image_rect_color" />
-   <remap from="depthcloud_encoded" to="depthcloud_encoded1"/>
+   <param name="depth" value="/camera/depth_registered/image_float" />
+   <param name="rgb" value="/camera/rgb/image_rect_color" />
   </node>
 
   <node pkg="depthcloud_encoder" type="depthcloud_encoder_node" name="depth_cloud2">
-   <param name="depth" value="/camera2/depth_registered/image_float" />
-   <param name="rgb" value="/camera2/rgb/image_rect_color" />
-   <remap from="depthcloud_encoded" to="depthcloud_encoded2"/>
+   <param name="depth" value="/camera_side/depth_registered/image_float" />
+   <param name="rgb" value="/camera_side/rgb/image_rect_color" />
+   <remap from="depthcloud_encoded" to="depthcloud_encoded_side"/>
   </node>
 
   <!--depth cloud processing-->
   <node pkg="nodelet" type="nodelet" name="standalone_nodelet"  args="manager"/>
 
-  <node pkg="nodelet" type="nodelet" name="convert1" args="standalone depth_image_proc/convert_metric image_raw:=/camera2/depth_registered/image_raw image:=/camera2/depth_registered/image_float" />
-  <node pkg="nodelet" type="nodelet" name="convert2" args="standalone depth_image_proc/convert_metric image_raw:=/camera1/depth_registered/image_raw image:=/camera1/depth_registered/image_float" />
+  <node pkg="nodelet" type="nodelet" name="convert1" args="standalone depth_image_proc/convert_metric image_raw:=/camera/depth_registered/image_raw image:=/camera/depth_registered/image_float" />
+  <node pkg="nodelet" type="nodelet" name="convert2" args="standalone depth_image_proc/convert_metric image_raw:=/camera_side/depth_registered/image_raw image:=/camera_side/depth_registered/image_float" />
   
 
 
