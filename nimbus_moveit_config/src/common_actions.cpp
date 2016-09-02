@@ -242,7 +242,10 @@ void CommonActions::executePickupUnrecognized(const rail_manipulation_msgs::Pick
   geometry_msgs::PoseStamped graspPose, approachAnglePose;
   graspPose.header.frame_id = "table_base_link";
   if (goal->pose.header.frame_id != "table_base_link")
+  {
+    tfListener.waitForTransform(goal->pose.header.frame_id, "table_base_link", ros::Time::now(), ros::Duration(1.0));
     tfListener.transformPose("table_base_link", goal->pose, graspPose);
+  }
   else
     graspPose = goal->pose;
 
