@@ -22,6 +22,11 @@ find_package(catkin REQUIRED COMPONENTS
 ## Declare ROS messages, services and actions ##
 ################################################
 
+add_service_files(
+  FILES
+  CreateNavidgetSphere.srv
+)
+
 add_action_files(
   FILES
   SpecifiedGrasp.action
@@ -31,6 +36,7 @@ add_action_files(
 generate_messages(
   DEPENDENCIES
   actionlib_msgs
+  geometry_msgs
 )
 
 ###################################################
@@ -56,6 +62,7 @@ include_directories(
 add_executable(nimbus_interactive_manipulation src/nimbus_interactive_manipulation.cpp)
 add_executable(nimbus_6dof_planning src/nimbus6dofPlanning.cpp)
 add_executable(nimbus_6dof_vis src/nimbus6dofVis.cpp)
+add_executable(nimbus_navidget src/nimbusNavidget.cpp)
 
 ## Specify libraries to link a library or executable target against
 target_link_libraries(nimbus_interactive_manipulation
@@ -67,10 +74,14 @@ target_link_libraries(nimbus_6dof_planning
 target_link_libraries(nimbus_6dof_vis
   ${catkin_LIBRARIES}
   )
+target_link_libraries(nimbus_navidget
+  ${catkin_LIBRARIES}
+  )
 
 ## Add cmake target dependencies of the executable/library
 add_dependencies(nimbus_interactive_manipulation rail_pick_and_place_msgs_gencpp wpi_jaco_msgs_gencpp)
-add_dependencies(nimbus_6dof_planning rail_pick_and_place_msgs_gencpp wpi_jaco_msgs_gencpp)
+add_dependencies(nimbus_6dof_planning rail_manipulation_msgs_gencpp wpi_jaco_msgs_gencpp)
+add_dependencies(nimbus_navidget rail_manipulation_msgs_gencpp)
 
 #############
 ## Install ##
