@@ -8,7 +8,7 @@
 
  <!--depth cloud and video server -->
   <node pkg = "web_video_server" type="web_video_server" name="web_video_server" respawn="true" output="screen">
-	<param name="port" value="9999" />
+	<param name="port" value="8080" />
 </node>
   <!-- user queue -->
   <node pkg="rail_user_queue_manager" type="rail_user_queue_manager" name="rail_user_queue_manager" respawn="true" output="screen"/>

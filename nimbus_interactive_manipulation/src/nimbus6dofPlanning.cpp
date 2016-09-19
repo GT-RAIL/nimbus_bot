@@ -186,7 +186,7 @@ void Nimbus6dofPlanning::executeGraspCallback(const nimbus_interactive_manipulat
   if (!pickupResult->executionSuccess)
   {
     ROS_INFO("Grasp failed!");
-    feedback.message = "The robot failed to plan to your selected grasp.";
+    feedback.message = "Failed to plan to your grasp. Try a different start or end pose, and watch out for collisions.";
   }
   else
   {

@@ -363,7 +363,7 @@ bool NimbusMoveIt::cartesianPathCallback(rail_manipulation_msgs::CartesianPath::
 
   executionFinished = false;
   ros::Rate loopRate(30);
-  ros::Time timeout = ros::Time::now() + ros::Duration(2.0);
+  ros::Time timeout = ros::Time::now() + ros::Duration(1.5);
   res.success = true;
   while (!executionFinished)
   {
@@ -372,6 +372,7 @@ bool NimbusMoveIt::cartesianPathCallback(rail_manipulation_msgs::CartesianPath::
       jacoArmGroup->stop();
       res.success = false;
       ROS_INFO("Timeout reached, stopping trajectory execution.");
+      return true;
     }
     loopRate.sleep();
     ros::spinOnce();
