@@ -77,8 +77,13 @@ void NimbusNavidget::processMarkerFeedback(const visualization_msgs::Interactive
       imServer->get("navidget_sphere", navidgetSphere);
       visualization_msgs::Marker sphere = navidgetSphere.controls[0].markers[0];
       double roll = 0;
-      double pitch = asin((feedback->mouse_point.z - sphere.pose.position.z)/sqrt(pow(feedback->mouse_point.z - sphere.pose.position.z, 2) + pow(feedback->mouse_point.y - sphere.pose.position.y, 2)));
-      double yaw = asin((feedback->mouse_point.y - sphere.pose.position.y)/sqrt(pow(feedback->mouse_point.y - sphere.pose.position.y, 2) + pow(feedback->mouse_point.x - sphere.pose.position.x, 2)));
+      //double pitch = atan2(navidgetSphere.pose.position.z - feedback->mouse_point.z, sqrt(pow(feedback->mouse_point.x - navidgetSphere.pose.position.x, 2) + pow(feedback->mouse_point.y - navidgetSphere.pose.position.y, 2)));
+      double pitch = -asin((navidgetSphere.pose.position.z - feedback->mouse_point.z)/sqrt(pow(feedback->mouse_point.x - navidgetSphere.pose.position.x, 2) + pow(feedback->mouse_point.y - navidgetSphere.pose.position.y, 2) + pow(feedback->mouse_point.z - navidgetSphere.pose.position.z, 2)));
+      //double yaw = 0;
+      double yaw = atan2(navidgetSphere.pose.position.y - feedback->mouse_point.y, navidgetSphere.pose.position.x - feedback->mouse_point.x);
+      ROS_INFO("Mouse point: %f, %f, %f", feedback->mouse_point.x, feedback->mouse_point.y, feedback->mouse_point.z);
+      ROS_INFO("Sphere center: %f, %f, %f", navidgetSphere.pose.position.x, navidgetSphere.pose.position.y, navidgetSphere.pose.position.z);
+      ROS_INFO("Roll, Pitch, Yaw: %f, %f, %f", roll, pitch, yaw);
       geometry_msgs::QuaternionStamped orientation;
       orientation.quaternion = tf::createQuaternionMsgFromRollPitchYaw(roll, pitch, yaw);
       orientation.header.frame_id = navidgetSphere.header.frame_id;
