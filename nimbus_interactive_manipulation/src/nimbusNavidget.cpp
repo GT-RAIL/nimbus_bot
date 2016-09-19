@@ -23,6 +23,8 @@ NimbusNavidget::NimbusNavidget() :
 
 bool NimbusNavidget::createSphereMarkerCallback(nimbus_interactive_manipulation::CreateNavidgetSphere::Request &req, nimbus_interactive_manipulation::CreateNavidgetSphere::Response &res)
 {
+  boost::recursive_mutex::scoped_lock lock(graspMutex);
+
   imServer->clear();
 
   visualization_msgs::InteractiveMarker navidgetSphere;
@@ -69,6 +71,7 @@ bool NimbusNavidget::createSphereMarkerCallback(nimbus_interactive_manipulation:
 
 void NimbusNavidget::processMarkerFeedback(const visualization_msgs::InteractiveMarkerFeedbackConstPtr &feedback)
 {
+  boost::recursive_mutex::scoped_lock lock(graspMutex);
   if (feedback->control_name == "navidget_sphere_control" && feedback->event_type == visualization_msgs::InteractiveMarkerFeedback::BUTTON_CLICK)
   {
     if (feedback->mouse_point_valid)
@@ -220,6 +223,8 @@ visualization_msgs::Marker NimbusNavidget::createGripperMeshMarker(double x, dou
 
 void NimbusNavidget::executeGraspCallback(const nimbus_interactive_manipulation::SpecifiedGraspGoalConstPtr &goal)
 {
+  boost::recursive_mutex::scoped_lock lock(graspMutex);
+
   nimbus_interactive_manipulation::SpecifiedGraspFeedback feedback;
   nimbus_interactive_manipulation::SpecifiedGraspResult result;
 
@@ -227,7 +232,15 @@ void NimbusNavidget::executeGraspCallback(const nimbus_interactive_manipulation:
   specifiedGraspServer.publishFeedback(feedback);
 
   visualization_msgs::InteractiveMarker poseMarker;
-  imServer->get("nimbus_gripper", poseMarker);
+  if (!imServer->get("nimbus_gripper", poseMarker))
+  {
+    feedback.message = "Please specify a grasp first.  See the instructions pane for details.";
+    specifiedGraspServer.publishFeedback(feedback);
+    result.success = false;
+    result.executionSuccess = false;
+    specifiedGraspServer.setSucceeded(result);
+    return;
+  }
 
   rail_manipulation_msgs::PickupGoal pickupGoal;
   pickupGoal.pose.header = poseMarker.header;
@@ -255,6 +268,7 @@ void NimbusNavidget::executeGraspCallback(const nimbus_interactive_manipulation:
 
 bool NimbusNavidget::clearGripperMarkerCallback(std_srvs::Empty::Request &req, std_srvs::Empty::Response &res)
 {
+  boost::recursive_mutex::scoped_lock lock(graspMutex);
   imServer->erase("nimbus_gripper");
   imServer->applyChanges();
 
@@ -263,6 +277,7 @@ bool NimbusNavidget::clearGripperMarkerCallback(std_srvs::Empty::Request &req, s
 
 bool NimbusNavidget::clearFullMarkerCallback(std_srvs::Empty::Request &req, std_srvs::Empty::Response &res)
 {
+  boost::recursive_mutex::scoped_lock lock(graspMutex);
   imServer->clear();
   imServer->applyChanges();
 

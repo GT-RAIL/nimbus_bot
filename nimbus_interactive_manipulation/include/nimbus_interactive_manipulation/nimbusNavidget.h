@@ -4,6 +4,7 @@
 #include <ros/ros.h>
 #include <actionlib/client/simple_action_client.h>
 #include <actionlib/server/simple_action_server.h>
+#include <boost/thread/recursive_mutex.hpp>
 #include <interactive_markers/interactive_marker_server.h>
 #include <nimbus_interactive_manipulation/SpecifiedGraspAction.h>
 #include <nimbus_interactive_manipulation/CreateNavidgetSphere.h>
@@ -50,6 +51,8 @@ private:
   actionlib::SimpleActionServer<nimbus_interactive_manipulation::SpecifiedGraspAction> specifiedGraspServer;
 
   boost::shared_ptr<interactive_markers::InteractiveMarkerServer> imServer; //!< interactive marker server
+
+  boost::recursive_mutex graspMutex;
 
   tf::TransformListener tfListener;
 };
