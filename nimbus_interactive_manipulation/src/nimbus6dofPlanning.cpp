@@ -153,10 +153,10 @@ visualization_msgs::Marker Nimbus6dofPlanning::createGripperMeshMarker(double x,
   marker.scale.x = 1.0;
   marker.scale.y = 1.0;
   marker.scale.z = 1.0;
-  marker.color.r = 0.85;
+  marker.color.r = 0.65;
   marker.color.g = 0.0;
-  marker.color.b = 0.85;
-  marker.color.a = 0.5;
+  marker.color.b = 0.65;
+  marker.color.a = 0.8;
 
   return marker;
 }

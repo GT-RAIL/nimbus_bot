@@ -38,4 +38,9 @@
     <remap from="topic_ns" to="/grasp_selector" />
     <remap from="target_frame" to="/table_base_link" />
   </node>
+
+  <node name="nimbus_point_cloud_clicker_proxy" pkg="interactive_marker_proxy" type="proxy" output="screen">
+    <remap from="topic_ns" to="/point_cloud_clicker" />
+    <remap from="target_frame" to="/table_base_link" />
+  </node>
 </launch>

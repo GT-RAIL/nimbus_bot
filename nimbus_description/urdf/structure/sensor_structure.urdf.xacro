@@ -14,7 +14,7 @@
     <joint name="${parent}_camera_side_link" type="fixed">
       <parent link="${parent}" />
       <child link="camera_side_link" />
-      <origin xyz="-0.104 -0.887 0.252" rpy="-0.032 0.035 1.538" /> <!-- Calibrated xyz and rpy for side camera go here (rosrun tf tf_echo /table_base_link /camera_side_link)-->
+      <origin xyz="-0.152 -1.175 0.328" rpy="-0.019 0.077 1.523" /> <!-- Calibrated xyz and rpy for side camera go here (rosrun tf tf_echo /table_base_link /camera_side_link)-->
     </joint>
     <link name="camera_side_link" />
 
@@ -30,10 +30,7 @@
     <link name="sensor_frame_sensor_link" />
 
     <xacro:sensor_asus_xtion_pro parent="sensor_frame_sensor_link">
-      <!--<origin xyz="0.001 -0.025 0.02" rpy="0.002 -0.236 -0.008" />--> <!-- insert calibrated x, y, z, pitch, and yaw here -->
-      <!--<origin xyz="0.007 0.006 0.014" rpy="0.002 -0.228 -0.010" />--> <!-- calibration 200 -->
-      <!--<origin xyz="-0.017 0.000 -0.01" rpy="0.003 -0.176 -0.017" />-->
-      <origin xyz="-0.007 0.000 -0.015" rpy="0.003 -0.176 -0.017" />
+      <origin xyz="-0.003 -0.025 -0.003" rpy="0.006 -0.224 -0.009" /> <!-- insert calibrated x, y, z, pitch, and yaw here (rosrun tf tf_echo /sensor_frame_sensor_calibration_link sensor_frame_sensor_link)-->
     </xacro:sensor_asus_xtion_pro>
   </xacro:macro>
 

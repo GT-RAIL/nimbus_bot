@@ -49,8 +49,8 @@ bool NimbusNavidget::createSphereMarkerCallback(nimbus_interactive_manipulation:
   sphereMarker.scale.y = 0.3;
   sphereMarker.scale.z = 0.3;
   sphereMarker.color.r = 0.8;
-  sphereMarker.color.g = 0.5;
-  sphereMarker.color.b = 0;
+  sphereMarker.color.g = 0.3;
+  sphereMarker.color.b = 0.1;
   sphereMarker.color.a = 0.5;
 
   visualization_msgs::InteractiveMarkerControl sphereMarkerControl;
@@ -60,7 +60,28 @@ bool NimbusNavidget::createSphereMarkerCallback(nimbus_interactive_manipulation:
   sphereMarkerControl.description = "Click to set an approach angle";
   sphereMarkerControl.markers.push_back(sphereMarker);
 
+  visualization_msgs::Marker centerMarker;
+  centerMarker.ns = "navidget";
+  centerMarker.id = 1;
+  centerMarker.type = visualization_msgs::Marker::SPHERE;
+  centerMarker.pose.orientation.w = 1.0;
+  centerMarker.scale.x = 0.02;
+  centerMarker.scale.y = 0.02;
+  centerMarker.scale.z = 0.02;
+  centerMarker.color.r = 0.0;
+  centerMarker.color.g = 0.0;
+  centerMarker.color.b = 1.0;
+  centerMarker.color.a = 1.0;
+
+  visualization_msgs::InteractiveMarkerControl centerMarkerControl;
+  centerMarkerControl.name = "navidget_center_control";
+  centerMarkerControl.interaction_mode = visualization_msgs::InteractiveMarkerControl::NONE;
+  centerMarkerControl.always_visible = true;
+  centerMarkerControl.description = "";
+  centerMarkerControl.markers.push_back(centerMarker);
+
   navidgetSphere.controls.push_back(sphereMarkerControl);
+  navidgetSphere.controls.push_back(centerMarkerControl);
 
   imServer->insert(navidgetSphere);
   imServer->setCallback(navidgetSphere.name, boost::bind(&NimbusNavidget::processMarkerFeedback, this, _1));
@@ -80,13 +101,11 @@ void NimbusNavidget::processMarkerFeedback(const visualization_msgs::Interactive
       imServer->get("navidget_sphere", navidgetSphere);
       visualization_msgs::Marker sphere = navidgetSphere.controls[0].markers[0];
       double roll = 0;
-      //double pitch = atan2(navidgetSphere.pose.position.z - feedback->mouse_point.z, sqrt(pow(feedback->mouse_point.x - navidgetSphere.pose.position.x, 2) + pow(feedback->mouse_point.y - navidgetSphere.pose.position.y, 2)));
       double pitch = -asin((navidgetSphere.pose.position.z - feedback->mouse_point.z)/sqrt(pow(feedback->mouse_point.x - navidgetSphere.pose.position.x, 2) + pow(feedback->mouse_point.y - navidgetSphere.pose.position.y, 2) + pow(feedback->mouse_point.z - navidgetSphere.pose.position.z, 2)));
-      //double yaw = 0;
       double yaw = atan2(navidgetSphere.pose.position.y - feedback->mouse_point.y, navidgetSphere.pose.position.x - feedback->mouse_point.x);
-      ROS_INFO("Mouse point: %f, %f, %f", feedback->mouse_point.x, feedback->mouse_point.y, feedback->mouse_point.z);
-      ROS_INFO("Sphere center: %f, %f, %f", navidgetSphere.pose.position.x, navidgetSphere.pose.position.y, navidgetSphere.pose.position.z);
-      ROS_INFO("Roll, Pitch, Yaw: %f, %f, %f", roll, pitch, yaw);
+      //ROS_INFO("Mouse point: %f, %f, %f", feedback->mouse_point.x, feedback->mouse_point.y, feedback->mouse_point.z);
+      //ROS_INFO("Sphere center: %f, %f, %f", navidgetSphere.pose.position.x, navidgetSphere.pose.position.y, navidgetSphere.pose.position.z);
+      //ROS_INFO("Roll, Pitch, Yaw: %f, %f, %f", roll, pitch, yaw);
       geometry_msgs::QuaternionStamped orientation;
       orientation.quaternion = tf::createQuaternionMsgFromRollPitchYaw(roll, pitch, yaw);
       orientation.header.frame_id = navidgetSphere.header.frame_id;
@@ -212,10 +231,10 @@ visualization_msgs::Marker NimbusNavidget::createGripperMeshMarker(double x, dou
   marker.scale.x = 1.0;
   marker.scale.y = 1.0;
   marker.scale.z = 1.0;
-  marker.color.r = 0.85;
+  marker.color.r = 0.65;
   marker.color.g = 0.0;
-  marker.color.b = 0.85;
-  marker.color.a = 0.5;
+  marker.color.b = 0.65;
+  marker.color.a = 1.0;
 
   return marker;
 }
