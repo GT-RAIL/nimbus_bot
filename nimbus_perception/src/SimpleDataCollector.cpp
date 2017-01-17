@@ -67,28 +67,21 @@ void SimpleDataCollector::showObject(unsigned int index)
   dims.push_back(fabs(max_pt.z - min_pt.z));
   sort(dims.begin(), dims.end());
 
-  //convert rgb to hsv
-  pcl::PointXYZRGB rgb;
-  pcl::PointXYZHSV hsv;
-  rgb.r = objects.objects[index].marker.color.r * 255;
-  rgb.g = objects.objects[index].marker.color.g * 255;
-  rgb.b = objects.objects[index].marker.color.b * 255;
-  pcl::PointXYZRGBtoXYZHSV(rgb, hsv);
-
   //display object info
   ROS_INFO("--------------------------------------------");
   ROS_INFO("Showing data for object %d", index);
   ROS_INFO("RGB: %f, %f, %f", objects.objects[index].marker.color.r, objects.objects[index].marker.color.g, objects.objects[index].marker.color.b);
-  ROS_INFO("HSV: %f, %f, %f", hsv.h/360.0, hsv.s, hsv.v);
   ROS_INFO("Axis-aligned bounding box: %f, %f, %f", objects.objects[index].width, objects.objects[index].height, objects.objects[index].depth);
   ROS_INFO("Min area bounding box: %f, %f, %f", dims[0], dims[1], dims[2]);
   ROS_INFO("Center: %f, %f, %f", objects.objects[index].center.x, objects.objects[index].center.y, objects.objects[index].center.z);
   ROS_INFO("Size heuristic: %f", sqrt(pow(objects.objects[index].width,2) + pow(objects.objects[index].height,2) + pow(objects.objects[index].depth,2)));
   ROS_INFO("YAML entry: ");
-  cout << "- r: " << hsv.h/360.0 << endl;
-  cout << "  g: " << hsv.s << endl;
-  cout << "  b: " << hsv.v << endl;
-  cout << "  dims: [" << dims[0] << "," << dims[1] << "," << dims[2] << "]" << endl;
+  cout << "- r: " << objects.objects[index].marker.color.r << endl;
+  cout << "  g: " << objects.objects[index].marker.color.g << endl;
+  cout << "  b: " << objects.objects[index].marker.color.b << endl;
+  cout << "  x: " << dims[0] << endl;
+  cout << "  y: " << dims[1] << endl;
+  cout << "  z: " << dims[2] << endl;
   cout << "  label: " << endl;
 }
 

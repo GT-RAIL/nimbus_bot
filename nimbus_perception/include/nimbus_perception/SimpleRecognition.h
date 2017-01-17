@@ -6,6 +6,7 @@
 #include <pcl/kdtree/kdtree_flann.h>
 #include <pcl/point_types.h>
 #include <pcl/point_cloud.h>
+#include <pcl/registration/gicp.h>
 #include <ros/ros.h>
 #include <yaml-cpp/yaml.h>
 
@@ -36,6 +37,11 @@ private:
   std::vector<geometry_msgs::Vector3> dims;
   pcl::PointCloud<pcl::PointXYZ>::Ptr trainingDataPoints;
   pcl::KdTreeFLANN<pcl::PointXYZ>::Ptr kdTree;
+
+  float radiusThreshold;
 };
+
+//convert from RGB color space to CIELAB color space, taken and adapted from pcl/registration/gicp6d
+Eigen::Vector3f RGB2Lab (const Eigen::Vector3f& colorRGB);
 
 #endif

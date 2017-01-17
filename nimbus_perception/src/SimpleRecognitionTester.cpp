@@ -69,22 +69,11 @@ void SimpleRecognitionTester::showObject(unsigned int index)
   dims.push_back(fabs(max_pt.z - min_pt.z));
   sort(dims.begin(), dims.end());
 
-  //convert rgb to hsv
-  pcl::PointXYZRGB rgb;
-  pcl::PointXYZHSV hsv;
-  rgb.r = objects.objects[index].marker.color.r * 255;
-  rgb.g = objects.objects[index].marker.color.g * 255;
-  rgb.b = objects.objects[index].marker.color.b * 255;
-  pcl::PointXYZRGBtoXYZHSV(rgb, hsv);
-
   //get classification
   nimbus_perception::ClassifyInstance srv;
   srv.request.r = objects.objects[index].marker.color.r;
   srv.request.g = objects.objects[index].marker.color.g;
   srv.request.b = objects.objects[index].marker.color.b;
-  srv.request.h = hsv.h;
-  srv.request.s = hsv.s;
-  srv.request.v = hsv.v;
   srv.request.dims.x = dims[0];
   srv.request.dims.y = dims[1];
   srv.request.dims.z = dims[2];

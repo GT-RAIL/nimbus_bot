@@ -8,9 +8,6 @@
 #include <sensor_msgs/point_cloud_conversion.h>
 
 //PCL
-#include <pcl/point_types_conversion.h>
-#include <pcl/point_types.h>
-#include <pcl/point_cloud.h>
 #include <pcl/common/common.h>
 #include <pcl/common/transforms.h>
 
