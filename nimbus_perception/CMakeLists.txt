@@ -6,10 +6,13 @@ project(nimbus_perception)
 ## is used, also find other catkin packages
 
 find_package(catkin REQUIRED COMPONENTS
+  cmake_modules
+  geometry_msgs
   pcl_ros
   rail_manipulation_msgs
   roscpp
   )
+find_package(Eigen REQUIRED)
 find_package(PCL)
 find_package(PkgConfig)
 
@@ -23,6 +26,7 @@ add_service_files(FILES
   )
 
 generate_messages(DEPENDENCIES
+  geometry_msgs
   )
 
 ###################################################
@@ -48,6 +52,7 @@ endif()
 include_directories(
   include
   ${catkin_INCLUDE_DIRS}
+  ${EIGEN_INCLUDE_DIRS}
   ${YAML_CPP_INCLUDE_DIRS}
 )
 link_directories(${YAML_CPP_LIBRARY_DIRS})

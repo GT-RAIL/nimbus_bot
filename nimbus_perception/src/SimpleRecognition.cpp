@@ -26,7 +26,11 @@ void SimpleRecognition::readTrainingData(std::string filename)
     point.y = yamlNode[i]["g"].as<float>();
     point.z = yamlNode[i]["b"].as<float>();
     readData->points.push_back(point);
-    sizes.push_back(yamlNode[i]["size"].as<double>());
+    geometry_msgs::Vector3 dim;
+    dim.x = yamlNode[i]["x"].as<float>();
+    dim.x = yamlNode[i]["y"].as<float>();
+    dim.x = yamlNode[i]["z"].as<float>();
+    dims.push_back(dim);
     labels.push_back(yamlNode[i]["label"].as<string>());
   }
 
@@ -46,9 +50,12 @@ bool SimpleRecognition::classifyCallback(nimbus_perception::ClassifyInstance::Re
   float radius = 0.075;
 
   pcl::PointXYZ searchPoint;
-  searchPoint.x = req.r;
-  searchPoint.y = req.g;
-  searchPoint.z = req.b;
+  //searchPoint.x = req.r;
+  //searchPoint.y = req.g;
+  //searchPoint.z = req.b;
+  searchPoint.x = req.h;
+  searchPoint.y = req.s;
+  searchPoint.z = req.v;
 
   std::vector<int> pointIndices;
   std::vector<float> pointDistances;
@@ -61,14 +68,14 @@ bool SimpleRecognition::classifyCallback(nimbus_perception::ClassifyInstance::Re
   else if (neighbors > 1)
   {
     //use size to break ties
-    float minSizeDiff = numeric_limits<float>::infinity();
+    double minSizeDiff = numeric_limits<double>::infinity();
     int bestIndex = 0;
     for (unsigned int i = 0; i < neighbors; i ++)
     {
       ROS_INFO("Candidate: %s, at distance %f", labels[pointIndices[i]].c_str(), pointDistances[i]);
 
       int testIndex = pointIndices[i];
-      float testSizeDiff = fabs(req.size - sizes[testIndex]);
+      double testSizeDiff = fabs(req.dims.x - dims[testIndex].x) + fabs(req.dims.y - dims[testIndex].y) + fabs(req.dims.z - dims[testIndex].z);
       if (testSizeDiff < minSizeDiff)
       {
         minSizeDiff = testSizeDiff;

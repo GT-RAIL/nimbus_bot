@@ -3,8 +3,17 @@
 
 //ROS
 #include <nimbus_perception/ClassifyInstance.h>
+#include <pcl_ros/point_cloud.h>
 #include <rail_manipulation_msgs/SegmentedObjectList.h>
 #include <ros/ros.h>
+#include <sensor_msgs/point_cloud_conversion.h>
+
+//PCL
+#include <pcl/point_types_conversion.h>
+#include <pcl/point_types.h>
+#include <pcl/point_cloud.h>
+#include <pcl/common/common.h>
+#include <pcl/common/transforms.h>
 
 //C++
 #include <boost/thread/mutex.hpp>

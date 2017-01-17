@@ -1,6 +1,7 @@
 #ifndef SIMPLE_RECOGNITION_H_
 #define SIMPLE_RECOGNITION_H_
 
+#include <geometry_msgs/Vector3.h>
 #include <nimbus_perception/ClassifyInstance.h>
 #include <pcl/kdtree/kdtree_flann.h>
 #include <pcl/point_types.h>
@@ -32,7 +33,7 @@ private:
   YAML::Node yamlNode;
 
   std::vector<std::string> labels;
-  std::vector<float> sizes;
+  std::vector<geometry_msgs::Vector3> dims;
   pcl::PointCloud<pcl::PointXYZ>::Ptr trainingDataPoints;
   pcl::KdTreeFLANN<pcl::PointXYZ>::Ptr kdTree;
 };
