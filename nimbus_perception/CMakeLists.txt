@@ -11,6 +11,7 @@ find_package(catkin REQUIRED COMPONENTS
   pcl_ros
   rail_manipulation_msgs
   roscpp
+  shape_msgs
   )
 find_package(Eigen REQUIRED)
 find_package(PCL)
@@ -20,13 +21,18 @@ find_package(PkgConfig)
 ## Declare ROS messages, services and actions ##
 ################################################
 
-## Generate services in the 'srv' folder
+add_message_files(FILES
+  TrackedObject.msg
+  TrackedObjectList.msg
+)
+
 add_service_files(FILES
   ClassifyInstance.srv
   )
 
 generate_messages(DEPENDENCIES
   geometry_msgs
+  shape_msgs
   )
 
 ###################################################
@@ -61,16 +67,19 @@ link_directories(${YAML_CPP_LIBRARY_DIRS})
 add_executable(simple_recognition src/SimpleRecognition.cpp)
 add_executable(simple_data_collector src/SimpleDataCollector.cpp)
 add_executable(simple_recognition_tester src/SimpleRecognitionTester.cpp)
+add_executable(object_labeler src/ObjectLabeler.cpp)
 
 ## Specify libraries to link a library or executable target against
 target_link_libraries(simple_recognition ${catkin_LIBRARIES} ${PCL_COMMON_LIBRARIES} yaml-cpp)
 target_link_libraries(simple_data_collector ${catkin_LIBRARIES})
 target_link_libraries(simple_recognition_tester ${catkin_LIBRARIES})
+target_link_libraries(object_labeler ${catkin_LIBRARIES})
 
 ## Add cmake target dependencies of the executable/library
 add_dependencies(simple_recognition rail_manipulation_msgs_gencpp ${PROJECT_NAME}_generate_messages)
 add_dependencies(simple_data_collector rail_manipulation_msgs_gencpp)
 add_dependencies(simple_recognition_tester rail_manipulation_msgs_gencpp ${PROJECT_NAME}_generate_messages)
+add_dependencies(object_labeler rail_manipulation_msgs_gencpp ${PROJECT_NAME}_generate_messages)
 
 #############
 ## Install ##
