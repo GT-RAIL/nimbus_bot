@@ -53,6 +53,9 @@ private:
   boost::mutex objectMutex;
 };
 
+//convert from RGB color space to CIELAB color space, taken and adapted from pcl/registration/gicp6d
+Eigen::Vector3f RGB2Lab (const Eigen::Vector3f& colorRGB);
+
 /*!
  * \brief A function to close ROS and exit the program.
  *
