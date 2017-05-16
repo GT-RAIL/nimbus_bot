@@ -1,12 +1,13 @@
 controller_list:
-  - name: fake_jaco_arm_controller
+  - name: fake_arm_controller
     joints:
-      - jaco_shoulder_pan_joint
-      - jaco_shoulder_lift_joint
-      - jaco_elbow_joint
-      - jaco_wrist_1_joint
-      - jaco_wrist_2_joint
-      - jaco_wrist_3_joint
+      - j2s7s300_joint_1
+      - j2s7s300_joint_2
+      - j2s7s300_joint_3
+      - j2s7s300_joint_4
+      - j2s7s300_joint_5
+      - j2s7s300_joint_6
+      - j2s7s300_joint_7
   - name: fake_gripper_controller
     joints:
-      - robotiq_85_left_knuckle_joint
+      - j2s7s300_robotiq_85_left_knuckle_joint

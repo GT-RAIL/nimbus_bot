@@ -1,4 +1,3 @@
 <launch>
-    <!-- <rosparam command="load" file="$(find nimbus_moveit_config)/config/sensors_depth.yaml" /> -->
-    <rosparam command="load" file="$(find nimbus_moveit_config)/config/sensors_point_cloud.yaml" />
+  <rosparam command="load" file="$(find nimbus_moveit_config)/config/sensors_point_cloud.yaml" />
 </launch>
