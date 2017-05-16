@@ -10,12 +10,13 @@
   <license>BSD</license>
 
   <url type="website">http://ros.org/wiki/nimbus_description</url>
-  <url type="bugtracker">https://github.com/WPI-RAIL/nimbus_description/issues</url>
-  <url type="repository">https://github.com/WPI-RAIL/nimbus_description</url>
+  <url type="bugtracker">https://github.com/GT-RAIL/nimbus_description/issues</url>
+  <url type="repository">https://github.com/GT-RAIL/nimbus_description</url>
   
   <buildtool_depend>catkin</buildtool_depend>
 
   <run_depend>xacro</run_depend>
   <run_depend>robot_state_publisher</run_depend>
   <run_depend>joint_state_publisher</run_depend>
+  <run_depend>kinova_description</run_depend>
 </package>
