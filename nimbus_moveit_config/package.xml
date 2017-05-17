@@ -3,10 +3,12 @@
   <name>nimbus_moveit_config</name>
   <version>0.2.0</version>
   <description>
-     An automatically generated package with all the configuration and launch files for using the nimbus with the MoveIt Motion Planning Framework
+    An automatically generated package with all the configuration and launch files for using the nimbus with the MoveIt Motion Planning Framework,
+    as well as ROS nodes that wrap common motion planning commands for easier use.
   </description>
   <author email="assistant@moveit.ros.org">MoveIt Setup Assistant</author>
-  <maintainer email="assistant@moveit.ros.org">MoveIt Setup Assistant</maintainer>
+  <author email="dekent@gatech.edu">David Kent</author>
+  <maintainer email="dekent@gatech.edu">David Kent</maintainer>
 
   <license>BSD</license>
 
@@ -14,14 +16,37 @@
   <url type="bugtracker">https://github.com/ros-planning/moveit_setup_assistant/issues</url>
   <url type="repository">https://github.com/ros-planning/moveit_setup_assistant</url>
 
+  <build_depend>nimbus_description</build_depend>
+  <build_depend>actionlib</build_depend>
+  <build_depend>control_msgs</build_depend>
+  <build_depend>geometry_msgs</build_depend>
+  <build_depend>pcl_conversions</build_depend>
+  <build_depend>pcl_ros</build_depend>
+  <build_depend>rail_manipulation_msgs</build_depend>
+  <build_depend>sensor_msgs</build_depend>
+  <build_depend>std_msgs</build_depend>
+  <build_depend>std_srvs</build_depend>
+  <build_depend>tf</build_depend>
+  <build_depend>tf2_ros</build_depend>
+
   <run_depend>moveit_ros_move_group</run_depend>
   <run_depend>moveit_planners_ompl</run_depend>
   <run_depend>moveit_ros_visualization</run_depend>
   <run_depend>joint_state_publisher</run_depend>
   <run_depend>robot_state_publisher</run_depend>
   <run_depend>xacro</run_depend>
-  <build_depend>nimbus_description</build_depend>
   <run_depend>nimbus_description</run_depend>
+  <run_depend>actionlib</run_depend>
+  <run_depend>control_msgs</run_depend>
+  <run_depend>geometry_msgs</run_depend>
+  <run_depend>pcl_conversions</run_depend>
+  <run_depend>pcl_ros</run_depend>
+  <run_depend>rail_manipulation_msgs</run_depend>
+  <run_depend>sensor_msgs</run_depend>
+  <run_depend>std_msgs</run_depend>
+  <run_depend>std_srvs</run_depend>
+  <run_depend>tf</run_depend>
+  <run_depend>tf2_ros</run_depend>
 
 
   <buildtool_depend>catkin</buildtool_depend>
