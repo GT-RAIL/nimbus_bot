@@ -20,6 +20,7 @@
         <joint name="j2s7s300_joint_7" />
         <joint name="j2s7s300_ee_fixed_joint" />
         <joint name="j2s7s300_ee_gripper" />
+        <joint name="jaco_ee_link_nimbus_ee_link_joint" />
     </group>
     <group name="gripper">
         <link name="j2s7s300_robotiq_85_base_link" />
@@ -31,6 +32,7 @@
         <link name="j2s7s300_robotiq_85_right_finger_tip_link" />
         <link name="j2s7s300_robotiq_85_right_knuckle_link" />
         <link name="j2s7s300_robotiq_85_right_finger_link" />
+        <link name="nimbus_ee_link" />
     </group>
     <!--END EFFECTOR: Purpose: Represent information about an end effector.-->
     <end_effector name="eef" parent_link="j2s7s300_ee_base" group="gripper" />

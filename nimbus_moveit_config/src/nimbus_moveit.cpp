@@ -284,8 +284,8 @@ bool NimbusMoveIt::cartesianPathCallback(rail_manipulation_msgs::CartesianPath::
   {
     geometry_msgs::PoseStamped tempPose;
     tempPose.header.frame_id = jacoArmGroup->getPoseReferenceFrame();
-    tfBuffer.transform(req.waypoints[i], tempPose, jacoArmGroup->getPoseReferenceFrame(), ros::Time(0), "table_base_link");
-    //tf.transformPose(jacoArmGroup->getPoseReferenceFrame(), req.waypoints[i], tempPose);
+    //tfBuffer.transform(req.waypoints[i], tempPose, jacoArmGroup->getPoseReferenceFrame(), ros::Time(0), "table_base_link");
+    tf.transformPose(jacoArmGroup->getPoseReferenceFrame(), req.waypoints[i], tempPose);
     convertedWaypoints.push_back(tempPose.pose);
   }
 
@@ -356,8 +356,19 @@ bool NimbusMoveIt::cartesianPathCallback(rail_manipulation_msgs::CartesianPath::
   move_group_interface::MoveGroup::Plan plan;
   plan.trajectory_ = finalTraj;
   moveit::core::robotStateToRobotStateMsg(*(jacoArmGroup->getCurrentState()), plan.start_state_);
-  //plan.planning_time_ = 0.0; //does this matter?
-  jacoArmGroup->asyncExecute(plan);
+  plan.planning_time_ = 1.0; //does this matter?
+
+  ROS_INFO("Calculated a trajectory with %lu points:", plan.trajectory_.joint_trajectory.points.size());
+  for (unsigned int i = 0; i < plan.trajectory_.joint_trajectory.points.size(); i ++)
+  {
+    for (unsigned int j = 0; j < plan.trajectory_.joint_trajectory.joint_names.size(); j ++)
+    {
+      cout << "\t" << plan.trajectory_.joint_trajectory.joint_names[j] << ": " << plan.trajectory_.joint_trajectory.points[i].positions[j] << endl;
+    }
+  }
+
+  //jacoArmGroup->asyncExecute(plan);
+  jacoArmGroup->execute(plan);
 
   //TODO: timeout should be a function of distance (calculated as (goal - start)*completion)
   executionFinished = false;
@@ -409,7 +420,7 @@ bool NimbusMoveIt::ikCallback(rail_manipulation_msgs::CallIK::Request &req, rail
     std::vector<double> joints;
     joints.resize(NUM_JACO_JOINTS);
     //set joints to be closest to current joint positions
-    for (unsigned int i = jacoStartIndex; i <= jacoStartIndex + NUM_JACO_JOINTS; i++)
+    for (unsigned int i = jacoStartIndex; i < jacoStartIndex + NUM_JACO_JOINTS; i++)
     {
       joints[i - jacoStartIndex] = nearest_equivalent(simplify_angle(ikRes.solution.joint_state.position[i]), jointState.position[i]);
     }
