@@ -4,9 +4,6 @@
 -->
 
 <launch>
-  <!-- Arm Params -->
-  <arg name="home_arm_on_init" default="false" />
-
   <!-- Gripper Params -->
   <arg name="comport" default="/dev/ttyUSB0"/>
   <arg name="baud" default="115200"/>
@@ -22,11 +19,11 @@
   <arg name="visualize_recognition" default="true" />
 
   <!-- Jaco 2 -->
-  <include file="$(find wpi_jaco_wrapper)/launch/arm.launch">
-    <arg name="arm_name" value="jaco2" />
-    <arg name="kinova_gripper" value="false" />
-    <arg name="home_arm_on_init" value="$(arg home_arm_on_init)" />
+  <include file="$(find kinova_bringup)/launch/kinova_robot.launch">
+    <arg name="kinova_robotType" value="j2s7s300" />
+    <arg name="use_urdf" value="false" />
   </include>
+  <node pkg="kinova_driver" type="joint_trajectory_action_server" name="j2s7s300_joint_trajectory_action_server" output="screen" respawn="false" args="j2s7s300" />
 
   <!-- Robotiq 85 ROS Driver -->
   <node pkg="robotiq_85_driver" type="robotiq_85_driver" name="robotiq_85_driver" respawn="true" output="screen">
@@ -48,9 +45,4 @@
   <include file="$(find nimbus_moveit_config)/launch/nimbus_moveit_full.launch" />
   <node pkg="nimbus_moveit_config" type="nimbus_moveit" name="nimbus_moveit" />
   <node pkg="nimbus_moveit_config" type="common_actions" name="common_actions" output="screen"/>
-
-  <node pkg="nimbus_interactive_manipulation" type="nimbus_interactive_manipulation" name="nimbus_interactive_manipulation" output="screen">
-    <param name="using_pickup" value="$(arg using_pickup)" />
-    <param name="using_recognition" value="$(arg visualize_recognition)" />
-  </node>
 </launch>
