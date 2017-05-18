@@ -31,22 +31,22 @@ CommonActions::CommonActions() : pnh("~"),
   //TODO: Set these values for 7DOF arm
   //setup home position
   homePosition.resize(NUM_JACO_JOINTS);
-  homePosition[0] = -1.4776;
-  homePosition[1] = 2.9246;
-  homePosition[2] = 1.002;
-  homePosition[3] = -2.0793;
-  homePosition[4] = 1.4455;
-  homePosition[5] = 1.3156;
-  homePosition[6] = 0.0;
+  homePosition[0] = -1.338;
+  homePosition[1] = 2.842;
+  homePosition[2] = 0;
+  homePosition[3] = 0.758;
+  homePosition[4] = -1.647;
+  homePosition[5] = 4.494;
+  homePosition[6] = -1.251;
 
   defaultRetractPosition.resize(NUM_JACO_JOINTS);
-  defaultRetractPosition[0] = -2.9388;
-  defaultRetractPosition[1] = 2.8894;
-  defaultRetractPosition[2] = 0.5216;
-  defaultRetractPosition[3] = -3.1342;
-  defaultRetractPosition[4] = 1.0143;
-  defaultRetractPosition[5] = 1.1296;
-  defaultRetractPosition[6] = 0.0;
+  defaultRetractPosition[0] = -3.134;
+  defaultRetractPosition[1] = 2.842;
+  defaultRetractPosition[2] = 0;
+  defaultRetractPosition[3] = 0.758;
+  defaultRetractPosition[4] = -3.225;
+  defaultRetractPosition[5] = 3.664;
+  defaultRetractPosition[6] = -1.480;
 
   //angularCmdPublisher = n.advertise<wpi_jaco_msgs::AngularCommand>("jaco_arm/angular_cmd", 1);
   jointStateSubscriber = n.subscribe("joint_states", 1, &CommonActions::jointStateCallback, this);
