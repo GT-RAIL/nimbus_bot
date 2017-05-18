@@ -18,6 +18,7 @@
 #include <moveit/robot_state/robot_state.h>
 #include <moveit_msgs/CollisionObject.h>
 #include <moveit_msgs/DisplayTrajectory.h>
+#include <moveit_msgs/GetCartesianPath.h>
 #include <moveit_msgs/GetPositionIK.h>
 #include <moveit_msgs/GetPlanningScene.h>
 #include <geometry_msgs/PoseStamped.h>
@@ -59,7 +60,6 @@ public:
 private:
   ros::NodeHandle n, pnh;
   ros::Subscriber armJointStateSubscriber;
-  //ros::Subscriber cartesianControlSubscriber;
   //ros::Subscriber armHomedSubscriber;
   ros::Subscriber recognizedObjectsSubscriber;
   ros::Subscriber followJointTrajectoryResultSubscriber;
@@ -75,6 +75,7 @@ private:
   ros::ServiceClient ikClient;
   ros::ServiceClient clearOctomapClient;
   ros::ServiceClient planningSceneClient;
+  ros::ServiceClient computeCartesianPathClient;
 
   actionlib::SimpleActionClient<control_msgs::FollowJointTrajectoryAction> armTrajectoryClient;
   actionlib::SimpleActionServer<rail_manipulation_msgs::MoveToPoseAction> moveToPoseServer;
@@ -110,8 +111,6 @@ private:
   moveit_msgs::GetPositionIK::Response callIK(geometry_msgs::PoseStamped pose);
 
   void armJointStatesCallback(const sensor_msgs::JointState &msg);
-
-  //void cartesianControlCallback(const geometry_msgs::Twist &msg);
 
   //void armHomedCallback(const std_msgs::Bool &msg);
 

@@ -21,7 +21,6 @@ NimbusMoveIt::NimbusMoveIt() :
   ignoredObject = "";
 
   armJointStateSubscriber = n.subscribe("joint_states", 1, &NimbusMoveIt::armJointStatesCallback, this);
-  //cartesianControlSubscriber = pnh.subscribe("cartesian_control", 1, &NimbusMoveIt::cartesianControlCallback, this);
   //armHomedSubscriber = n.subscribe("jaco_arm/arm_homed", 1, &NimbusMoveIt::armHomedCallback, this);
   recognizedObjectsSubscriber = n.subscribe("object_recognition_listener/recognized_objects", 1, &NimbusMoveIt::recognizedObjectsCallback, this);
   followJointTrajectoryResultSubscriber = n.subscribe("jaco_arm/joint_velocity_controller/trajectory/result", 1, &NimbusMoveIt::followJointTrajectoryResultCallback, this);
@@ -33,14 +32,12 @@ NimbusMoveIt::NimbusMoveIt() :
   ikClient = n.serviceClient<moveit_msgs::GetPositionIK>("compute_ik");
   clearOctomapClient = n.serviceClient<std_srvs::Empty>("clear_octomap");
   planningSceneClient = n.serviceClient<moveit_msgs::GetPlanningScene>("/get_planning_scene");
+  computeCartesianPathClient = n.serviceClient<moveit_msgs::GetCartesianPath>("/compute_cartesian_path");
 
   jacoArmGroup = new move_group_interface::MoveGroup("arm");
   jacoArmGroup->startStateMonitor();
 
   planningSceneInterface = new move_group_interface::PlanningSceneInterface();
-  /*planningSceneMonitor = planning_scene_monitor::PlanningSceneMonitorPtr(new
-                                                                            planning_scene_monitor::PlanningSceneMonitor("robot_description"));
-  */
 
   //advertise service
   cartesianPathServer = pnh.advertiseService("cartesian_path", &NimbusMoveIt::cartesianPathCallback, this);
@@ -290,47 +287,24 @@ bool NimbusMoveIt::cartesianPathCallback(rail_manipulation_msgs::CartesianPath::
   }
 
   //calculate trajectory
-  moveit_msgs::RobotTrajectory tempTraj;
-  double completion = jacoArmGroup->computeCartesianPath(convertedWaypoints, eefStep, jumpThreshold, tempTraj, req.avoidCollisions);
-  if (completion == -1)
+  moveit_msgs::GetCartesianPath cartesianPath;
+  cartesianPath.request.waypoints = convertedWaypoints;
+  cartesianPath.request.max_step = 0.05;
+  cartesianPath.request.jump_threshold = 0.0;
+  cartesianPath.request.avoid_collisions = false;
+  cartesianPath.request.group_name = "arm";
+  moveit::core::robotStateToRobotStateMsg(*(jacoArmGroup->getCurrentState()), cartesianPath.request.start_state);
+
+  if(!computeCartesianPathClient.call(cartesianPath))
   {
-    ROS_INFO("Could not calculate a path.");
-    res.success = false;
-    return true;
+    ROS_INFO("Could not call MoveIt!'s cartesian path planner!");
+    return false;
   }
 
-  if (completion == 1.0)
-  {
-    finalTraj = tempTraj;
-  }
-  else
-  {
-    finalTraj = tempTraj;
-    ROS_INFO("Could not find a complete path, varying parameters and recalculating...");
-    //vary jumpThreshold and eefStep
-    double newCompletion;
-      for (unsigned int j = 0; j < 3; j ++)
-      {
-        if (j == 0)
-          eefStep /= 2.0;
-        else
-          eefStep *= 2.0;
-        newCompletion = jacoArmGroup->computeCartesianPath(convertedWaypoints, eefStep, jumpThreshold, tempTraj, req.avoidCollisions);
-        if (newCompletion > completion)
-        {
-          ROS_INFO("Found a better path.");
-          finalTraj = tempTraj;
-          completion = newCompletion;
-          if (newCompletion == 1.0)
-          {
-            ROS_INFO("Found a complete path!");
-            break;
-          }
-        }
-      }
-  }
+  res.completion = cartesianPath.response.fraction;
+  finalTraj = cartesianPath.response.solution;
 
-  if (completion == 0.0)
+  if (res.completion == 0.0)
   {
     ROS_INFO("Could not calculate a path.");
     res.success = false;
@@ -339,7 +313,6 @@ bool NimbusMoveIt::cartesianPathCallback(rail_manipulation_msgs::CartesianPath::
   else
   {
     res.success = true;
-    res.completion = completion;
   }
 
   //display trajectory
@@ -356,7 +329,7 @@ bool NimbusMoveIt::cartesianPathCallback(rail_manipulation_msgs::CartesianPath::
   move_group_interface::MoveGroup::Plan plan;
   plan.trajectory_ = finalTraj;
   moveit::core::robotStateToRobotStateMsg(*(jacoArmGroup->getCurrentState()), plan.start_state_);
-  plan.planning_time_ = 1.0; //does this matter?
+  //plan.planning_time_ = 0.0; //does this matter?
 
   ROS_INFO("Calculated a trajectory with %lu points:", plan.trajectory_.joint_trajectory.points.size());
   for (unsigned int i = 0; i < plan.trajectory_.joint_trajectory.points.size(); i ++)
@@ -367,18 +340,19 @@ bool NimbusMoveIt::cartesianPathCallback(rail_manipulation_msgs::CartesianPath::
     }
   }
 
-  //jacoArmGroup->asyncExecute(plan);
-  jacoArmGroup->execute(plan);
+  jacoArmGroup->asyncExecute(plan);
 
   //TODO: timeout should be a function of distance (calculated as (goal - start)*completion)
+  /*
   executionFinished = false;
   ros::Rate loopRate(30);
-  ros::Time timeout = ros::Time::now() + ros::Duration(1.5);
+  ros::Time timeout = ros::Time::now() + ros::Duration(10);
   res.success = true;
   while (!executionFinished)
   {
     if (ros::Time::now() >= timeout)
     {
+      //TODO: replace stop command with somethign that more directly stops arm, because the kinova_ros trajectory controller segfaults on a stop command
       jacoArmGroup->stop();
       res.success = false;
       ROS_INFO("Timeout reached, stopping trajectory execution.");
@@ -387,6 +361,7 @@ bool NimbusMoveIt::cartesianPathCallback(rail_manipulation_msgs::CartesianPath::
     loopRate.sleep();
     ros::spinOnce();
   }
+  */
 
   return true;
 }
@@ -406,16 +381,6 @@ bool NimbusMoveIt::ikCallback(rail_manipulation_msgs::CallIK::Request &req, rail
 
     //extract joint states
     int jacoStartIndex = distance(jointState.name.begin(), find(jointState.name.begin(), jointState.name.end(), "j2s7s300_joint_1"));
-    /*
-    for (unsigned int i = 0; i < jointState.name.size(); i++)
-    {
-      if (jointState.name[i].compare("jaco_shoulder_pan_joint") == 0)
-      {
-        jacoStartIndex = i;
-        break;
-      }
-    }
-    */
 
     std::vector<double> joints;
     joints.resize(NUM_JACO_JOINTS);
@@ -462,52 +427,6 @@ moveit_msgs::GetPositionIK::Response NimbusMoveIt::callIK(geometry_msgs::PoseSta
 
   return ikRes;
 }
-
-/*
-void NimbusMoveIt::cartesianControlCallback(const geometry_msgs::Twist &msg)
-{
-  //get the jacobian
-  robot_state::RobotStatePtr kinematicState = jacoArmGroup->getCurrentState();
-  const moveit::core::JointModelGroup* jointModelGroup = kinematicState->getRobotModel()->getJointModelGroup("jaco_arm");
-  Eigen::Vector3d referencePointPosition(0.0, 0.0, 0.0);  //what does this do?
-  Eigen::MatrixXd jacobian;
-  kinematicState->getJacobian(jointModelGroup, kinematicState->getLinkModel(jointModelGroup->getLinkModelNames().back()), referencePointPosition, jacobian);
-
-  //calculate the jacobian pseudoinverse
-
-  //Method 1: SVD
-  Eigen::MatrixXd pInv = EIGEN_PINV::pinv(jacobian, 0.001);
-
-*/
-  //Method 2: Permuting the jacobian's main diagonal
-  /*
-  Eigen::MatrixXd pInv;
-  float val = .001;
-  Eigen::MatrixXd permutedJacobian = jacobian + val*Eigen::MatrixXd::Identity(6, 6);
-  pInv = permutedJacobian.inverse();
-  */
-
-/*
-  //calculate joint velocities
-  Eigen::VectorXd twist(6);
-  twist << msg.linear.x, msg.linear.y, msg.linear.z, msg.angular.x, msg.angular.y, msg.angular.z;
-  Eigen::VectorXd jointVel(6);
-  jointVel = pInv * twist;
-
-  //publish joint velocity command to the arm
-  wpi_jaco_msgs::AngularCommand cmd;
-  cmd.position = false;
-  cmd.armCommand = true;
-  cmd.fingerCommand = false;
-  cmd.repeat = true;
-  cmd.joints.resize(6);
-  for(unsigned int i = 0; i < jointVel.size(); i ++)
-  {
-    cmd.joints[i] = jointVel[i];
-  }
-  angularCmdPublisher.publish(cmd);
-}
-*/
 
 void NimbusMoveIt::recognizedObjectsCallback(const rail_manipulation_msgs::SegmentedObjectList &msg)
 {
