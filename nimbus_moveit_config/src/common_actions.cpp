@@ -26,7 +26,8 @@ CommonActions::CommonActions() : pnh("~"),
                                  armServer(n, "nimbus_moveit/common_actions/arm_action", boost::bind(&CommonActions::executeArmAction, this, _1), false),
                                  pickupServer(n, "nimbus_moveit/common_actions/pickup", boost::bind(&CommonActions::executePickup, this, _1), false),
                                  pickupUnrecognizedServer(n, "nimbus_moveit/common_actions/pickup_unrecognized", boost::bind(&CommonActions::executePickupUnrecognized, this, _1), false),
-                                 storeServer(n, "nimbus_moveit/common_actions/store", boost::bind(&CommonActions::executeStore, this, _1), false)
+                                 storeServer(n, "nimbus_moveit/common_actions/store", boost::bind(&CommonActions::executeStore, this, _1), false),
+                                 placeServer(n, "nimbus_moveit/common_actions/place", boost::bind(&CommonActions::executePlace, this, _1), false)
 {
   //TODO: Set these values for 7DOF arm
   //setup home position
@@ -406,6 +407,69 @@ void CommonActions::executePickupUnrecognized(const rail_manipulation_msgs::Pick
   }
 
   pickupUnrecognizedServer.setSucceeded(result);
+}
+
+void CommonActions::executePlace(const rail_manipulation_msgs::StoreGoalConstPtr &goal)
+{
+  rail_manipulation_msgs::StoreFeedback feedback;
+  rail_manipulation_msgs::StoreResult result;
+  stringstream ss;
+
+  //move to place pose
+  ss.str("");
+  ss << "Moving gripper to place pose...";
+  feedback.message = ss.str();
+  placeServer.publishFeedback(feedback);
+
+  rail_manipulation_msgs::MoveToPoseGoal placeGoal;
+
+  placeGoal.pose = goal->store_pose;
+  placeGoal.planningTime = 3.0;
+  moveToPoseClient.sendGoal(placeGoal);
+  moveToPoseClient.waitForResult(ros::Duration(30.0));
+  if (!moveToPoseClient.getResult()->success)
+  {
+    ss.str("");
+    ss << "Moving gripper to place pose failed.";
+    feedback.message = ss.str();
+    placeServer.publishFeedback(feedback);
+    result.success = false;
+    placeServer.setAborted(result, "Unable to move gripper to place pose.");
+    return;
+  }
+
+  //lower gripper
+  ss.str("");
+  ss << "Opening gripper...";
+  feedback.message = ss.str();
+  placeServer.publishFeedback(feedback);
+
+  rail_manipulation_msgs::GripperGoal gripperGoal;
+  gripperGoal.close = false;
+  gripperClient.sendGoal(gripperGoal);
+  gripperClient.waitForResult(ros::Duration(10.0));
+  if (!gripperClient.getResult()->success)
+  {
+    ROS_INFO("Opening gripper failed.");
+    result.success = false;
+    placeServer.setAborted(result, "Unable to open gripper.");
+    return;
+  }
+
+  ROS_INFO("Place complete.");
+  ss << "Place complete.";
+  feedback.message = ss.str();
+  placeServer.publishFeedback(feedback);
+
+  //detach any attached collision objects
+  std_srvs::Empty emptySrv;
+  if (!detachObjectsClient.call(emptySrv))
+  {
+    ROS_INFO("Couldn't call detach objects service.");
+  }
+
+  result.success = true;
+  storeServer.setSucceeded(result);
 }
 
 void CommonActions::executeStore(const rail_manipulation_msgs::StoreGoalConstPtr &goal)

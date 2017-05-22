@@ -52,6 +52,7 @@ private:
   actionlib::SimpleActionServer<rail_manipulation_msgs::PickupAction> pickupServer;
   actionlib::SimpleActionServer<rail_manipulation_msgs::PickupAction> pickupUnrecognizedServer;
   actionlib::SimpleActionServer<rail_manipulation_msgs::StoreAction> storeServer;
+  actionlib::SimpleActionServer<rail_manipulation_msgs::StoreAction> placeServer;
 
   tf::TransformBroadcaster tfBroadcaster;
   tf::TransformListener tfListener;
@@ -114,6 +115,8 @@ private:
   * @param goal Empty store goal
   */
   void executeStore(const rail_manipulation_msgs::StoreGoalConstPtr &goal);
+
+  void executePlace(const rail_manipulation_msgs::StoreGoalConstPtr &goal);
 
   /**
   * \brief Raise the hand vertically by 10 cm
