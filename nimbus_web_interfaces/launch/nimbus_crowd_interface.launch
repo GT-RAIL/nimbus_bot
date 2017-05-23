@@ -1,0 +1,21 @@
+<launch>
+  <!-- rosbridge -->
+  <include file="$(find rosbridge_server)/launch/rosbridge_websocket.launch"/>
+
+  <!-- tf2 republisher -->
+  <node pkg="tf2_web_republisher" type="tf2_web_republisher" name="tf2_web_republisher" respawn="true" output="screen"/>
+
+ <!--depth cloud and video server -->
+  <node pkg = "web_video_server" type="web_video_server" name="web_video_server" respawn="true" output="screen">
+    <param name="port" value="8080" />
+  </node>
+
+  <!-- user queue -->
+  <node pkg="rail_user_queue_manager" type="rail_user_queue_manager" name="rail_user_queue_manager" respawn="true" output="screen"/>
+
+  <!-- Interactive Markers -->
+  <node name="click_and_refine_proxy" pkg="interactive_marker_proxy" type="proxy" output="screen">
+    <remap from="topic_ns" to="/click_and_refine" />
+    <remap from="target_frame" to="/table_base_link" />
+  </node>
+</launch>
