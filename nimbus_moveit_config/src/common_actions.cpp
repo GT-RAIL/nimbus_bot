@@ -316,10 +316,7 @@ void CommonActions::executePickupUnrecognized(const rail_manipulation_msgs::Pick
   feedback.message = ss.str();
   pickupServer.publishFeedback(feedback);
   rail_manipulation_msgs::CartesianPath srv;
-  geometry_msgs::PoseStamped cartesianPose;
-  cartesianPose.header.frame_id = "table_base_link";
-  tfListener.transformPose("table_base_link", graspPose, cartesianPose);
-  srv.request.waypoints.push_back(cartesianPose);
+  srv.request.waypoints.push_back(graspPose);
   srv.request.avoidCollisions = false;
   if (!cartesianPathClient.call(srv))
   {

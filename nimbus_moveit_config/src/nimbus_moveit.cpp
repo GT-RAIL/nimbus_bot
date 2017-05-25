@@ -8,15 +8,15 @@ NimbusMoveIt::NimbusMoveIt() :
     moveToPoseServer(pnh, "move_to_pose", boost::bind(&NimbusMoveIt::moveToPose, this, _1), false),
     moveToJointPoseServer(pnh, "move_to_joint_pose", boost::bind(&NimbusMoveIt::moveToJointPose, this, _1), false)
 {
-  gripperNames.push_back("j2s7s300_base_link");
-  gripperNames.push_back("j2s7s300_left_finger_link");
-  gripperNames.push_back("j2s7s300_left_finger_tip_link");
-  gripperNames.push_back("j2s7s300_left_inner_knuckle_link");
-  gripperNames.push_back("j2s7s300_left_knuckle_link");
-  gripperNames.push_back("j2s7s300_right_finger_link");
-  gripperNames.push_back("j2s7s300_right_finger_tip_link");
-  gripperNames.push_back("j2s7s300_right_inner_knuckle_link");
-  gripperNames.push_back("j2s7s300_right_knuckle_link");
+  gripperNames.push_back("robotiq_85_base_link");
+  gripperNames.push_back("robotiq_85_left_finger_link");
+  gripperNames.push_back("robotiq_85_left_finger_tip_link");
+  gripperNames.push_back("robotiq_85_left_inner_knuckle_link");
+  gripperNames.push_back("robotiq_85_left_knuckle_link");
+  gripperNames.push_back("robotiq_85_right_finger_link");
+  gripperNames.push_back("robotiq_85_right_finger_tip_link");
+  gripperNames.push_back("robotiq_85_right_inner_knuckle_link");
+  gripperNames.push_back("robotiq_85_right_knuckle_link");
 
   ignoredObject = "";
 
@@ -271,7 +271,7 @@ void NimbusMoveIt::moveToJointPose(const rail_manipulation_msgs::MoveToJointPose
 
 bool NimbusMoveIt::cartesianPathCallback(rail_manipulation_msgs::CartesianPath::Request &req, rail_manipulation_msgs::CartesianPath::Response &res)
 {
-  double eefStep = .05;
+  double eefStep = .01;
   double  jumpThreshold = 1.5;
   moveit_msgs::RobotTrajectory finalTraj;
 
@@ -289,7 +289,7 @@ bool NimbusMoveIt::cartesianPathCallback(rail_manipulation_msgs::CartesianPath::
   //calculate trajectory
   moveit_msgs::GetCartesianPath cartesianPath;
   cartesianPath.request.waypoints = convertedWaypoints;
-  cartesianPath.request.max_step = 0.05;
+  cartesianPath.request.max_step = 0.01;
   cartesianPath.request.jump_threshold = 0.0;
   cartesianPath.request.avoid_collisions = false;
   cartesianPath.request.group_name = "arm";
@@ -599,15 +599,15 @@ bool NimbusMoveIt::attachClosestSceneObject(std_srvs::Empty::Request &req, std_s
   vector<string> touchLinks;
   touchLinks.push_back("j2s7s300_ee_link");
   touchLinks.push_back("nimbus_ee_link");
-  touchLinks.push_back("j2s7s300_base_link");
-  touchLinks.push_back("j2s7s300_left_finger_link");
-  touchLinks.push_back("j2s7s300_left_finger_tip_link");
-  touchLinks.push_back("j2s7s300_left_inner_knuckle_link");
-  touchLinks.push_back("j2s7s300_left_knuckle_link");
-  touchLinks.push_back("j2s7s300_right_finger_link");
-  touchLinks.push_back("j2s7s300_right_finger_tip_link");
-  touchLinks.push_back("j2s7s300_right_inner_knuckle_link");
-  touchLinks.push_back("j2s7s300_right_knuckle_link");
+  touchLinks.push_back("robotiq_85_base_link");
+  touchLinks.push_back("robotiq_85_left_finger_link");
+  touchLinks.push_back("robotiq_85_left_finger_tip_link");
+  touchLinks.push_back("robotiq_85_left_inner_knuckle_link");
+  touchLinks.push_back("robotiq_85_left_knuckle_link");
+  touchLinks.push_back("robotiq_85_right_finger_link");
+  touchLinks.push_back("robotiq_85_right_finger_tip_link");
+  touchLinks.push_back("robotiq_85_right_inner_knuckle_link");
+  touchLinks.push_back("robotiq_85_right_knuckle_link");
   jacoArmGroup->attachObject(unattachedObjects[closest], jacoArmGroup->getEndEffectorLink(), touchLinks);
   attachedObjects.push_back(unattachedObjects[closest]);
   unattachedObjects.erase(unattachedObjects.begin() + closest);
