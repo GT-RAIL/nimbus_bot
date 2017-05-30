@@ -1,5 +1,8 @@
 #include <nimbus_perception/SimpleDataCollector.h>
 
+#include <iostream>
+#include <fstream>
+
 using namespace std;
 
 // used for capturing keyboard input
@@ -61,7 +64,7 @@ void SimpleDataCollector::showObject(unsigned int index)
   pcl::getMinMax3D(c_points, min_pt, max_pt);
 
   //sort from least to greatest
-  vector<float> dims;
+  // vector<float> dims;
   dims.push_back(fabs(max_pt.x - min_pt.x));
   dims.push_back(fabs(max_pt.y - min_pt.y));
   dims.push_back(fabs(max_pt.z - min_pt.z));
@@ -71,7 +74,8 @@ void SimpleDataCollector::showObject(unsigned int index)
   rgb[0] = objects.objects[index].marker.color.r;
   rgb[1] = objects.objects[index].marker.color.g;
   rgb[2] = objects.objects[index].marker.color.b;
-  Eigen::Vector3f lab = RGB2Lab(rgb);
+  // Eigen::Vector3f lab = RGB2Lab(rgb);
+  lab = RGB2Lab(rgb);
 
   //display object info
   ROS_INFO("--------------------------------------------");
@@ -136,6 +140,24 @@ void SimpleDataCollector::loop()
         index ++;
         showObject(index);
       }
+    }
+    // Save captured values
+    //else if (c == KEYCODE_ENTER)
+    else
+    {
+      string label;
+
+      cout << "Please enter label: " <<endl;
+      cin >> label;
+
+      // write into csv
+      ofstream file;
+      file.open("dataset.csv", ofstream::out | ofstream::app);
+      file << lab[0] << "," << lab[1] << "," << lab[2] << "," << dims[0] << "," << dims[1] << "," << dims[2] << "," << label << "\n";
+      file.close();
+
+      cout << label << " Saved!" << endl;
+      cout << "Press Q or W to continue navigating." << endl;
     }
   }
 }

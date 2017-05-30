@@ -12,6 +12,9 @@ find_package(catkin REQUIRED COMPONENTS
   rail_manipulation_msgs
   roscpp
   shape_msgs
+  rospy
+  std_msgs
+  message_generation
   )
 find_package(Eigen REQUIRED)
 find_package(PCL)
@@ -28,11 +31,13 @@ add_message_files(FILES
 
 add_service_files(FILES
   ClassifyInstance.srv
+  Classify.srv
   )
 
 generate_messages(DEPENDENCIES
   geometry_msgs
   shape_msgs
+  std_msgs
   )
 
 ###################################################
@@ -42,7 +47,9 @@ generate_messages(DEPENDENCIES
 ## LIBRARIES: libraries you create in this project that dependent projects also need
 ## CATKIN_DEPENDS: catkin_packages dependent projects also need
 ## DEPENDS: system dependencies of this project that dependent projects also need
-catkin_package()
+catkin_package(
+  CATKIN_DEPENDS message_runtime rospy
+  )
 
 ###########
 ## Build ##
