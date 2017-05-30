@@ -1,5 +1,8 @@
 #include <nimbus_perception/SimpleDataCollector.h>
 
+#include <iostream>
+#include <fstream>
+
 using namespace std;
 
 // used for capturing keyboard input
@@ -61,24 +64,32 @@ void SimpleDataCollector::showObject(unsigned int index)
   pcl::getMinMax3D(c_points, min_pt, max_pt);
 
   //sort from least to greatest
-  vector<float> dims;
+  // vector<float> dims;
   dims.push_back(fabs(max_pt.x - min_pt.x));
   dims.push_back(fabs(max_pt.y - min_pt.y));
   dims.push_back(fabs(max_pt.z - min_pt.z));
   sort(dims.begin(), dims.end());
 
+  Eigen::Vector3f rgb;
+  rgb[0] = objects.objects[index].marker.color.r;
+  rgb[1] = objects.objects[index].marker.color.g;
+  rgb[2] = objects.objects[index].marker.color.b;
+  // Eigen::Vector3f lab = RGB2Lab(rgb);
+  lab = RGB2Lab(rgb);
+
   //display object info
   ROS_INFO("--------------------------------------------");
   ROS_INFO("Showing data for object %d", index);
   ROS_INFO("RGB: %f, %f, %f", objects.objects[index].marker.color.r, objects.objects[index].marker.color.g, objects.objects[index].marker.color.b);
+  ROS_INFO("LAB: %f, %f, %f", lab[0], lab[1], lab[2]);
   ROS_INFO("Axis-aligned bounding box: %f, %f, %f", objects.objects[index].width, objects.objects[index].height, objects.objects[index].depth);
   ROS_INFO("Min area bounding box: %f, %f, %f", dims[0], dims[1], dims[2]);
   ROS_INFO("Center: %f, %f, %f", objects.objects[index].center.x, objects.objects[index].center.y, objects.objects[index].center.z);
   ROS_INFO("Size heuristic: %f", sqrt(pow(objects.objects[index].width,2) + pow(objects.objects[index].height,2) + pow(objects.objects[index].depth,2)));
   ROS_INFO("YAML entry: ");
-  cout << "- r: " << objects.objects[index].marker.color.r << endl;
-  cout << "  g: " << objects.objects[index].marker.color.g << endl;
-  cout << "  b: " << objects.objects[index].marker.color.b << endl;
+  cout << "- l: " << lab[0] << endl;
+  cout << "  a: " << lab[1] << endl;
+  cout << "  b: " << lab[2] << endl;
   cout << "  x: " << dims[0] << endl;
   cout << "  y: " << dims[1] << endl;
   cout << "  z: " << dims[2] << endl;
@@ -130,6 +141,24 @@ void SimpleDataCollector::loop()
         showObject(index);
       }
     }
+    // Save captured values
+    //else if (c == KEYCODE_ENTER)
+    else
+    {
+      string label;
+
+      cout << "Please enter label: " <<endl;
+      cin >> label;
+
+      // write into csv
+      ofstream file;
+      file.open("dataset.csv", ofstream::out | ofstream::app);
+      file << lab[0] << "," << lab[1] << "," << lab[2] << "," << dims[0] << "," << dims[1] << "," << dims[2] << "," << label << "\n";
+      file.close();
+
+      cout << label << " Saved!" << endl;
+      cout << "Press Q or W to continue navigating." << endl;
+    }
   }
 }
 
@@ -138,6 +167,73 @@ void shutdown(int sig)
   // shut everything down
   tcsetattr(kfd, TCSANOW, &cooked);
   ros::shutdown();
+}
+
+//convert from RGB color space to CIELAB color space, taken and adapted from pcl/registration/gicp6d
+Eigen::Vector3f RGB2Lab (const Eigen::Vector3f& colorRGB)
+{
+  // for sRGB   -> CIEXYZ see http://www.easyrgb.com/index.php?X=MATH&H=02#text2
+  // for CIEXYZ -> CIELAB see http://www.easyrgb.com/index.php?X=MATH&H=07#text7
+
+  double R, G, B, X, Y, Z;
+
+  R = colorRGB[0];
+  G = colorRGB[1];
+  B = colorRGB[2];
+
+  // linearize sRGB values
+  if (R > 0.04045)
+    R = pow ( (R + 0.055) / 1.055, 2.4);
+  else
+    R = R / 12.92;
+
+  if (G > 0.04045)
+    G = pow ( (G + 0.055) / 1.055, 2.4);
+  else
+    G = G / 12.92;
+
+  if (B > 0.04045)
+    B = pow ( (B + 0.055) / 1.055, 2.4);
+  else
+    B = B / 12.92;
+
+  // postponed:
+  //    R *= 100.0;
+  //    G *= 100.0;
+  //    B *= 100.0;
+
+  // linear sRGB -> CIEXYZ
+  X = R * 0.4124 + G * 0.3576 + B * 0.1805;
+  Y = R * 0.2126 + G * 0.7152 + B * 0.0722;
+  Z = R * 0.0193 + G * 0.1192 + B * 0.9505;
+
+  // *= 100.0 including:
+  X /= 0.95047;  //95.047;
+  //    Y /= 1;//100.000;
+  Z /= 1.08883;  //108.883;
+
+  // CIEXYZ -> CIELAB
+  if (X > 0.008856)
+    X = pow (X, 1.0 / 3.0);
+  else
+    X = 7.787 * X + 16.0 / 116.0;
+
+  if (Y > 0.008856)
+    Y = pow (Y, 1.0 / 3.0);
+  else
+    Y = 7.787 * Y + 16.0 / 116.0;
+
+  if (Z > 0.008856)
+    Z = pow (Z, 1.0 / 3.0);
+  else
+    Z = 7.787 * Z + 16.0 / 116.0;
+
+  Eigen::Vector3f colorLab;
+  colorLab[0] = static_cast<float> (116.0 * Y - 16.0);
+  colorLab[1] = static_cast<float> (500.0 * (X - Y));
+  colorLab[2] = static_cast<float> (200.0 * (Y - Z));
+
+  return colorLab;
 }
 
 int main(int argc, char **argv)
