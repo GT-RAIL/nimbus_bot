@@ -21,6 +21,7 @@
 #define KEYCODE_Q 0x71
 #define KEYCODE_W 0x77
 #define KEYCODE_D 0x64
+#define KEYCODE_ENTER 0x0D
 
 class SimpleDataCollector
 {
@@ -51,7 +52,16 @@ private:
   unsigned int index;
 
   boost::mutex objectMutex;
+
+
+  // captured data vectors
+  std::vector<float> dims;
+  Eigen::Vector3f lab;
+
 };
+
+//convert from RGB color space to CIELAB color space, taken and adapted from pcl/registration/gicp6d
+Eigen::Vector3f RGB2Lab (const Eigen::Vector3f& colorRGB);
 
 /*!
  * \brief A function to close ROS and exit the program.
