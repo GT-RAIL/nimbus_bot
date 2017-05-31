@@ -15,6 +15,9 @@
   <arg name="using_pickup" default="true" />
   <arg name="visualize_recognition" default="true" />
 
+  <!-- Vision Params -->
+  <arg name="use_color" default="false" />
+
   <!-- Jaco 2 -->
   <include file="$(find kinova_bringup)/launch/kinova_robot.launch">
     <arg name="kinova_robotType" value="j2s7s300" />
@@ -32,6 +35,25 @@
 
   <include file="$(find nimbus_bringup)/launch/sensors.launch" />
   <include file="$(find nimbus_bringup)/launch/robot_model.launch" />
+
+  <!-- Vision -->
+  <node name="rail_segmentation" pkg="rail_segmentation" type="rail_segmentation" output="screen">
+    <param name="zones_config" value="$(find nimbus_bringup)/config/segmentation/zones.yaml" />
+    <param name="point_cloud_topic" value="camera/depth_registered/points" />
+    <param name="use_color" value="$(arg use_color)" />
+    <param name="min_cluster_size" value="100" />
+    <param name="max_cluster_size" value="20000" />
+  </node>
+  <!--
+  <node name="rail_segmentation_side" pkg="rail_segmentation" type="rail_segmentation" output="screen">
+    <param name="zones_config" value="$(find nimbus_bringup)/config/segmentation/zones_side.yaml" />
+    <param name="point_cloud_topic" value="camera_side/depth_registered/points" />
+    <param name="use_color" value="$(arg use_color)" />
+    <param name="min_cluster_size" value="100" />
+    <param name="max_cluster_size" value="20000" />
+    <param name="debug" value="true" />
+  </node>
+  -->
 
   <!-- MoveIt -->
   <include file="$(find nimbus_moveit_config)/launch/nimbus_moveit_full.launch" />

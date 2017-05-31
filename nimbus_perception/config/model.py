@@ -10,7 +10,7 @@ from sklearn.ensemble import RandomForestClassifier
 from sklearn.externals import joblib
 
 # Load dataset
-dataset = pandas.read_csv('~/ROS/src/nimbus_bot/nimbus_perception/config/objects.csv')
+dataset = pandas.read_csv('objects.csv')
 
 # Split-out validation dataset
 array = dataset.values

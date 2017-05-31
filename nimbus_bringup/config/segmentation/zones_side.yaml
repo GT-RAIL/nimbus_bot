@@ -1,0 +1,11 @@
+- name: "Table Surface"
+  remove_surface: false
+  parent_frame_id: "table_base_link"
+  child_frame_id: "camera_side_link"
+  bounding_frame_id: "table_base_link"
+  segmentation_frame_id: "table_base_link"
+  x_min: 1.0
+  x_max: 1.0
+  y_min: 0.0
+  y_max: 1.0
+  z_min: -0.2
