@@ -60,6 +60,7 @@ include_directories(
 
 ## Declare a cpp executable
 add_executable(nimbus_interactive_manipulation src/nimbus_interactive_manipulation.cpp)
+add_executable(nimbus_object_viewer src/nimbusObjectViewer.cpp)
 add_executable(nimbus_6dof_planning src/nimbus6dofPlanning.cpp)
 add_executable(nimbus_6dof_vis src/nimbus6dofVis.cpp)
 add_executable(nimbus_navidget src/nimbusNavidget.cpp)
@@ -68,6 +69,9 @@ add_executable(nimbus_navidget src/nimbusNavidget.cpp)
 target_link_libraries(nimbus_interactive_manipulation
   ${catkin_LIBRARIES}
 )
+target_link_libraries(nimbus_object_viewer
+  ${catkin_LIBRARIES}
+  )
 target_link_libraries(nimbus_6dof_planning
   ${catkin_LIBRARIES}
   )
@@ -80,6 +84,7 @@ target_link_libraries(nimbus_navidget
 
 ## Add cmake target dependencies of the executable/library
 add_dependencies(nimbus_interactive_manipulation rail_pick_and_place_msgs_gencpp wpi_jaco_msgs_gencpp)
+add_dependencies(nimbus_object_viewer rail_pick_and_place_msgs_gencpp)
 add_dependencies(nimbus_6dof_planning rail_manipulation_msgs_gencpp wpi_jaco_msgs_gencpp)
 add_dependencies(nimbus_navidget rail_manipulation_msgs_gencpp)
 
