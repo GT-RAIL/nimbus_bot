@@ -75,18 +75,21 @@ add_executable(simple_recognition src/SimpleRecognition.cpp)
 add_executable(simple_data_collector src/SimpleDataCollector.cpp)
 add_executable(simple_recognition_tester src/SimpleRecognitionTester.cpp)
 add_executable(object_labeler src/ObjectLabeler.cpp)
+add_executable(object_listener src/ObjectRecognitionListener.cpp)
 
 ## Specify libraries to link a library or executable target against
 target_link_libraries(simple_recognition ${catkin_LIBRARIES} ${PCL_COMMON_LIBRARIES} yaml-cpp)
 target_link_libraries(simple_data_collector ${catkin_LIBRARIES})
 target_link_libraries(simple_recognition_tester ${catkin_LIBRARIES})
 target_link_libraries(object_labeler ${catkin_LIBRARIES})
+target_link_libraries(object_listener ${catkin_LIBRARIES})
 
 ## Add cmake target dependencies of the executable/library
 add_dependencies(simple_recognition rail_manipulation_msgs_gencpp ${PROJECT_NAME}_generate_messages)
 add_dependencies(simple_data_collector rail_manipulation_msgs_gencpp)
 add_dependencies(simple_recognition_tester rail_manipulation_msgs_gencpp ${PROJECT_NAME}_generate_messages)
 add_dependencies(object_labeler rail_manipulation_msgs_gencpp ${PROJECT_NAME}_generate_messages)
+add_dependencies(object_listener rail_manipulation_msgs_gencpp ${PROJECT_NAME}_generate_messages)
 
 #############
 ## Install ##
