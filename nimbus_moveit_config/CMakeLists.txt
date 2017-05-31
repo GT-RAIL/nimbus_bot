@@ -5,6 +5,7 @@ find_package(catkin REQUIRED
   actionlib
   cmake_modules
   control_msgs
+  ecl_geometry
   message_generation
   geometry_msgs
   roscpp
@@ -38,11 +39,13 @@ include_directories(
 add_executable(nimbus_moveit src/nimbus_moveit.cpp include/nimbus_moveit_config/nimbus_moveit.h)
 add_executable(common_actions src/common_actions.cpp)
 add_executable(primitive_actions src/primitive_actions.cpp)
+add_executable(jaco_trajectory_controller src/jaco_trajectory_controller.cpp)
 
 ## Specify libraries to link a library or executable target against
 target_link_libraries(nimbus_moveit ${catkin_LIBRARIES})
 target_link_libraries(common_actions ${catkin_LIBRARIES})
 target_link_libraries(primitive_actions ${catkin_LIBRARIES})
+target_link_libraries(jaco_trajectory_controller ${catkin_LIBRARIES})
 
 add_dependencies(nimbus_moveit rail_manipulation_msgs_gencpp)
 add_dependencies(common_actions rail_manipulation_msgs_gencpp)
