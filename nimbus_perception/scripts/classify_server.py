@@ -23,6 +23,7 @@ class ClassifyObjects:
 	    
 	    print "Returning [l=%f a=%f b=%f x=%f y=%f z=%f]"%(req.l, req.a, req.b, req.x, req.y, req.z)
 	    str = self.model.predict([req.l, req.a, req.b, req.x, req.y, req.z])
+	    #str = self.model.predict([req.l, req.a, req.b, req.x, req.y])
 	    return str[0]
 
 if __name__ == "__main__":

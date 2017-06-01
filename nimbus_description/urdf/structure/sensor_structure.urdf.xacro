@@ -191,6 +191,29 @@
     </link>
     <xacro:left_bracket parent="sensor_frame_left_strut_link" side="left" />
     <xacro:right_bracket parent="sensor_frame_left_strut_link" side="left" />
+    <joint name="sensor_frame_left_strut_link_sensor_frame_left_support_link_joint" type="fixed">
+      <parent link="sensor_frame_left_strut_link" />
+      <child link="sensor_frame_left_support_link" />
+      <origin xyz="0 0.2286 0.2286" rpy="0 0 0" />
+    </joint>
+    <link name="sensor_frame_left_support_link" >
+      <visual>
+        <geometry>
+          <box size="0.0254 0.4572 0.4572" />
+        </geometry>
+        <origin xyz="0 0 0" rpy="0 0 0" />
+        <material name="light-gray">
+          <color rgba="0.4 0.4 0.4 1" />
+        </material>
+      </visual>
+      <collision>
+        <geometry>
+          <box size="0.0454 0.4572 0.4572" />
+        </geometry>
+        <origin xyz="0 0 0" rpy="0 0 0" />
+      </collision>
+    </link>
+
 
     <joint name="sensor_frame_center_link_sensor_frame_right_strut_link_joint" type="fixed">
       <parent link="sensor_frame_center_link" />
@@ -214,6 +237,29 @@
     </link>
     <xacro:left_bracket parent="sensor_frame_right_strut_link" side="right" />
     <xacro:right_bracket parent="sensor_frame_right_strut_link" side="right" />
+    <joint name="sensor_frame_right_strut_link_sensor_frame_right_support_link_joint" type="fixed">
+      <parent link="sensor_frame_right_strut_link" />
+      <child link="sensor_frame_right_support_link" />
+      <origin xyz="0 0.2286 0.2286" rpy="0 0 0" />
+    </joint>
+    <link name="sensor_frame_right_support_link" >
+      <visual>
+        <geometry>
+          <box size="0.0254 0.4572 0.4572" />
+        </geometry>
+        <origin xyz="0 0 0" rpy="0 0 0" />
+        <material name="light-gray">
+          <color rgba="0.4 0.4 0.4 1" />
+        </material>
+      </visual>
+      <collision>
+        <geometry>
+          <box size="0.0454 0.4572 0.4572" />
+        </geometry>
+        <origin xyz="0 0 0" rpy="0 0 0" />
+      </collision>
+    </link>
+
 
     <joint name="sensor_frame_center_link_sensor_frame_top_beam_link_joint" type="fixed">
       <parent link="sensor_frame_center_link" />

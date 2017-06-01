@@ -74,6 +74,10 @@ void ObjectRecognitionListener::segmentedObjectsCallback(const rail_manipulation
     lab = RGB2Lab(rgb);
 
     nimbus_perception::Classify classifyObject;
+    //double p = 4*(dims[0] + dims[1] + dims[2]);
+    //double v = dims[0]*dims[1]*dims[2];
+    //classifyObject.request.x = p;
+    //classifyObject.request.y = v;
     classifyObject.request.x = dims[0];
     classifyObject.request.y = dims[1];
     classifyObject.request.z = dims[2];

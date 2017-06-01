@@ -48,11 +48,13 @@
     <disable_collisions link1="arm_mount_beam_link" link2="sensor_frame_left_bracket_right_foot_link" reason="Never" />
     <disable_collisions link1="arm_mount_beam_link" link2="sensor_frame_left_bracket_right_side_link" reason="Never" />
     <disable_collisions link1="arm_mount_beam_link" link2="sensor_frame_left_strut_link" reason="Never" />
+    <disable_collisions link1="arm_mount_beam_link" link2="sensor_frame_left_support_link" reason="Never" />
     <disable_collisions link1="arm_mount_beam_link" link2="sensor_frame_right_bracket_left_foot_link" reason="Never" />
     <disable_collisions link1="arm_mount_beam_link" link2="sensor_frame_right_bracket_left_side_link" reason="Never" />
     <disable_collisions link1="arm_mount_beam_link" link2="sensor_frame_right_bracket_right_foot_link" reason="Never" />
     <disable_collisions link1="arm_mount_beam_link" link2="sensor_frame_right_bracket_right_side_link" reason="Never" />
     <disable_collisions link1="arm_mount_beam_link" link2="sensor_frame_right_strut_link" reason="Never" />
+    <disable_collisions link1="arm_mount_beam_link" link2="sensor_frame_right_support_link" reason="Never" />
     <disable_collisions link1="arm_mount_beam_link" link2="sensor_frame_top_beam_link" reason="Never" />
     <disable_collisions link1="arm_mount_plate_link" link2="camera_link" reason="Never" />
     <disable_collisions link1="arm_mount_plate_link" link2="j2s7s300_link_1" reason="Never" />
@@ -64,30 +66,33 @@
     <disable_collisions link1="arm_mount_plate_link" link2="sensor_frame_left_bracket_right_foot_link" reason="Never" />
     <disable_collisions link1="arm_mount_plate_link" link2="sensor_frame_left_bracket_right_side_link" reason="Never" />
     <disable_collisions link1="arm_mount_plate_link" link2="sensor_frame_left_strut_link" reason="Adjacent" />
+    <disable_collisions link1="arm_mount_plate_link" link2="sensor_frame_left_support_link" reason="Never" />
     <disable_collisions link1="arm_mount_plate_link" link2="sensor_frame_right_bracket_left_foot_link" reason="Never" />
     <disable_collisions link1="arm_mount_plate_link" link2="sensor_frame_right_bracket_left_side_link" reason="Never" />
     <disable_collisions link1="arm_mount_plate_link" link2="sensor_frame_right_bracket_right_foot_link" reason="Never" />
     <disable_collisions link1="arm_mount_plate_link" link2="sensor_frame_right_bracket_right_side_link" reason="Never" />
     <disable_collisions link1="arm_mount_plate_link" link2="sensor_frame_right_strut_link" reason="Adjacent" />
+    <disable_collisions link1="arm_mount_plate_link" link2="sensor_frame_right_support_link" reason="Never" />
     <disable_collisions link1="arm_mount_plate_link" link2="sensor_frame_top_beam_link" reason="Adjacent" />
     <disable_collisions link1="camera_link" link2="j2s7s300_link_1" reason="Never" />
     <disable_collisions link1="camera_link" link2="j2s7s300_link_2" reason="Never" />
     <disable_collisions link1="camera_link" link2="j2s7s300_link_3" reason="Never" />
     <disable_collisions link1="camera_link" link2="j2s7s300_link_4" reason="Never" />
     <disable_collisions link1="camera_link" link2="j2s7s300_link_5" reason="Never" />
-    <disable_collisions link1="camera_link" link2="j2s7s300_link_7" reason="Default" />
+    <disable_collisions link1="camera_link" link2="j2s7s300_link_6" reason="Never" />
     <disable_collisions link1="camera_link" link2="j2s7s300_link_base" reason="Never" />
-    <disable_collisions link1="camera_link" link2="robotiq_85_base_link" reason="Default" />
     <disable_collisions link1="camera_link" link2="sensor_frame_left_bracket_left_foot_link" reason="Never" />
     <disable_collisions link1="camera_link" link2="sensor_frame_left_bracket_left_side_link" reason="Never" />
     <disable_collisions link1="camera_link" link2="sensor_frame_left_bracket_right_foot_link" reason="Never" />
     <disable_collisions link1="camera_link" link2="sensor_frame_left_bracket_right_side_link" reason="Never" />
     <disable_collisions link1="camera_link" link2="sensor_frame_left_strut_link" reason="Never" />
+    <disable_collisions link1="camera_link" link2="sensor_frame_left_support_link" reason="Never" />
     <disable_collisions link1="camera_link" link2="sensor_frame_right_bracket_left_foot_link" reason="Never" />
     <disable_collisions link1="camera_link" link2="sensor_frame_right_bracket_left_side_link" reason="Never" />
     <disable_collisions link1="camera_link" link2="sensor_frame_right_bracket_right_foot_link" reason="Never" />
     <disable_collisions link1="camera_link" link2="sensor_frame_right_bracket_right_side_link" reason="Never" />
     <disable_collisions link1="camera_link" link2="sensor_frame_right_strut_link" reason="Never" />
+    <disable_collisions link1="camera_link" link2="sensor_frame_right_support_link" reason="Never" />
     <disable_collisions link1="camera_link" link2="sensor_frame_top_beam_link" reason="Adjacent" />
     <disable_collisions link1="j2s7s300_link_1" link2="j2s7s300_link_2" reason="Adjacent" />
     <disable_collisions link1="j2s7s300_link_1" link2="j2s7s300_link_3" reason="Never" />
@@ -99,11 +104,13 @@
     <disable_collisions link1="j2s7s300_link_1" link2="sensor_frame_left_bracket_right_foot_link" reason="Never" />
     <disable_collisions link1="j2s7s300_link_1" link2="sensor_frame_left_bracket_right_side_link" reason="Never" />
     <disable_collisions link1="j2s7s300_link_1" link2="sensor_frame_left_strut_link" reason="Never" />
+    <disable_collisions link1="j2s7s300_link_1" link2="sensor_frame_left_support_link" reason="Never" />
     <disable_collisions link1="j2s7s300_link_1" link2="sensor_frame_right_bracket_left_foot_link" reason="Never" />
     <disable_collisions link1="j2s7s300_link_1" link2="sensor_frame_right_bracket_left_side_link" reason="Never" />
     <disable_collisions link1="j2s7s300_link_1" link2="sensor_frame_right_bracket_right_foot_link" reason="Never" />
     <disable_collisions link1="j2s7s300_link_1" link2="sensor_frame_right_bracket_right_side_link" reason="Never" />
     <disable_collisions link1="j2s7s300_link_1" link2="sensor_frame_right_strut_link" reason="Never" />
+    <disable_collisions link1="j2s7s300_link_1" link2="sensor_frame_right_support_link" reason="Never" />
     <disable_collisions link1="j2s7s300_link_1" link2="sensor_frame_top_beam_link" reason="Never" />
     <disable_collisions link1="j2s7s300_link_2" link2="j2s7s300_link_3" reason="Adjacent" />
     <disable_collisions link1="j2s7s300_link_2" link2="j2s7s300_link_4" reason="Never" />
@@ -114,11 +121,13 @@
     <disable_collisions link1="j2s7s300_link_2" link2="sensor_frame_left_bracket_right_foot_link" reason="Never" />
     <disable_collisions link1="j2s7s300_link_2" link2="sensor_frame_left_bracket_right_side_link" reason="Never" />
     <disable_collisions link1="j2s7s300_link_2" link2="sensor_frame_left_strut_link" reason="Never" />
+    <disable_collisions link1="j2s7s300_link_2" link2="sensor_frame_left_support_link" reason="Never" />
     <disable_collisions link1="j2s7s300_link_2" link2="sensor_frame_right_bracket_left_foot_link" reason="Never" />
     <disable_collisions link1="j2s7s300_link_2" link2="sensor_frame_right_bracket_left_side_link" reason="Never" />
     <disable_collisions link1="j2s7s300_link_2" link2="sensor_frame_right_bracket_right_foot_link" reason="Never" />
     <disable_collisions link1="j2s7s300_link_2" link2="sensor_frame_right_bracket_right_side_link" reason="Never" />
     <disable_collisions link1="j2s7s300_link_2" link2="sensor_frame_right_strut_link" reason="Never" />
+    <disable_collisions link1="j2s7s300_link_2" link2="sensor_frame_right_support_link" reason="Never" />
     <disable_collisions link1="j2s7s300_link_2" link2="sensor_frame_top_beam_link" reason="Never" />
     <disable_collisions link1="j2s7s300_link_3" link2="j2s7s300_link_4" reason="Adjacent" />
     <disable_collisions link1="j2s7s300_link_3" link2="j2s7s300_link_5" reason="Never" />
@@ -129,11 +138,13 @@
     <disable_collisions link1="j2s7s300_link_3" link2="sensor_frame_left_bracket_right_foot_link" reason="Never" />
     <disable_collisions link1="j2s7s300_link_3" link2="sensor_frame_left_bracket_right_side_link" reason="Never" />
     <disable_collisions link1="j2s7s300_link_3" link2="sensor_frame_left_strut_link" reason="Never" />
+    <disable_collisions link1="j2s7s300_link_3" link2="sensor_frame_left_support_link" reason="Never" />
     <disable_collisions link1="j2s7s300_link_3" link2="sensor_frame_right_bracket_left_foot_link" reason="Never" />
     <disable_collisions link1="j2s7s300_link_3" link2="sensor_frame_right_bracket_left_side_link" reason="Never" />
     <disable_collisions link1="j2s7s300_link_3" link2="sensor_frame_right_bracket_right_foot_link" reason="Never" />
     <disable_collisions link1="j2s7s300_link_3" link2="sensor_frame_right_bracket_right_side_link" reason="Never" />
     <disable_collisions link1="j2s7s300_link_3" link2="sensor_frame_right_strut_link" reason="Never" />
+    <disable_collisions link1="j2s7s300_link_3" link2="sensor_frame_right_support_link" reason="Never" />
     <disable_collisions link1="j2s7s300_link_3" link2="sensor_frame_top_beam_link" reason="Never" />
     <disable_collisions link1="j2s7s300_link_4" link2="j2s7s300_link_5" reason="Adjacent" />
     <disable_collisions link1="j2s7s300_link_4" link2="robotiq_85_base_link" reason="Never" />
@@ -150,11 +161,13 @@
     <disable_collisions link1="j2s7s300_link_4" link2="sensor_frame_left_bracket_right_foot_link" reason="Never" />
     <disable_collisions link1="j2s7s300_link_4" link2="sensor_frame_left_bracket_right_side_link" reason="Never" />
     <disable_collisions link1="j2s7s300_link_4" link2="sensor_frame_left_strut_link" reason="Never" />
+    <disable_collisions link1="j2s7s300_link_4" link2="sensor_frame_left_support_link" reason="Never" />
     <disable_collisions link1="j2s7s300_link_4" link2="sensor_frame_right_bracket_left_foot_link" reason="Never" />
     <disable_collisions link1="j2s7s300_link_4" link2="sensor_frame_right_bracket_left_side_link" reason="Never" />
     <disable_collisions link1="j2s7s300_link_4" link2="sensor_frame_right_bracket_right_foot_link" reason="Never" />
     <disable_collisions link1="j2s7s300_link_4" link2="sensor_frame_right_bracket_right_side_link" reason="Never" />
     <disable_collisions link1="j2s7s300_link_4" link2="sensor_frame_right_strut_link" reason="Never" />
+    <disable_collisions link1="j2s7s300_link_4" link2="sensor_frame_right_support_link" reason="Never" />
     <disable_collisions link1="j2s7s300_link_4" link2="sensor_frame_top_beam_link" reason="Never" />
     <disable_collisions link1="j2s7s300_link_5" link2="j2s7s300_link_6" reason="Adjacent" />
     <disable_collisions link1="j2s7s300_link_5" link2="robotiq_85_base_link" reason="Never" />
@@ -171,11 +184,13 @@
     <disable_collisions link1="j2s7s300_link_5" link2="sensor_frame_left_bracket_right_foot_link" reason="Never" />
     <disable_collisions link1="j2s7s300_link_5" link2="sensor_frame_left_bracket_right_side_link" reason="Never" />
     <disable_collisions link1="j2s7s300_link_5" link2="sensor_frame_left_strut_link" reason="Never" />
+    <disable_collisions link1="j2s7s300_link_5" link2="sensor_frame_left_support_link" reason="Never" />
     <disable_collisions link1="j2s7s300_link_5" link2="sensor_frame_right_bracket_left_foot_link" reason="Never" />
     <disable_collisions link1="j2s7s300_link_5" link2="sensor_frame_right_bracket_left_side_link" reason="Never" />
     <disable_collisions link1="j2s7s300_link_5" link2="sensor_frame_right_bracket_right_foot_link" reason="Never" />
     <disable_collisions link1="j2s7s300_link_5" link2="sensor_frame_right_bracket_right_side_link" reason="Never" />
     <disable_collisions link1="j2s7s300_link_5" link2="sensor_frame_right_strut_link" reason="Never" />
+    <disable_collisions link1="j2s7s300_link_5" link2="sensor_frame_right_support_link" reason="Never" />
     <disable_collisions link1="j2s7s300_link_5" link2="sensor_frame_top_beam_link" reason="Never" />
     <disable_collisions link1="j2s7s300_link_6" link2="j2s7s300_link_7" reason="Adjacent" />
     <disable_collisions link1="j2s7s300_link_6" link2="robotiq_85_base_link" reason="Never" />
@@ -207,17 +222,18 @@
     <disable_collisions link1="j2s7s300_link_7" link2="sensor_frame_left_bracket_left_side_link" reason="Never" />
     <disable_collisions link1="j2s7s300_link_7" link2="sensor_frame_right_bracket_right_foot_link" reason="Never" />
     <disable_collisions link1="j2s7s300_link_7" link2="sensor_frame_right_bracket_right_side_link" reason="Never" />
-    <disable_collisions link1="j2s7s300_link_7" link2="sensor_frame_top_beam_link" reason="Default" />
     <disable_collisions link1="j2s7s300_link_base" link2="sensor_frame_left_bracket_left_foot_link" reason="Never" />
     <disable_collisions link1="j2s7s300_link_base" link2="sensor_frame_left_bracket_left_side_link" reason="Never" />
     <disable_collisions link1="j2s7s300_link_base" link2="sensor_frame_left_bracket_right_foot_link" reason="Never" />
     <disable_collisions link1="j2s7s300_link_base" link2="sensor_frame_left_bracket_right_side_link" reason="Never" />
     <disable_collisions link1="j2s7s300_link_base" link2="sensor_frame_left_strut_link" reason="Never" />
+    <disable_collisions link1="j2s7s300_link_base" link2="sensor_frame_left_support_link" reason="Never" />
     <disable_collisions link1="j2s7s300_link_base" link2="sensor_frame_right_bracket_left_foot_link" reason="Never" />
     <disable_collisions link1="j2s7s300_link_base" link2="sensor_frame_right_bracket_left_side_link" reason="Never" />
     <disable_collisions link1="j2s7s300_link_base" link2="sensor_frame_right_bracket_right_foot_link" reason="Never" />
     <disable_collisions link1="j2s7s300_link_base" link2="sensor_frame_right_bracket_right_side_link" reason="Never" />
     <disable_collisions link1="j2s7s300_link_base" link2="sensor_frame_right_strut_link" reason="Never" />
+    <disable_collisions link1="j2s7s300_link_base" link2="sensor_frame_right_support_link" reason="Never" />
     <disable_collisions link1="j2s7s300_link_base" link2="sensor_frame_top_beam_link" reason="Never" />
     <disable_collisions link1="robotiq_85_base_link" link2="robotiq_85_left_finger_link" reason="Never" />
     <disable_collisions link1="robotiq_85_base_link" link2="robotiq_85_left_finger_tip_link" reason="Never" />
@@ -227,7 +243,6 @@
     <disable_collisions link1="robotiq_85_base_link" link2="robotiq_85_right_finger_tip_link" reason="Never" />
     <disable_collisions link1="robotiq_85_base_link" link2="robotiq_85_right_inner_knuckle_link" reason="Adjacent" />
     <disable_collisions link1="robotiq_85_base_link" link2="robotiq_85_right_knuckle_link" reason="Adjacent" />
-    <disable_collisions link1="robotiq_85_base_link" link2="sensor_frame_top_beam_link" reason="Default" />
     <disable_collisions link1="robotiq_85_left_finger_link" link2="robotiq_85_left_finger_tip_link" reason="Default" />
     <disable_collisions link1="robotiq_85_left_finger_link" link2="robotiq_85_left_inner_knuckle_link" reason="Never" />
     <disable_collisions link1="robotiq_85_left_finger_link" link2="robotiq_85_left_knuckle_link" reason="Adjacent" />
@@ -245,7 +260,6 @@
     <disable_collisions link1="robotiq_85_left_inner_knuckle_link" link2="robotiq_85_right_finger_tip_link" reason="Never" />
     <disable_collisions link1="robotiq_85_left_inner_knuckle_link" link2="robotiq_85_right_inner_knuckle_link" reason="Never" />
     <disable_collisions link1="robotiq_85_left_inner_knuckle_link" link2="robotiq_85_right_knuckle_link" reason="Never" />
-    <disable_collisions link1="robotiq_85_left_inner_knuckle_link" link2="sensor_frame_top_beam_link" reason="Default" />
     <disable_collisions link1="robotiq_85_left_knuckle_link" link2="robotiq_85_right_finger_link" reason="Never" />
     <disable_collisions link1="robotiq_85_left_knuckle_link" link2="robotiq_85_right_finger_tip_link" reason="Never" />
     <disable_collisions link1="robotiq_85_left_knuckle_link" link2="robotiq_85_right_inner_knuckle_link" reason="Never" />
@@ -253,66 +267,86 @@
     <disable_collisions link1="robotiq_85_right_finger_link" link2="robotiq_85_right_finger_tip_link" reason="Default" />
     <disable_collisions link1="robotiq_85_right_finger_link" link2="robotiq_85_right_inner_knuckle_link" reason="Never" />
     <disable_collisions link1="robotiq_85_right_finger_link" link2="robotiq_85_right_knuckle_link" reason="Adjacent" />
-    <disable_collisions link1="robotiq_85_right_finger_link" link2="sensor_frame_top_beam_link" reason="Default" />
     <disable_collisions link1="robotiq_85_right_finger_tip_link" link2="robotiq_85_right_inner_knuckle_link" reason="Adjacent" />
     <disable_collisions link1="robotiq_85_right_finger_tip_link" link2="robotiq_85_right_knuckle_link" reason="Never" />
     <disable_collisions link1="robotiq_85_right_inner_knuckle_link" link2="robotiq_85_right_knuckle_link" reason="Never" />
-    <disable_collisions link1="robotiq_85_right_inner_knuckle_link" link2="sensor_frame_top_beam_link" reason="Default" />
-    <disable_collisions link1="robotiq_85_right_knuckle_link" link2="sensor_frame_left_bracket_right_side_link" reason="Never" />
-    <disable_collisions link1="robotiq_85_right_knuckle_link" link2="sensor_frame_top_beam_link" reason="Default" />
+    <disable_collisions link1="robotiq_85_right_inner_knuckle_link" link2="sensor_frame_left_bracket_left_foot_link" reason="Never" />
     <disable_collisions link1="sensor_frame_left_bracket_left_foot_link" link2="sensor_frame_left_bracket_left_side_link" reason="Adjacent" />
     <disable_collisions link1="sensor_frame_left_bracket_left_foot_link" link2="sensor_frame_left_bracket_right_foot_link" reason="Never" />
     <disable_collisions link1="sensor_frame_left_bracket_left_foot_link" link2="sensor_frame_left_bracket_right_side_link" reason="Never" />
     <disable_collisions link1="sensor_frame_left_bracket_left_foot_link" link2="sensor_frame_left_strut_link" reason="Adjacent" />
+    <disable_collisions link1="sensor_frame_left_bracket_left_foot_link" link2="sensor_frame_left_support_link" reason="Default" />
     <disable_collisions link1="sensor_frame_left_bracket_left_foot_link" link2="sensor_frame_right_bracket_left_foot_link" reason="Never" />
     <disable_collisions link1="sensor_frame_left_bracket_left_foot_link" link2="sensor_frame_right_bracket_left_side_link" reason="Never" />
     <disable_collisions link1="sensor_frame_left_bracket_left_foot_link" link2="sensor_frame_right_bracket_right_foot_link" reason="Never" />
     <disable_collisions link1="sensor_frame_left_bracket_left_foot_link" link2="sensor_frame_right_bracket_right_side_link" reason="Never" />
     <disable_collisions link1="sensor_frame_left_bracket_left_foot_link" link2="sensor_frame_right_strut_link" reason="Never" />
+    <disable_collisions link1="sensor_frame_left_bracket_left_foot_link" link2="sensor_frame_right_support_link" reason="Never" />
     <disable_collisions link1="sensor_frame_left_bracket_left_foot_link" link2="sensor_frame_top_beam_link" reason="Never" />
     <disable_collisions link1="sensor_frame_left_bracket_left_side_link" link2="sensor_frame_left_bracket_right_foot_link" reason="Never" />
     <disable_collisions link1="sensor_frame_left_bracket_left_side_link" link2="sensor_frame_left_bracket_right_side_link" reason="Never" />
     <disable_collisions link1="sensor_frame_left_bracket_left_side_link" link2="sensor_frame_left_strut_link" reason="Default" />
+    <disable_collisions link1="sensor_frame_left_bracket_left_side_link" link2="sensor_frame_left_support_link" reason="Default" />
     <disable_collisions link1="sensor_frame_left_bracket_left_side_link" link2="sensor_frame_right_bracket_left_foot_link" reason="Never" />
     <disable_collisions link1="sensor_frame_left_bracket_left_side_link" link2="sensor_frame_right_bracket_left_side_link" reason="Never" />
     <disable_collisions link1="sensor_frame_left_bracket_left_side_link" link2="sensor_frame_right_bracket_right_foot_link" reason="Never" />
     <disable_collisions link1="sensor_frame_left_bracket_left_side_link" link2="sensor_frame_right_bracket_right_side_link" reason="Never" />
     <disable_collisions link1="sensor_frame_left_bracket_left_side_link" link2="sensor_frame_right_strut_link" reason="Never" />
+    <disable_collisions link1="sensor_frame_left_bracket_left_side_link" link2="sensor_frame_right_support_link" reason="Never" />
     <disable_collisions link1="sensor_frame_left_bracket_left_side_link" link2="sensor_frame_top_beam_link" reason="Never" />
     <disable_collisions link1="sensor_frame_left_bracket_right_foot_link" link2="sensor_frame_left_bracket_right_side_link" reason="Adjacent" />
     <disable_collisions link1="sensor_frame_left_bracket_right_foot_link" link2="sensor_frame_left_strut_link" reason="Adjacent" />
+    <disable_collisions link1="sensor_frame_left_bracket_right_foot_link" link2="sensor_frame_left_support_link" reason="Default" />
     <disable_collisions link1="sensor_frame_left_bracket_right_foot_link" link2="sensor_frame_right_bracket_left_foot_link" reason="Never" />
     <disable_collisions link1="sensor_frame_left_bracket_right_foot_link" link2="sensor_frame_right_bracket_left_side_link" reason="Never" />
     <disable_collisions link1="sensor_frame_left_bracket_right_foot_link" link2="sensor_frame_right_bracket_right_foot_link" reason="Never" />
     <disable_collisions link1="sensor_frame_left_bracket_right_foot_link" link2="sensor_frame_right_bracket_right_side_link" reason="Never" />
     <disable_collisions link1="sensor_frame_left_bracket_right_foot_link" link2="sensor_frame_right_strut_link" reason="Never" />
+    <disable_collisions link1="sensor_frame_left_bracket_right_foot_link" link2="sensor_frame_right_support_link" reason="Never" />
     <disable_collisions link1="sensor_frame_left_bracket_right_foot_link" link2="sensor_frame_top_beam_link" reason="Never" />
     <disable_collisions link1="sensor_frame_left_bracket_right_side_link" link2="sensor_frame_left_strut_link" reason="Default" />
+    <disable_collisions link1="sensor_frame_left_bracket_right_side_link" link2="sensor_frame_left_support_link" reason="Default" />
     <disable_collisions link1="sensor_frame_left_bracket_right_side_link" link2="sensor_frame_right_bracket_left_foot_link" reason="Never" />
     <disable_collisions link1="sensor_frame_left_bracket_right_side_link" link2="sensor_frame_right_bracket_left_side_link" reason="Never" />
     <disable_collisions link1="sensor_frame_left_bracket_right_side_link" link2="sensor_frame_right_bracket_right_foot_link" reason="Never" />
     <disable_collisions link1="sensor_frame_left_bracket_right_side_link" link2="sensor_frame_right_bracket_right_side_link" reason="Never" />
     <disable_collisions link1="sensor_frame_left_bracket_right_side_link" link2="sensor_frame_right_strut_link" reason="Never" />
+    <disable_collisions link1="sensor_frame_left_bracket_right_side_link" link2="sensor_frame_right_support_link" reason="Never" />
     <disable_collisions link1="sensor_frame_left_bracket_right_side_link" link2="sensor_frame_top_beam_link" reason="Never" />
+    <disable_collisions link1="sensor_frame_left_strut_link" link2="sensor_frame_left_support_link" reason="Adjacent" />
     <disable_collisions link1="sensor_frame_left_strut_link" link2="sensor_frame_right_bracket_left_foot_link" reason="Never" />
     <disable_collisions link1="sensor_frame_left_strut_link" link2="sensor_frame_right_bracket_left_side_link" reason="Never" />
     <disable_collisions link1="sensor_frame_left_strut_link" link2="sensor_frame_right_bracket_right_foot_link" reason="Never" />
     <disable_collisions link1="sensor_frame_left_strut_link" link2="sensor_frame_right_bracket_right_side_link" reason="Never" />
     <disable_collisions link1="sensor_frame_left_strut_link" link2="sensor_frame_right_strut_link" reason="Adjacent" />
+    <disable_collisions link1="sensor_frame_left_strut_link" link2="sensor_frame_right_support_link" reason="Never" />
     <disable_collisions link1="sensor_frame_left_strut_link" link2="sensor_frame_top_beam_link" reason="Adjacent" />
+    <disable_collisions link1="sensor_frame_left_support_link" link2="sensor_frame_right_bracket_left_foot_link" reason="Never" />
+    <disable_collisions link1="sensor_frame_left_support_link" link2="sensor_frame_right_bracket_left_side_link" reason="Never" />
+    <disable_collisions link1="sensor_frame_left_support_link" link2="sensor_frame_right_bracket_right_foot_link" reason="Never" />
+    <disable_collisions link1="sensor_frame_left_support_link" link2="sensor_frame_right_bracket_right_side_link" reason="Never" />
+    <disable_collisions link1="sensor_frame_left_support_link" link2="sensor_frame_right_strut_link" reason="Never" />
+    <disable_collisions link1="sensor_frame_left_support_link" link2="sensor_frame_right_support_link" reason="Never" />
+    <disable_collisions link1="sensor_frame_left_support_link" link2="sensor_frame_top_beam_link" reason="Never" />
     <disable_collisions link1="sensor_frame_right_bracket_left_foot_link" link2="sensor_frame_right_bracket_left_side_link" reason="Adjacent" />
     <disable_collisions link1="sensor_frame_right_bracket_left_foot_link" link2="sensor_frame_right_bracket_right_foot_link" reason="Never" />
     <disable_collisions link1="sensor_frame_right_bracket_left_foot_link" link2="sensor_frame_right_bracket_right_side_link" reason="Never" />
     <disable_collisions link1="sensor_frame_right_bracket_left_foot_link" link2="sensor_frame_right_strut_link" reason="Adjacent" />
+    <disable_collisions link1="sensor_frame_right_bracket_left_foot_link" link2="sensor_frame_right_support_link" reason="Default" />
     <disable_collisions link1="sensor_frame_right_bracket_left_foot_link" link2="sensor_frame_top_beam_link" reason="Never" />
     <disable_collisions link1="sensor_frame_right_bracket_left_side_link" link2="sensor_frame_right_bracket_right_foot_link" reason="Never" />
     <disable_collisions link1="sensor_frame_right_bracket_left_side_link" link2="sensor_frame_right_bracket_right_side_link" reason="Never" />
     <disable_collisions link1="sensor_frame_right_bracket_left_side_link" link2="sensor_frame_right_strut_link" reason="Default" />
+    <disable_collisions link1="sensor_frame_right_bracket_left_side_link" link2="sensor_frame_right_support_link" reason="Default" />
     <disable_collisions link1="sensor_frame_right_bracket_left_side_link" link2="sensor_frame_top_beam_link" reason="Never" />
     <disable_collisions link1="sensor_frame_right_bracket_right_foot_link" link2="sensor_frame_right_bracket_right_side_link" reason="Adjacent" />
     <disable_collisions link1="sensor_frame_right_bracket_right_foot_link" link2="sensor_frame_right_strut_link" reason="Adjacent" />
+    <disable_collisions link1="sensor_frame_right_bracket_right_foot_link" link2="sensor_frame_right_support_link" reason="Default" />
     <disable_collisions link1="sensor_frame_right_bracket_right_foot_link" link2="sensor_frame_top_beam_link" reason="Never" />
     <disable_collisions link1="sensor_frame_right_bracket_right_side_link" link2="sensor_frame_right_strut_link" reason="Default" />
+    <disable_collisions link1="sensor_frame_right_bracket_right_side_link" link2="sensor_frame_right_support_link" reason="Default" />
     <disable_collisions link1="sensor_frame_right_bracket_right_side_link" link2="sensor_frame_top_beam_link" reason="Never" />
+    <disable_collisions link1="sensor_frame_right_strut_link" link2="sensor_frame_right_support_link" reason="Adjacent" />
     <disable_collisions link1="sensor_frame_right_strut_link" link2="sensor_frame_top_beam_link" reason="Adjacent" />
+    <disable_collisions link1="sensor_frame_right_support_link" link2="sensor_frame_top_beam_link" reason="Never" />
 </robot>

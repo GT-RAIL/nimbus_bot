@@ -143,6 +143,8 @@ void JacoTrajectoryController::executeSmoothTrajectory(const control_msgs::Follo
   double current_joint_pos[NUM_JACO_JOINTS];
   kinova_msgs::JointVelocity trajectoryPoint;
   ros::Rate rate(100);
+  bool reachedFinalPoint;
+  ros::Time finalPointTime;
 
   while (!trajectoryComplete)
   {
@@ -180,6 +182,12 @@ void JacoTrajectoryController::executeSmoothTrajectory(const control_msgs::Follo
       }
       */
 
+      if (!reachedFinalPoint)
+      {
+        reachedFinalPoint = true;
+        finalPointTime = ros::Time::now();
+      }
+
       for (unsigned int i = 0; i < NUM_JACO_JOINTS; i++)
       {
         current_joint_pos[i] = jointStates.position[i];
@@ -194,7 +202,7 @@ void JacoTrajectoryController::executeSmoothTrajectory(const control_msgs::Follo
         totalError += fabs(error[i]);
       }
 
-      if (totalError < .03)
+      if (totalError < .035 || ros::Time::now() - finalPointTime >= ros::Duration(3.0))
       {
         //stop arm
         trajectoryPoint.joint1 = 0.0;
@@ -253,7 +261,7 @@ void JacoTrajectoryController::executeSmoothTrajectory(const control_msgs::Follo
     }
 
     rate.sleep();
-    //ros::spinOnce();
+    ros::spinOnce();
   }
 
   control_msgs::FollowJointTrajectoryResult result;

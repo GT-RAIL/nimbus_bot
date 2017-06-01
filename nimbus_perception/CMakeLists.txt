@@ -8,6 +8,7 @@ project(nimbus_perception)
 find_package(catkin REQUIRED COMPONENTS
   cmake_modules
   geometry_msgs
+  pcl_conversions
   pcl_ros
   rail_manipulation_msgs
   roscpp

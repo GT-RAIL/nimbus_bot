@@ -66,6 +66,7 @@ CommonActions::CommonActions() : pnh("~"),
   pickupServer.start();
   pickupUnrecognizedServer.start();
   storeServer.start();
+  placeServer.start();
 }
 
 void CommonActions::jointStateCallback(const sensor_msgs::JointState &msg)
@@ -408,9 +409,19 @@ void CommonActions::executePickupUnrecognized(const rail_manipulation_msgs::Pick
 
 void CommonActions::executePlace(const rail_manipulation_msgs::StoreGoalConstPtr &goal)
 {
+  ROS_INFO("Place called!");
+
   rail_manipulation_msgs::StoreFeedback feedback;
   rail_manipulation_msgs::StoreResult result;
   stringstream ss;
+
+  //make sure pose is in the table_base_link frame
+  geometry_msgs::PoseStamped graspPose, approachAnglePose;
+  graspPose.header.frame_id = "table_base_link";
+  if (goal->store_pose.header.frame_id != "table_base_link")
+    tfListener.transformPose("table_base_link", goal->store_pose, graspPose);
+  else
+    graspPose = goal->store_pose;
 
   //move to place pose
   ss.str("");
@@ -420,7 +431,7 @@ void CommonActions::executePlace(const rail_manipulation_msgs::StoreGoalConstPtr
 
   rail_manipulation_msgs::MoveToPoseGoal placeGoal;
 
-  placeGoal.pose = goal->store_pose;
+  placeGoal.pose = graspPose;
   placeGoal.planningTime = 3.0;
   moveToPoseClient.sendGoal(placeGoal);
   moveToPoseClient.waitForResult(ros::Duration(30.0));

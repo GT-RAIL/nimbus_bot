@@ -23,7 +23,7 @@ NimbusMoveIt::NimbusMoveIt() :
   armJointStateSubscriber = n.subscribe("joint_states", 1, &NimbusMoveIt::armJointStatesCallback, this);
   //armHomedSubscriber = n.subscribe("jaco_arm/arm_homed", 1, &NimbusMoveIt::armHomedCallback, this);
   recognizedObjectsSubscriber = n.subscribe("object_recognition_listener/recognized_objects", 1, &NimbusMoveIt::recognizedObjectsCallback, this);
-  followJointTrajectoryResultSubscriber = n.subscribe("/j2s7s300/follow_joint_trajectory/result", 1, &NimbusMoveIt::followJointTrajectoryResultCallback, this);
+  followJointTrajectoryResultSubscriber = n.subscribe("/jaco_trajectory_controller/smooth_trajectory/result", 1, &NimbusMoveIt::followJointTrajectoryResultCallback, this);
 
   trajectoryVisPublisher = pnh.advertise<moveit_msgs::DisplayTrajectory>("computed_trajectory", 1);
   graspingStatePublisher = pnh.advertise<rail_manipulation_msgs::GraspingState>("grasping_state", 1);

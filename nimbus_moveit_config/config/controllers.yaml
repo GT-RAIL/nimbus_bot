@@ -1,6 +1,6 @@
 controller_list:
-  - name: j2s7s300
-    action_ns: follow_joint_trajectory
+  - name: jaco_trajectory_controller
+    action_ns: smooth_trajectory
     type: FollowJointTrajectory
     default: true
     joints:
