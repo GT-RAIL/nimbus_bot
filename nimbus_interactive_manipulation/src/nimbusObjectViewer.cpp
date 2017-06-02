@@ -27,6 +27,9 @@ void NimbusObjectViewer::segmentedObjectsCallback(
   clearSegmentedObjects();
   for (unsigned int i = 0; i < objectList->objects.size(); i++)
   {
+    if (objectList->objects[i].name == "ignore")
+      continue;
+
     visualization_msgs::InteractiveMarker objectMarker;
     objectMarker.header = objectList->objects[i].marker.header;
 
