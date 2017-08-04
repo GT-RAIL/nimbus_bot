@@ -8,28 +8,28 @@ from sklearn.externals import joblib
 
 class ClassifyObjects:
 
-	def __init__(self):
+    def __init__(self, model_name):
 
-		# Instance of RosPack with the default file path
-		path = rospkg.RosPack().get_path('nimbus_perception')
+        # Instance of RosPack with the default file path
+        path = rospkg.RosPack().get_path('nimbus_perception')
 
-		# Load the classifier model
-		self.model = joblib.load(path + "/config/model.pkl")
+        # Load the classifier model
+        self.model = joblib.load(path + "/config/" + model_name + ".pkl")
 
-		# initialize the service and pass in inputs
-		self.service = rospy.Service('classify', Classify, self.handle_classify)
+        # initialize the service and pass in inputs
+        self.service = rospy.Service('classify', Classify, self.handle_classify)
 
-	def handle_classify(self, req):
-	    
-	    print "Returning [l=%f a=%f b=%f x=%f y=%f z=%f]"%(req.l, req.a, req.b, req.x, req.y, req.z)
-	    str = self.model.predict([req.l, req.a, req.b, req.x, req.y, req.z])
-	    #str = self.model.predict([req.l, req.a, req.b, req.x, req.y])
-	    return str[0]
+    def handle_classify(self, req):
+        
+        print "Returning [l=%f a=%f b=%f x=%f y=%f z=%f]"%(req.l, req.a, req.b, req.x, req.y, req.z)
+        str = self.model.predict([req.l, req.a, req.b, req.x, req.y, req.z])
+        return str[0]
 
 if __name__ == "__main__":
 
-	rospy.init_node('classify_server')
-	classify = ClassifyObjects()
-	print "Ready to classify."
+    rospy.init_node('classify_server')
+    rospy.myargv(argv = sys.argv) # remove remapping arguments
+    classify = ClassifyObjects(sys.argv[1])
+    print "Ready to classify."
 
-	rospy.spin()
+    rospy.spin()

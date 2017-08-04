@@ -1,0 +1,27 @@
+dataset list
+
+subset 1:
+	- sunblock
+	- harmonica (harmonica case)
+	- repellent
+	- multitool
+	- poncho
+	- flashlight
+
+	- drawer
+	- pitcher
+	- pitcher_lid
+	- container_yellow
+
+subset 2:
+	- ziplock
+	- apple_juice
+	- rope
+	- tape
+	- battery
+	- knife
+
+	- drawer
+	- pitcher
+	- pitcher_lid
+	- container_yellow
