@@ -81,7 +81,10 @@ void PrimitiveActions::executePrimitive(const rail_manipulation_msgs::PrimitiveG
     rail_manipulation_msgs::CartesianPath cartesianPath;
     cartesianPath.request.avoidCollisions = false;
     cartesianPath.request.waypoints.push_back(endPose);
-    if (!cartesianPathClient.call(cartesianPath))
+    ROS_INFO("Sending goal");
+    bool test = cartesianPathClient.call(cartesianPath);
+    ROS_INFO("goal sent");
+    if (!test)
     {
       feedback.feedback = "Couldn't move arm, an error has occurred.";
       primitiveServer.publishFeedback(feedback);
@@ -91,6 +94,7 @@ void PrimitiveActions::executePrimitive(const rail_manipulation_msgs::PrimitiveG
       return;
     }
 
+    ROS_INFO("Getting result");
     result.completion = cartesianPath.response.completion;
     ROS_INFO("Path completion: %f", result.completion);
 
