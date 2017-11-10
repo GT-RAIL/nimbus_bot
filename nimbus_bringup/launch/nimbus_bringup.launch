@@ -25,7 +25,7 @@
   </include>
   <!--<node pkg="kinova_driver" type="joint_trajectory_action_server" name="j2s7s300_joint_trajectory_action_server" output="screen" respawn="false" args="j2s7s300" />-->
   <!--<node pkg="nimbus_moveit_config" type="jaco_trajectory_controller" name="jaco_trajectory_controller" output="screen" />-->
-  <node pkg="kinova_driver" type="hlpr_trajectory_controller" name="hlpr_trajectory_controller">
+  <node pkg="kinova_driver" type="hlpr_trajectory_controller" name="hlpr_trajectory_controller" output="screen">
     <param name="sim" value="false" />
   </node>
 
