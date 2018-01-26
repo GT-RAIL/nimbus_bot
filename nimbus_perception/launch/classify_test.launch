@@ -1,9 +1,0 @@
-<launch>
-  <node name="classify_server" pkg="nimbus_perception" type="classify_server.py" args="model" />
-
-  <node name="object_listener" pkg="nimbus_perception" type="object_listener" output="screen">
-    <param name="segmented_objects_topic" value="rail_segmentation/segmented_objects" />
-  </node>
-
-  <node name="nimbus_object_viewer" pkg="nimbus_interactive_manipulation" type="nimbus_object_viewer" output="screen" />
-</launch>

@@ -1,5 +1,0 @@
-<launch>
-    <node name="self_filter" pkg="robot_self_filter" type="self_filter" output="screen">
-        <rosparam command="load" file="$(find nimbus_bringup)/config/self_filter/filter_params.yaml" />
-    </node>
-</launch>

@@ -1,6 +1,0 @@
-float32 r
-float32 g
-float32 b
-geometry_msgs/Vector3 dims
----
-string label

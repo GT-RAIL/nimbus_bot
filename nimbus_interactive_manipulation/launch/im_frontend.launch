@@ -1,3 +1,0 @@
-<launch>
-  <node pkg="rviz" type="rviz" name="rviz" args="-d $(find nimbus_interactive_manipulation)/rviz/im_frontend.rviz" />
-</launch>

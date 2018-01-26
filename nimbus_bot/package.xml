@@ -14,13 +14,9 @@
 
   <buildtool_depend>catkin</buildtool_depend>
   
-  <run_depend>nimbus_action_queue</run_depend>
   <run_depend>nimbus_bringup</run_depend>
   <run_depend>nimbus_description</run_depend>
-  <run_depend>nimbus_interactive_manipulation</run_depend>
   <run_depend>nimbus_moveit_config</run_depend>
-  <run_depend>nimbus_web_interfaces</run_depend>
-  <run_depend>nimbus_world_model</run_depend>
   
   <export>
     <metapackage />

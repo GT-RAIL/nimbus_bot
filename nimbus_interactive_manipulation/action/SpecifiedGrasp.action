@@ -1,8 +1,0 @@
-# Define the goal
----
-# Define the result
-bool executionSuccess   # True if the arm could successfully complete motion planning
-bool success            # True if the object is verified to be in the gripper after pickup
----
-# Define a feedback message
-string message         # Feedback message

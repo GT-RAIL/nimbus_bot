@@ -15,20 +15,27 @@
  
   <buildtool_depend>catkin</buildtool_depend>
   
-  <!-- ROBOT MODEL -->
+  <!-- Model -->
   <run_depend>nimbus_description</run_depend>
   
-  <!-- SENSORS -->
-  <run_depend>kinect2_bridge</run_depend>
+  <!-- Sensors -->
+  <run_depend>openni_launch</run_depend>
 
-  <!-- JACO -->
-  <run_depend>wpi_jaco_wrapper</run_depend>
+  <!-- Arm -->
+  <run_depend>kinova_bringup</run_depend>
+  <run_depend>kinova_driver</run_depend>
+
+  <!-- Gripper -->
+  <run_depend>robotiq_85_driver</run_depend>
+  <run_depend>robotiq_85_gripper_actions</run_depend>
   
-  <!-- NIMBUS -->
-  <run_depend>nimbus_interactive_manipulation</run_depend>
+  <!-- Motion Planning -->
   <run_depend>nimbus_moveit_config</run_depend>
 
-  <!-- VISION -->
+  <!-- Vision -->
   <run_depend>rail_segmentation</run_depend>
-  <run_depend>rail_recognition</run_depend>
+
+  <!-- Visualization -->
+  <run_depend>rviz</run_depend>
+
 </package>

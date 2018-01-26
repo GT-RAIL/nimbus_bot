@@ -13,8 +13,9 @@
     <param name="publish_frequency" type="double" value="100" />
   </node>
   <node name="joint_state_publisher" pkg="joint_state_publisher" type="joint_state_publisher">
-  	<param name="use_gui" value="$(arg gui)" />
-  	<rosparam param="source_list">[jaco_arm/joint_states, gripper/joint_states]</rosparam>
+    <param name="rate" value="100" />
+    <param name="use_gui" value="$(arg gui)" />
+    <rosparam param="source_list">[j2s7s300_driver/out/joint_state, gripper/joint_states]</rosparam>
   </node>
 
   <!-- Visualization -->

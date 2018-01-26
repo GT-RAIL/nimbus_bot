@@ -1,6 +1,6 @@
 <!--
-   Author: David Kent, Worcester Polytechnic Institute
-  Version: October 8, 2015
+  Author: David Kent, Georgia Institute of Technology
+  Version: January 26, 2018
 -->
 
 <launch>
@@ -9,44 +9,38 @@
   <arg name="baud" default="115200"/>
 
   <!-- Segmentation Params -->
-  <arg name="debug" default="false" />
+  <arg name="segmentation" default="true" />
+  <arg name="use_color" default="false" />
+  <arg name="min_cluster_size" default="100" />
+  <arg name="max_cluster_size" default="20000" />
 
   <!-- Recognition Params -->
   <arg name="segmented_objects_topic" default="/rail_segmentation/segmented_objects" />
 
-  <!-- Manipulation Params -->
-  <arg name="using_pickup" default="true" />
-  <arg name="visualize_recognition" default="true" />
+  <!-- Motion Planning Params -->
+  <arg name="motion_planning" default="true" />
 
-  <!-- Jaco 2 -->
-  <include file="$(find kinova_bringup)/launch/kinova_robot.launch">
-    <arg name="kinova_robotType" value="j2s7s300" />
-    <arg name="use_urdf" value="false" />
+  <!-- Drivers -->
+  <include file="$(find nimbus_bringup)/launch/nimbus_minimal.launch">
+    <arg name="comport" value="$(arg comport)" />
+    <arg name="baud" value="$(baud)" />
   </include>
-  <!--<node pkg="kinova_driver" type="joint_trajectory_action_server" name="j2s7s300_joint_trajectory_action_server" output="screen" respawn="false" args="j2s7s300" />-->
-  <!--<node pkg="nimbus_moveit_config" type="jaco_trajectory_controller" name="jaco_trajectory_controller" output="screen" />-->
-  <node pkg="kinova_driver" type="hlpr_trajectory_controller" name="hlpr_trajectory_controller" output="screen">
-    <param name="sim" value="false" />
-  </node>
 
-  <!-- Robotiq 85 ROS Driver -->
-  <node pkg="robotiq_85_driver" type="robotiq_85_driver" name="robotiq_85_driver" respawn="true" output="screen">
-    <param name="num_grippers" value="1" />
-    <param name="comport" value="$(arg comport)" />
-    <param name="baud" value="$(arg baud)" />
-  </node>
-  <node pkg="robotiq_85_gripper_actions" type="gripper_actions" name="gripper_actions" />
-
-  <include file="$(find nimbus_bringup)/launch/sensors.launch" />
-  <include file="$(find nimbus_bringup)/launch/robot_model.launch" />
-
-  <include file="$(find nimbus_bringup)/launch/nimbus_recognition.launch">
-    <arg name="debug" value="$(arg debug)" />
-    <arg name="segmented_objects_topic" value="$(arg segmented_objects_topic)" />
-  </include>
+  <!-- Vision -->
+  <group if="$(arg segmentation)">
+    <node name="rail_segmentation" pkg="rail_segmentation" type="rail_segmentation" output="screen">
+      <param name="zones_config" value="$(find nimbus_bringup)/config/segmentation/zones.yaml" />
+      <param name="point_cloud_topic" value="camera/depth_registered/points" />
+      <param name="use_color" value="$(arg use_color)" />
+      <param name="min_cluster_size" value="$(arg min_cluster_size)" />
+      <param name="max_cluster_size" value="$(arg max_cluster_size)" />
+    </node>
+  </group>
 
   <!-- MoveIt -->
-  <include file="$(find nimbus_moveit_config)/launch/nimbus_moveit_full.launch" />
-  <node pkg="nimbus_moveit_config" type="nimbus_moveit" name="nimbus_moveit" />
-  <node pkg="nimbus_moveit_config" type="common_actions" name="common_actions" output="screen"/>
+  <group if="$(arg motion_planning)">
+    <include file="$(find nimbus_moveit_config)/launch/nimbus_moveit_full.launch" />
+    <node pkg="nimbus_moveit_config" type="nimbus_moveit" name="nimbus_moveit" />
+    <node pkg="nimbus_moveit_config" type="common_actions" name="common_actions" output="screen"/>
+  </group>
 </launch>
