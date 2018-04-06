@@ -23,7 +23,7 @@
   <!-- Drivers -->
   <include file="$(find nimbus_bringup)/launch/nimbus_minimal.launch">
     <arg name="comport" value="$(arg comport)" />
-    <arg name="baud" value="$(baud)" />
+    <arg name="baud" value="$(arg baud)" />
   </include>
 
   <!-- Vision -->
