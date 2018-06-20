@@ -8,6 +8,10 @@
   <arg name="comport" default="/dev/ttyUSB0"/>
   <arg name="baud" default="115200"/>
 
+  <!-- Sensor Params -->
+  <arg name="top" default="true"/>
+  <arg name="side" default="false"/>
+
   <!-- Jaco 2 -->
   <include file="$(find kinova_bringup)/launch/kinova_robot.launch">
     <arg name="kinova_robotType" value="j2s7s300" />
@@ -26,6 +30,10 @@
   <node pkg="robotiq_85_gripper_actions" type="gripper_actions" name="gripper_actions" />
 
   <!-- Sensors (camera) and robot model -->
-  <include file="$(find nimbus_bringup)/launch/sensors.launch" />
+  <include file="$(find nimbus_bringup)/launch/sensors.launch">
+    <arg name="top" value="$(arg top)"/>
+    <arg name="side" value="$(arg side)"/>
+  </include>
+
   <include file="$(find nimbus_bringup)/launch/robot_model.launch" />
 </launch>

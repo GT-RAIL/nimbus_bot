@@ -13,24 +13,28 @@
   <arg name="use_color" default="false" />
   <arg name="min_cluster_size" default="100" />
   <arg name="max_cluster_size" default="20000" />
-
-  <!-- Recognition Params -->
-  <arg name="segmented_objects_topic" default="/rail_segmentation/segmented_objects" />
+  <arg name="segmentation_cloud" default="camera/depth_registered/points" />
 
   <!-- Motion Planning Params -->
   <arg name="motion_planning" default="true" />
+
+  <!-- Sensor Params -->
+  <arg name="top" default="true"/>
+  <arg name="side" default="false"/>
 
   <!-- Drivers -->
   <include file="$(find nimbus_bringup)/launch/nimbus_minimal.launch">
     <arg name="comport" value="$(arg comport)" />
     <arg name="baud" value="$(arg baud)" />
+    <arg name="top" value="$(arg top)"/>
+    <arg name="side" value="$(arg side)"/>
   </include>
 
   <!-- Vision -->
   <group if="$(arg segmentation)">
     <node name="rail_segmentation" pkg="rail_segmentation" type="rail_segmentation" output="screen">
       <param name="zones_config" value="$(find nimbus_bringup)/config/segmentation/zones.yaml" />
-      <param name="point_cloud_topic" value="camera/depth_registered/points" />
+      <param name="point_cloud_topic" value="$(arg segmentation_cloud)" />
       <param name="use_color" value="$(arg use_color)" />
       <param name="min_cluster_size" value="$(arg min_cluster_size)" />
       <param name="max_cluster_size" value="$(arg max_cluster_size)" />

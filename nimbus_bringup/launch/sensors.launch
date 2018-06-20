@@ -1,14 +1,25 @@
 <!--
-  Author: David Kent, Worcester Polytechnic Institute
-  Author: Russell Toris, Worcester Polytechnic Institute
-  Version: August 4, 2014
+  Author: David Kent, Georgia Institute of Technology
+  Version: June 20, 2018
 -->
 
 <launch>
-  <include file="$(find openni_launch)/launch/openni.launch">
+  <arg name="top" default="true"/>
+  <arg name="side" default="false"/>
+
+  <include file="$(find openni_launch)/launch/openni.launch" if="$(arg top)">
     <arg name="depth_registration" value="true" />
     <arg name="publish_tf" value="false" />
     <arg name="rgb_camera_info_url" value="file://$(find nimbus_bringup)/config/camera_info/rgb_1401210033.yaml" />
     <arg name="depth_camera_info_url" value="file://$(find nimbus_bringup)/config/camera_info/depth_1401210033.yaml" />
   </include>
+
+  <include file="$(find openni_launch)/launch/openni.launch" if="$(arg side)">
+    <arg name="camera" value="camera_side" />
+    <arg name="depth_registration" value="true" />
+    <arg name="publish_tf" value="true" />
+    <arg name="rgb_camera_info_url" value="file://$(find nimbus_bringup)/config/camera_info/rgb_1411060937.yaml" />
+    <arg name="depth_camera_info_url" value="file://$(find nimbus_bringup)/config/camera_info/depth_1411060937.yaml" />
+  </include>
+
 </launch>

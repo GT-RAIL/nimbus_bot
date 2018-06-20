@@ -6,6 +6,7 @@ Panels:
       Expanded:
         - /Global Options1
         - /RobotModel1
+        - /TF1
         - /TF1/Frames1
         - /TF1/Tree1
         - /PointCloud21
@@ -66,11 +67,19 @@ Visualization Manager:
           Show Axes: false
           Show Trail: false
           Value: true
+        arm_mount_offset_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
         arm_mount_plate_link:
           Alpha: 1
           Show Axes: false
           Show Trail: false
           Value: true
+        calibrate_side_camera_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
         camera_depth_frame:
           Alpha: 1
           Show Axes: false
@@ -92,71 +101,78 @@ Visualization Manager:
           Alpha: 1
           Show Axes: false
           Show Trail: false
-        jaco_base_link:
+        camera_side_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+        camera_side_pitch_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+        camera_side_roll_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+        camera_side_x_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+        camera_side_y_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+        camera_side_yaw_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+        camera_side_z_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+        j2s7s300_ee_base:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+        j2s7s300_ee_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+        j2s7s300_link_1:
           Alpha: 1
           Show Axes: false
           Show Trail: false
           Value: true
-        jaco_base_link_simplified:
+        j2s7s300_link_2:
           Alpha: 1
           Show Axes: false
           Show Trail: false
           Value: true
-        jaco_ee_link:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-        jaco_forearm_link:
+        j2s7s300_link_3:
           Alpha: 1
           Show Axes: false
           Show Trail: false
           Value: true
-        jaco_forearm_link_simplified:
+        j2s7s300_link_4:
           Alpha: 1
           Show Axes: false
           Show Trail: false
           Value: true
-        jaco_shoulder_link:
+        j2s7s300_link_5:
           Alpha: 1
           Show Axes: false
           Show Trail: false
           Value: true
-        jaco_upper_arm_link:
+        j2s7s300_link_6:
           Alpha: 1
           Show Axes: false
           Show Trail: false
           Value: true
-        jaco_upper_arm_link_simplified:
+        j2s7s300_link_7:
           Alpha: 1
           Show Axes: false
           Show Trail: false
           Value: true
-        jaco_wrist_1_link:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        jaco_wrist_1_link_simplified:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        jaco_wrist_2_link:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        jaco_wrist_2_link_simplified:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        jaco_wrist_3_link:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        jaco_wrist_3_link_simplified:
+        j2s7s300_link_base:
           Alpha: 1
           Show Axes: false
           Show Trail: false
@@ -239,6 +255,11 @@ Visualization Manager:
           Show Axes: false
           Show Trail: false
           Value: true
+        sensor_frame_left_support_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
         sensor_frame_right_bracket_left_foot_link:
           Alpha: 1
           Show Axes: false
@@ -264,11 +285,20 @@ Visualization Manager:
           Show Axes: false
           Show Trail: false
           Value: true
+        sensor_frame_right_support_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
         sensor_frame_sensor_calibration_link:
           Alpha: 1
           Show Axes: false
           Show Trail: false
         sensor_frame_sensor_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+        sensor_frame_sensor_pitch_link:
           Alpha: 1
           Show Axes: false
           Show Trail: false
@@ -305,19 +335,220 @@ Visualization Manager:
       Value: true
       Visual Enabled: true
     - Class: rviz/TF
-      Enabled: false
+      Enabled: true
       Frame Timeout: 15
       Frames:
         All Enabled: false
+        arm_mount_beam_link:
+          Value: false
+        arm_mount_offset_link:
+          Value: false
+        arm_mount_plate_link:
+          Value: false
+        calibrate_side_camera_link:
+          Value: false
+        camera_depth_frame:
+          Value: false
+        camera_depth_optical_frame:
+          Value: false
+        camera_link:
+          Value: false
+        camera_rgb_frame:
+          Value: false
+        camera_rgb_optical_frame:
+          Value: false
+        camera_side_depth_frame:
+          Value: false
+        camera_side_depth_optical_frame:
+          Value: false
+        camera_side_link:
+          Value: true
+        camera_side_pitch_link:
+          Value: false
+        camera_side_rgb_frame:
+          Value: false
+        camera_side_rgb_optical_frame:
+          Value: false
+        camera_side_roll_link:
+          Value: false
+        camera_side_x_link:
+          Value: false
+        camera_side_y_link:
+          Value: false
+        camera_side_yaw_link:
+          Value: false
+        camera_side_z_link:
+          Value: false
+        j2s7s300_ee_base:
+          Value: false
+        j2s7s300_ee_link:
+          Value: false
+        j2s7s300_link_1:
+          Value: false
+        j2s7s300_link_2:
+          Value: false
+        j2s7s300_link_3:
+          Value: false
+        j2s7s300_link_4:
+          Value: false
+        j2s7s300_link_5:
+          Value: false
+        j2s7s300_link_6:
+          Value: false
+        j2s7s300_link_7:
+          Value: false
+        j2s7s300_link_base:
+          Value: false
+        nimbus_ee_link:
+          Value: false
+        robotiq_85_base_link:
+          Value: false
+        robotiq_85_left_finger_link:
+          Value: false
+        robotiq_85_left_finger_tip_link:
+          Value: false
+        robotiq_85_left_inner_knuckle_link:
+          Value: false
+        robotiq_85_left_knuckle_link:
+          Value: false
+        robotiq_85_right_finger_link:
+          Value: false
+        robotiq_85_right_finger_tip_link:
+          Value: false
+        robotiq_85_right_inner_knuckle_link:
+          Value: false
+        robotiq_85_right_knuckle_link:
+          Value: false
+        sensor_frame_center_link:
+          Value: false
+        sensor_frame_left_bracket_left_foot_link:
+          Value: false
+        sensor_frame_left_bracket_left_side_link:
+          Value: false
+        sensor_frame_left_bracket_right_foot_link:
+          Value: false
+        sensor_frame_left_bracket_right_side_link:
+          Value: false
+        sensor_frame_left_strut_link:
+          Value: false
+        sensor_frame_left_support_link:
+          Value: false
+        sensor_frame_right_bracket_left_foot_link:
+          Value: false
+        sensor_frame_right_bracket_left_side_link:
+          Value: false
+        sensor_frame_right_bracket_right_foot_link:
+          Value: false
+        sensor_frame_right_bracket_right_side_link:
+          Value: false
+        sensor_frame_right_strut_link:
+          Value: false
+        sensor_frame_right_support_link:
+          Value: false
+        sensor_frame_sensor_calibration_link:
+          Value: false
+        sensor_frame_sensor_link:
+          Value: false
+        sensor_frame_sensor_pitch_link:
+          Value: false
+        sensor_frame_sensor_x_link:
+          Value: false
+        sensor_frame_sensor_y_link:
+          Value: false
+        sensor_frame_sensor_yaw_link:
+          Value: false
+        sensor_frame_sensor_z_link:
+          Value: false
+        sensor_frame_top_beam_link:
+          Value: false
+        table_base_link:
+          Value: true
       Marker Scale: 1
       Name: TF
       Show Arrows: true
       Show Axes: true
       Show Names: true
       Tree:
-        {}
+        table_base_link:
+          arm_mount_plate_link:
+            arm_mount_beam_link:
+              arm_mount_offset_link:
+                j2s7s300_link_base:
+                  j2s7s300_link_1:
+                    j2s7s300_link_2:
+                      j2s7s300_link_3:
+                        j2s7s300_link_4:
+                          j2s7s300_link_5:
+                            j2s7s300_link_6:
+                              j2s7s300_link_7:
+                                j2s7s300_ee_base:
+                                  j2s7s300_ee_link:
+                                    nimbus_ee_link:
+                                      {}
+                                  robotiq_85_base_link:
+                                    robotiq_85_left_inner_knuckle_link:
+                                      robotiq_85_left_finger_tip_link:
+                                        {}
+                                    robotiq_85_left_knuckle_link:
+                                      robotiq_85_left_finger_link:
+                                        {}
+                                    robotiq_85_right_inner_knuckle_link:
+                                      robotiq_85_right_finger_tip_link:
+                                        {}
+                                    robotiq_85_right_knuckle_link:
+                                      robotiq_85_right_finger_link:
+                                        {}
+          calibrate_side_camera_link:
+            camera_side_x_link:
+              camera_side_y_link:
+                camera_side_z_link:
+                  camera_side_roll_link:
+                    camera_side_pitch_link:
+                      camera_side_yaw_link:
+                        camera_side_link:
+                          camera_side_depth_frame:
+                            camera_side_depth_optical_frame:
+                              {}
+                          camera_side_rgb_frame:
+                            camera_side_rgb_optical_frame:
+                              {}
+          sensor_frame_center_link:
+            sensor_frame_left_strut_link:
+              sensor_frame_left_bracket_left_foot_link:
+                sensor_frame_left_bracket_left_side_link:
+                  {}
+              sensor_frame_left_bracket_right_foot_link:
+                sensor_frame_left_bracket_right_side_link:
+                  {}
+              sensor_frame_left_support_link:
+                {}
+            sensor_frame_right_strut_link:
+              sensor_frame_right_bracket_left_foot_link:
+                sensor_frame_right_bracket_left_side_link:
+                  {}
+              sensor_frame_right_bracket_right_foot_link:
+                sensor_frame_right_bracket_right_side_link:
+                  {}
+              sensor_frame_right_support_link:
+                {}
+            sensor_frame_top_beam_link:
+              sensor_frame_sensor_calibration_link:
+                sensor_frame_sensor_x_link:
+                  sensor_frame_sensor_y_link:
+                    sensor_frame_sensor_z_link:
+                      sensor_frame_sensor_pitch_link:
+                        sensor_frame_sensor_yaw_link:
+                          sensor_frame_sensor_link:
+                            camera_rgb_frame:
+                              camera_depth_frame:
+                                camera_depth_optical_frame:
+                                  {}
+                              camera_link:
+                                {}
+                              camera_rgb_optical_frame:
+                                {}
       Update Interval: 0
-      Value: false
+      Value: true
     - Alpha: 1
       Autocompute Intensity Bounds: true
       Autocompute Value Bounds:
@@ -343,7 +574,7 @@ Visualization Manager:
       Size (Pixels): 3
       Size (m): 0.01
       Style: Flat Squares
-      Topic: /camera/depth_registered/points
+      Topic: /camera_side/depth_registered/points
       Unreliable: false
       Use Fixed Frame: true
       Use rainbow: true
@@ -384,10 +615,10 @@ Visualization Manager:
         Z: 0.642417
       Name: Current View
       Near Clip Distance: 0.01
-      Pitch: 0.420203
+      Pitch: 0.349797
       Target Frame: <Fixed Frame>
       Value: Orbit (rviz)
-      Yaw: 0.9754
+      Yaw: 1.4754
     Saved: ~
 Window Geometry:
   Displays:

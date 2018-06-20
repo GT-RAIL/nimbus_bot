@@ -14,7 +14,7 @@
     <joint name="${parent}_camera_side_link" type="fixed">
       <parent link="${parent}" />
       <child link="camera_side_link" />
-      <origin xyz="-0.152 -1.175 0.328" rpy="-0.019 0.077 1.523" /> <!-- Calibrated xyz and rpy for side camera go here (rosrun tf tf_echo /table_base_link /camera_side_link)-->
+      <origin xyz="0.716 -0.196 0.875" rpy="0.009 0.724 2.396" /> <!-- Calibrated xyz and rpy for side camera go here (rosrun tf tf_echo /table_base_link /camera_side_link)-->
     </joint>
     <link name="camera_side_link" />
 
@@ -39,7 +39,7 @@
     <joint name="${parent}_calibrate_side_camera_link" type="fixed">
       <parent link="${parent}" />
       <child link="calibrate_side_camera_link" />
-      <origin xyz="-0.1 -0.9 0.25" rpy="0.0 0.0 ${pi/2.0}" /> <!-- todo: set to reasonable values -->
+      <origin xyz="0.8 -0.2 0.9" rpy="0.0 ${pi/4.0} ${3*pi/4.0}" /> <!-- todo: set to reasonable values -->
     </joint>
     <link name="calibrate_side_camera_link" />
 
