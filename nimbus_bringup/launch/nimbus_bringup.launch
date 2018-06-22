@@ -14,6 +14,7 @@
   <arg name="min_cluster_size" default="100" />
   <arg name="max_cluster_size" default="20000" />
   <arg name="segmentation_cloud" default="camera/depth_registered/points" />
+  <arg name="zones_config" default="$(find nimbus_bringup)/config/segmentation/zones.yaml" />
 
   <!-- Motion Planning Params -->
   <arg name="motion_planning" default="true" />
@@ -33,7 +34,7 @@
   <!-- Vision -->
   <group if="$(arg segmentation)">
     <node name="rail_segmentation" pkg="rail_segmentation" type="rail_segmentation" output="screen">
-      <param name="zones_config" value="$(find nimbus_bringup)/config/segmentation/zones.yaml" />
+      <param name="zones_config" value="$(arg zones_config)" />
       <param name="point_cloud_topic" value="$(arg segmentation_cloud)" />
       <param name="use_color" value="$(arg use_color)" />
       <param name="min_cluster_size" value="$(arg min_cluster_size)" />
